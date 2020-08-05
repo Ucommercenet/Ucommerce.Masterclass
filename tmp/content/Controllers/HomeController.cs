@@ -8,7 +8,8 @@ using Umbraco.Web.Mvc;
 namespace Ucommerce.Masterclass.Umbraco.Controllers
 {
     public class HomeController : RenderMvcController
-    { 
+    {
+        // GET: Home
         public ActionResult Index()
         {
             return View();

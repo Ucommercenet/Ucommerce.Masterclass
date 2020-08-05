@@ -19,7 +19,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Umbraco", "Umbraco", "{9F840D65-E4F4-425A-B1C2-EDA80F882DAD}"
 ProjectSection(SolutionItems) = preProject
 	..\tools\NuGet\Umbraco\uCommerce.Masterclass.Umbraco.nuspec = ..\tools\NuGet\Umbraco\uCommerce.Masterclass.Umbraco.nuspec
-	..\tools\NuGet\Umbraco\uCommerce.Masterclass.Umbraco.txt = ..\tools\NuGet\Umbraco\uCommerce.Masterclass.Umbraco.txt
+	..\tmp\readme.txt = ..\tmp\readme.txt
 EndProjectSection
 EndProject
 Global

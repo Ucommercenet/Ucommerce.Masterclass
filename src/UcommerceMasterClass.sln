@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29326.143
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ucommerce.Masterclass.Models", "Ucommerce.Masterclass.Models\Ucommerce.Masterclass.Models.csproj", "{E2E6EB8C-5936-4D5F-82F4-2A802B7FD9D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ucommerce.Masterclass.Umbraco", "Ucommerce.Masterclass.Umbraco\Ucommerce.Masterclass.Umbraco.csproj", "{E5E72B8E-9FB6-4686-9AE8-45DB28416BF0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{D0268BAC-DDBF-4D01-9B88-86D189B49AA2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deploy", "Deploy", "{8D4B7722-40DA-4791-8BC8-F077A41726BD}"
+ProjectSection(SolutionItems) = preProject
+	..\tools\Deploy\Create.NugetPackage.Umbraco8.ps1 = ..\tools\Deploy\Create.NugetPackage.Umbraco8.ps1
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{0A49CCC2-6F77-475C-8A76-1FF6D921C23E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Umbraco", "Umbraco", "{9F840D65-E4F4-425A-B1C2-EDA80F882DAD}"
+ProjectSection(SolutionItems) = preProject
+	..\tools\NuGet\Umbraco\uCommerce.Masterclass.Umbraco.nuspec = ..\tools\NuGet\Umbraco\uCommerce.Masterclass.Umbraco.nuspec
+	..\tools\NuGet\Umbraco\uCommerce.Masterclass.Umbraco.txt = ..\tools\NuGet\Umbraco\uCommerce.Masterclass.Umbraco.txt
+EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E2E6EB8C-5936-4D5F-82F4-2A802B7FD9D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2E6EB8C-5936-4D5F-82F4-2A802B7FD9D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2E6EB8C-5936-4D5F-82F4-2A802B7FD9D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2E6EB8C-5936-4D5F-82F4-2A802B7FD9D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5E72B8E-9FB6-4686-9AE8-45DB28416BF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5E72B8E-9FB6-4686-9AE8-45DB28416BF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5E72B8E-9FB6-4686-9AE8-45DB28416BF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5E72B8E-9FB6-4686-9AE8-45DB28416BF0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8D4B7722-40DA-4791-8BC8-F077A41726BD} = {D0268BAC-DDBF-4D01-9B88-86D189B49AA2}
+		{0A49CCC2-6F77-475C-8A76-1FF6D921C23E} = {D0268BAC-DDBF-4D01-9B88-86D189B49AA2}
+		{9F840D65-E4F4-425A-B1C2-EDA80F882DAD} = {0A49CCC2-6F77-475C-8A76-1FF6D921C23E}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {63D94D0E-731F-4D46-9320-7FF5E5579627}
+	EndGlobalSection
+EndGlobal

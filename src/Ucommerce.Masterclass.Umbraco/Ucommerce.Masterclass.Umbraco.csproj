@@ -235,6 +235,54 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Ucommerce, Version=9.2.1.20209, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\uCommerce.Core.9.2.1.20209\lib\net45\Ucommerce.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ucommerce.Admin, Version=9.2.1.20209, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\uCommerce.Core.9.2.1.20209\lib\net45\Ucommerce.Admin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ucommerce.Api, Version=9.2.1.20209, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\uCommerce.Core.9.2.1.20209\lib\net45\Ucommerce.Api.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ucommerce.Infrastructure, Version=9.2.1.20209, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\uCommerce.Core.9.2.1.20209\lib\net45\Ucommerce.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ucommerce.Installer, Version=9.2.1.20209, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\uCommerce.Core.9.2.1.20209\lib\net45\Ucommerce.Installer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ucommerce.NHibernate, Version=9.2.1.20209, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\uCommerce.Core.9.2.1.20209\lib\net45\Ucommerce.NHibernate.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ucommerce.Pipelines, Version=9.2.1.20209, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\uCommerce.Core.9.2.1.20209\lib\net45\Ucommerce.Pipelines.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ucommerce.Presentation, Version=9.2.1.20209, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\uCommerce.Core.9.2.1.20209\lib\net45\Ucommerce.Presentation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ucommerce.Search, Version=9.2.1.20209, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\uCommerce.Core.9.2.1.20209\lib\net45\Ucommerce.Search.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ucommerce.SqlMultiReaderConnector, Version=9.2.1.20209, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\uCommerce.Core.9.2.1.20209\lib\net45\Ucommerce.SqlMultiReaderConnector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ucommerce.SystemHttp, Version=9.2.1.20209, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\uCommerce.Core.9.2.1.20209\lib\net45\Ucommerce.SystemHttp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ucommerce.SystemWeb, Version=9.2.1.20209, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\uCommerce.Core.9.2.1.20209\lib\net45\Ucommerce.SystemWeb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Umbraco.Core, Version=8.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\UmbracoCms.Core.8.6.1\lib\net472\Umbraco.Core.dll</HintPath>
     </Reference>
@@ -258,15 +306,28 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Basket\Index.cshtml" />
+    <Content Include="Views\CategoryNavigation\Index.cshtml" />
     <Content Include="Views\Category\Index.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
+    <Content Include="Views\Shared\TwoCol.cshtml" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\BasketController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\CategoryNavigationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Models\AddressDetailsViewModel.cs" />
+    <Compile Include="Models\AddressViewModel.cs" />
+    <Compile Include="Models\AddToBasketViewModel.cs" />
+    <Compile Include="Models\CategoryNavigationViewModel.cs" />
+    <Compile Include="Models\CategoryViewModel.cs" />
+    <Compile Include="Models\OrderlineViewModel.cs" />
+    <Compile Include="Models\PaymentViewModel.cs" />
+    <Compile Include="Models\ProductViewModel.cs" />
+    <Compile Include="Models\PurchaseOrderViewModel.cs" />
+    <Compile Include="Models\ShippingViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -313,6 +374,9 @@
     <Error Condition="!Exists('..\packages\Umbraco.SqlServerCE.4.0.0.1\build\Umbraco.SqlServerCE.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Umbraco.SqlServerCE.4.0.0.1\build\Umbraco.SqlServerCE.targets'))" />
   </Target>
   <Import Project="..\packages\Umbraco.SqlServerCE.4.0.0.1\build\Umbraco.SqlServerCE.targets" Condition="Exists('..\packages\Umbraco.SqlServerCE.4.0.0.1\build\Umbraco.SqlServerCE.targets')" />
+  <PropertyGroup>
+    <PostBuildEvent>Powershell.exe -ExecutionPolicy Bypass -file "$(SolutionDir)..\tools\Deploy\deploy.Local.ps1"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

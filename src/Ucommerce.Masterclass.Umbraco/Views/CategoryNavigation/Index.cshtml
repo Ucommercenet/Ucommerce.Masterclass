@@ -1,0 +1,31 @@
+﻿@using Ucommerce.Masterclass.Umbraco.Models
+@model Ucommerce.Masterclass.Umbraco.Models.CategoryNavigationViewModel
+@{
+}
+
+<ul class="list-group list-group-item">
+  @foreach (var category in Model.Categories)
+  {
+    @MapCategory(category)
+  }
+</ul>
+
+@helper MapCategory(CategoryViewModel category)
+{
+//  string className = category.Guid == Model.CurrentCategoryGuid ? "active" : "";
+  <li class="list-group-item border-0">
+    <a href="@category.Url">@category.Name</a>
+    @if (category.Categories.Count > 0)
+    {
+      foreach (var subCategory in category.Categories)
+      {
+        <li class="list-group-item border-0">
+          <ul class="list-group border-0">
+            @MapCategory(subCategory)
+          </ul>
+        </li>
+      }
+    }
+  </li>
+}
+

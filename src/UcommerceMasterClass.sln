@@ -12,6 +12,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deploy", "Deploy", "{8D4B7722-40DA-4791-8BC8-F077A41726BD}"
 ProjectSection(SolutionItems) = preProject
 	..\tools\Deploy\Create.NugetPackage.Umbraco8.ps1 = ..\tools\Deploy\Create.NugetPackage.Umbraco8.ps1
+	..\tools\Deploy\deploy.local.ps1 = ..\tools\Deploy\deploy.local.ps1
 EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{0A49CCC2-6F77-475C-8A76-1FF6D921C23E}"

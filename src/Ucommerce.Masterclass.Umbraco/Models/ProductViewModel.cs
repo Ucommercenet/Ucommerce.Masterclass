@@ -11,12 +11,16 @@ namespace Ucommerce.Masterclass.Umbraco.Models
         }
         public bool IsVariant { get; set; }
 
+        public bool Sellable { get; set; }
+        
         public string Name { get; set; }
 
         public string Url { get; set; }
 
         public string LongDescription { get; set; }
-
+        
+        public string ShortDescription { get; set; }
+        
         public IList<ProductViewModel> Variants { get; set; }
 
         public string Sku { get; set; }
@@ -24,5 +28,6 @@ namespace Ucommerce.Masterclass.Umbraco.Models
         public string VariantSku { get; set; }
 
         public ProductPriceCalculationResult Prices { get; set; }
+        public string PrimaryImageUrl { get; set; }
     }
 }

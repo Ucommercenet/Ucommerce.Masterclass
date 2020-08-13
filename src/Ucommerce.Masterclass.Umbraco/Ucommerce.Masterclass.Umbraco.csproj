@@ -305,6 +305,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Css\style.css" />
     <Content Include="Umbraco\Ucommerce\Apps\MasterClassIndexDefinitions.config" />
     <Content Include="Views\Basket\Index.cshtml" />
     <Content Include="Views\CategoryNavigation\Index.cshtml" />

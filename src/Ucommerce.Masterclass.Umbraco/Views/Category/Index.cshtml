@@ -7,6 +7,7 @@
     
     <img src="@Model.ImageMediaUrl" />
 </div>
+
 <div class="row">
     <h2>Products in @Model.Name</h2>
 </div>
@@ -17,11 +18,29 @@
     {
         <div class="col">
             <div class="card" style="width: 18rem;">
-                <img src="..." class="card-img-top" alt="product image">
+                <a href="@product.Url">
+                <img src="@product.PrimaryImageUrl" class="card-img-top" alt="product image">
+                </a>
                 <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    
+                    <h5 class="card-title">
+                        <a class="text-dark" href="@product.Url">
+                            @product.Name
+                        </a>
+                    </h5>
+                    <p class="card-text">
+                        <a class="text-dark" href="@product.Url">
+                            @product.ShortDescription
+                        </a>
+                    </p>
+                    <a href="@product.Url" class="btn btn-primary">More Info</a>
+                    @if (product.Sellable)
+                    {
+                        <button class="btn btn-primary" form="@product.Sku" type="submit"><i class="fa fa-shopping-cart"></i> Add to cart</button>
+                        <form method="POST" id="@product.Sku">
+                            <input type="hidden" name="Sku" value="@product.Sku">
+                        </form>
+                    }
                 </div>
             </div>
         </div>

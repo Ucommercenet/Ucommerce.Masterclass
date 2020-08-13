@@ -1,5 +1,5 @@
 # Website root folder (website is deployed here)
-$website_root = "C:\inetpub\u8\website"
+$website_root = "C:\inetpub\u8\website\CMS"
 
 # Temporarily change to the correct folder containing script
 $scriptPath = (Get-Variable MyInvocation -Scope Script).Value.MyCommand.Path
@@ -18,6 +18,7 @@ $options = @("/E", "/S", "/xf", "*.cs", "/xf", "*.??proj", "/xf", "*.user", "/xf
 & robocopy "$src\bin" "$website_root\bin" Ucommerce.Masterclass*.dll $options
 & robocopy "$src\img" "$website_root\img" *.* $options
 & robocopy "$src\Views" "$website_root\Views" *.* $options
+& robocopy "$src\Css" "$website_root\Css" *.* $options
 & robocopy "$src\Umbraco" "$website_root\Umbraco" *.* $options
 
 # Now back to original directory

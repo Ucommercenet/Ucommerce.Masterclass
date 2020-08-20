@@ -5,9 +5,14 @@
 }
 <div class="row">
     <h1>@Model.Name</h1>
-    
-    <img src="@Model.ImageMediaUrl" />
 </div>
+
+@if (!string.IsNullOrWhiteSpace(Model.ImageMediaUrl))
+{
+    <div class="row align-items-center">
+        <img src="@Model.ImageMediaUrl" style="width: auto; max-height: 200px;" />
+    </div>
+}
 
 <div class="row">
     <h2>@Model.TotalProductsCount Products available in @Model.Name</h2>

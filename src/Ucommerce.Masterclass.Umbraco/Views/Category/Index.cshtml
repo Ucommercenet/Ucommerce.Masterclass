@@ -1,6 +1,7 @@
 ﻿@model Ucommerce.Masterclass.Umbraco.Models.CategoryViewModel
 @{
     Layout = "~/views/shared/TwoCol.cshtml";
+    const string f = "f";
 }
 <div class="row">
     <h1>@Model.Name</h1>
@@ -24,7 +25,7 @@
                     @foreach (var value in facet.FacetValues)
                     {
                         <a class="dropdown-item" facet-data="link">
-                            <input type="checkbox" facet-data="input" facet-data-key="@facet.Key" facet-data-value="@value.Key"/> @value.Key (@value.Count)
+                            <input type="checkbox" facet-data="input" facet-data-key="@facet.Key" facet-data-value-selector='@f@value.Key' facet-data-value="@value.Key"/> @value.Key (@value.Count)
                         </a>   
                     }
                 </div>
@@ -34,25 +35,63 @@
 </div>
 
 <script>
+    const params = new URLSearchParams(top.location.search);
+    let paramObj = {};
+    for(var key of params.keys()) {
+         var values = params.get(key).split('|');
+         for (var n in values) {
+             var element = document.querySelector('input[facet-data-key='+key+'][facet-data-value-selector=f'+values[n]+']');
+             if (element != null) {                 
+                element.checked = true;
+             }
+         }
+     } 
 
-document.querySelectorAll('input[facet-data=input]').forEach(
-  function(element) {
-      element.addEventListener('click', function(event) { 
-        event.stopPropagation();
-      });
-  }
-);
+</script>
 
-document.querySelectorAll('a[facet-data=link]').forEach(
-  function(element) { 
-    element.addEventListener('click', function(event) { 
+<script>
 
-      var input = element.querySelectorAll('input')[0];     
-      input.click();
-      
-      event.stopPropagation();  
-    });
-  })
+    document.querySelectorAll('input[facet-data=input]').forEach(
+      function(element) {
+          element.addEventListener('click', function(event) { 
+            event.stopPropagation();
+            
+            var keyValueMap = {};
+            
+            document.querySelectorAll('input[facet-data=input]:checked').forEach(function(element) { 
+                var key = element.getAttribute('facet-data-key');  
+                
+                if (keyValueMap[key] == null) {
+                    keyValueMap[key] = [];
+                }
+    
+                var value = element.getAttribute('facet-data-value');  
+                
+                keyValueMap[key].push(value);
+            });
+            
+            var values = [];
+            for(var key in keyValueMap) {
+                values.push(key + "=" + keyValueMap[key].join('|'))
+            }
+            
+            var url = top.location.origin + top.location.pathname + '?' + values.join('&');
+            
+            top.location.href = url;
+          });
+      }
+    );
+    
+    document.querySelectorAll('a[facet-data=link]').forEach(
+      function(element) { 
+        element.addEventListener('click', function(event) { 
+    
+          var input = element.querySelectorAll('input')[0];     
+          input.click();
+          
+          event.stopPropagation();  
+        });
+      })
 </script>
 
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">

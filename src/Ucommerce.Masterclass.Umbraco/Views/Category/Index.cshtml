@@ -9,8 +9,51 @@
 </div>
 
 <div class="row">
-    <h2>Products in @Model.Name</h2>
+    <h2>@Model.TotalProductsCount Products available in @Model.Name</h2>
 </div>
+
+<div class="row">
+    <div class="col">
+        @foreach (var facet in Model.Facets)
+        {
+            <div class="btn-group">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    @facet.Key
+                </button>
+                <div class="dropdown-menu">
+                    @foreach (var value in facet.FacetValues)
+                    {
+                        <a class="dropdown-item" facet-data="link">
+                            <input type="checkbox" facet-data="input" facet-data-key="@facet.Key" facet-data-value="@value.Key"/> @value.Key (@value.Count)
+                        </a>   
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+
+document.querySelectorAll('input[facet-data=input]').forEach(
+  function(element) {
+      element.addEventListener('click', function(event) { 
+        event.stopPropagation();
+      });
+  }
+);
+
+document.querySelectorAll('a[facet-data=link]').forEach(
+  function(element) { 
+    element.addEventListener('click', function(event) { 
+
+      var input = element.querySelectorAll('input')[0];     
+      input.click();
+      
+      event.stopPropagation();  
+    });
+  })
+</script>
 
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
     

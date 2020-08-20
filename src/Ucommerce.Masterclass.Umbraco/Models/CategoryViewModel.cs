@@ -9,6 +9,7 @@ namespace Ucommerce.Masterclass.Umbraco.Models
         {
             Categories = new List<CategoryViewModel>();
             Products = new List<ProductViewModel>();
+            Facets = new List<FacetsViewModel>();
         }
         public string Url { get; set; }
 
@@ -23,5 +24,7 @@ namespace Ucommerce.Masterclass.Umbraco.Models
         public IList<ProductViewModel> Products { get; set; }
         
         public string ImageMediaUrl { get; set; }
+        public uint TotalProductsCount { get; set; }
+        public IList<FacetsViewModel> Facets { get; set; }
     }
 }

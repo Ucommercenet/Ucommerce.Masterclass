@@ -306,7 +306,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Css\style.css" />
-    <Content Include="Umbraco\Ucommerce\Apps\MasterClassIndexDefinitions.config" />
+    <Content Include="Umbraco\Ucommerce\Apps\Umbraco Masterclass\MasterClassIndexDefinitions.config" />
     <Content Include="Views\Basket\Index.cshtml" />
     <Content Include="Views\CategoryNavigation\Index.cshtml" />
     <Content Include="Views\Category\Index.cshtml" />
@@ -326,6 +326,7 @@
     <Compile Include="Models\AddToBasketViewModel.cs" />
     <Compile Include="Models\CategoryNavigationViewModel.cs" />
     <Compile Include="Models\CategoryViewModel.cs" />
+    <Compile Include="Models\FacetsViewModel.cs" />
     <Compile Include="Models\OrderlineViewModel.cs" />
     <Compile Include="Models\PaymentViewModel.cs" />
     <Compile Include="Models\ProductViewModel.cs" />

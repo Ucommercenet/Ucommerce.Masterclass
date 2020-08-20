@@ -7,7 +7,11 @@ namespace Ucommerce.Masterclass.Umbraco.IndexDefinitions
     {
         public MasterclassIndexDefinition() : base()
         {
-            
+            this.Field(p => p["Color"], typeof(string));
+            this.Field(p => p["ShoeSize"], typeof(string));
+
+            this.Facet("Color");
+            this.Facet("ShoeSize");
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using Ucommerce.Api;
 using Ucommerce.Infrastructure;
 using Ucommerce.Masterclass.Umbraco.Models;
+using Ucommerce.Search.Facets;
 using Ucommerce.Search.Models;
 using Ucommerce.Search.Slugs;
 using Umbraco.Web.Mvc;
@@ -40,17 +41,45 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
             categoryModel.Name = currentCategory.Name;
             categoryModel.ImageMediaUrl = currentCategory.ImageMediaUrl;
 
-            categoryModel.Products = MapProducts(currentCategory);
+            var facetResultSet = CatalogLibrary.GetProducts(currentCategory.Guid, new FacetDictionary());
+            
+            categoryModel.Facets = MapFacets(facetResultSet.Facets);
+            categoryModel.TotalProductsCount = facetResultSet.TotalCount;
+            categoryModel.Products = MapProducts(facetResultSet.Results);
             
             return View("/views/category/index.cshtml", categoryModel);
         }
 
-        private IList<ProductViewModel> MapProducts(Category currentCategory)
+        private IList<FacetsViewModel> MapFacets(IList<Facet> facets)
         {
-            return CatalogLibrary.GetProducts(currentCategory.Guid).Select(x => new ProductViewModel()
+            var facetsToReturn = new List<FacetsViewModel>();
+
+            foreach (var facet in facets)
+            {
+                var facetsViewModel = new FacetsViewModel();
+                facetsViewModel.Key = facet.Name;
+                facetsViewModel.DisplayName = facet.DisplayName;
+
+                foreach (var facetValue in facet.FacetValues)
+                {
+                    facetsViewModel.FacetValues.Add(new FacetValueViewModel()
+                    {
+                        Count = facetValue.Count,
+                        Key = facetValue.Value
+                    });
+                }
+                
+                facetsToReturn.Add(facetsViewModel);
+            }
+
+            return facetsToReturn;
+        }
+
+        private IList<ProductViewModel> MapProducts(IList<Product> products)
+        {
+            return products.Select(x => new ProductViewModel()
             {
                 LongDescription = x.LongDescription,
-                
                 IsVariant = x.ProductType == ProductType.Variant,
                 Sellable = x.ProductType == ProductType.Product || x.ProductType == ProductType.Variant,
                 PrimaryImageUrl = x.PrimaryImageUrl,

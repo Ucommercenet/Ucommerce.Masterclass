@@ -22,26 +22,39 @@
         </header>
         <form method="post">
             <div class="col-md-12 border bg-light">
-                <div class="col-md-5 p-4">
-                    @if (hasDiscount)
+                <div class="row">
+                    <div class="col-md-5 p-4">
+                        @if (hasDiscount)
+                        {
+                            <h1 class="text-success m-0">@formattedPrice</h1>
+                            <div>
+                                <span style="text-decoration: line-through;">@formattedListPrice</span>
+                                <span class="badge bg-dark">-@percentageDiscount %</span>
+                            </div>
+                            
+                            <div>
+                                <span class="font-italic" style="font-size: 10px">inc. tax @formattedTax</span>
+                            </div>
+                        }
+                        else
+                        {
+                            <h1 class="text-success">@formattedPrice</h1>
+                        }
+                    </div>
+                    @if (Model.Variants.Any())
                     {
-                        <h1 class="text-success m-0">@formattedPrice</h1>
-                        <div>
-                            <span style="text-decoration: line-through;">@formattedListPrice</span>
-                            <span class="badge bg-dark">-@percentageDiscount %</span>
-                        </div>
-                        
-                        <div>
-                            <span class="font-italic" style="font-size: 10px">inc. tax @formattedTax</span>
+                        <div class="col-md-7 p-4">
+                            <div class="col-md-12">
+                                <h3>Available Variants</h3>
+                                <select>
+                                    @foreach (var variant in Model.Variants)
+                                    {
+                                        <option value="@variant.VariantSku">@variant.Name</option>
+                                    }
+                                </select>
+                            </div>
                         </div>
                     }
-                    else
-                    {
-                        <h1 class="text-success">@formattedPrice</h1>
-                    }
-                </div>
-                <div class="col-md-7">
-                    
                 </div>
             </div>
         </form>

@@ -12,6 +12,7 @@ using Ucommerce.Search.Facets;
 using Ucommerce.Search.Models;
 using Ucommerce.Search.Slugs;
 using Umbraco.Core;
+using Umbraco.Core.Packaging;
 using Umbraco.Web.Mvc;
 
 namespace Ucommerce.Masterclass.Umbraco.Controllers
@@ -53,6 +54,8 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
 
         public ICatalogContext CatalogContext => ObjectFactory.Instance.Resolve<ICatalogContext>();
 
+        public ITransactionLibrary TransactionLibrary => ObjectFactory.Instance.Resolve<ITransactionLibrary>();
+        
         public IUrlService UrlService => ObjectFactory.Instance.Resolve<IUrlService>();
 
         public CategoryController()
@@ -63,6 +66,7 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
         [System.Web.Mvc.HttpPost]
         public ActionResult Index(string sku)
         {
+            TransactionLibrary.AddToBasket(1, sku);
             return Index();
         }
 
@@ -114,17 +118,19 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
 
         private IList<ProductViewModel> MapProducts(IList<Product> products)
         {
-            return products.Select(x => new ProductViewModel()
+            var prices = CatalogLibrary.CalculatePrices(products.Select(x => x.Guid).ToList());
+            
+            return products.Select(product => new ProductViewModel()
             {
-                LongDescription = x.LongDescription,
-                IsVariant = x.ProductType == ProductType.Variant,
-                Sellable = x.ProductType == ProductType.Product || x.ProductType == ProductType.Variant,
-                PrimaryImageUrl = x.PrimaryImageUrl,
-                Sku = x.Sku,
-                Name = x.DisplayName,
-                ShortDescription = x.ShortDescription,
-                Url = UrlService.GetUrl(CatalogContext.CurrentCatalog, new []{ CatalogContext.CurrentCategory }, x)
-                
+                LongDescription = product.LongDescription,
+                IsVariant = product.ProductType == ProductType.Variant,
+                Sellable = product.ProductType == ProductType.Product || product.ProductType == ProductType.Variant,
+                PrimaryImageUrl = product.PrimaryImageUrl,
+                Sku = product.Sku,
+                Name = product.DisplayName,
+                Prices = prices.Items.Where(price => price.ProductGuid == product.Guid && price.PriceGroupGuid == CatalogContext.CurrentPriceGroup.Guid).ToList(),
+                ShortDescription = product.ShortDescription,
+                Url = UrlService.GetUrl(CatalogContext.CurrentCatalog, new []{ CatalogContext.CurrentCategory }, product)
             }).ToList();
         }
     }

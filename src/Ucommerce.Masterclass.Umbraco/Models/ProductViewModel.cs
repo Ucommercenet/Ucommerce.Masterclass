@@ -27,7 +27,7 @@ namespace Ucommerce.Masterclass.Umbraco.Models
 
         public string VariantSku { get; set; }
 
-        public ProductPriceCalculationResult Prices { get; set; }
+        public IList<ProductPriceCalculationResult.Item> Prices { get; set; }
         public string PrimaryImageUrl { get; set; }
     }
 }

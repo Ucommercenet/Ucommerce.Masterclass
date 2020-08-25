@@ -27,9 +27,7 @@
           Home
         </strong>
       </a>
-      <a class="nav-link text-white"  href="/basket">
-        <i class="fa fa-shopping-cart"></i> Your shopping cart is empty
-      </a>
+      @{ Html.RenderAction("Render", "MiniBasket"); }
     </div>
   </div>
 </header>

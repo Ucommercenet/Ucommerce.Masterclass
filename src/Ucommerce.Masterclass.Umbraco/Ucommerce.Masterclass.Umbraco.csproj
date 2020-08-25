@@ -310,6 +310,7 @@
     <Content Include="Views\Basket\Index.cshtml" />
     <Content Include="Views\CategoryNavigation\Index.cshtml" />
     <Content Include="Views\Category\Index.cshtml" />
+    <Content Include="Views\MiniBasket\Index.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\Shared\TwoCol.cshtml" />
     <Content Include="Web.config" />
@@ -319,6 +320,7 @@
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CategoryNavigationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MiniBasketController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="IndexDefinitions\MasterclassIndexDefinition.cs" />
     <Compile Include="Models\AddressDetailsViewModel.cs" />
@@ -327,6 +329,7 @@
     <Compile Include="Models\CategoryNavigationViewModel.cs" />
     <Compile Include="Models\CategoryViewModel.cs" />
     <Compile Include="Models\FacetsViewModel.cs" />
+    <Compile Include="Models\MiniBasketViewModel.cs" />
     <Compile Include="Models\OrderlineViewModel.cs" />
     <Compile Include="Models\PaymentViewModel.cs" />
     <Compile Include="Models\ProductViewModel.cs" />

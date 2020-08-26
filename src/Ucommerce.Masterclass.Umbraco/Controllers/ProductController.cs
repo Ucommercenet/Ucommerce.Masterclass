@@ -17,6 +17,10 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
         
         public ICatalogLibrary CatalogLibrary => ObjectFactory.Instance.Resolve<ICatalogLibrary>();
 
+
+        public ITransactionLibrary TransactionLibrary => ObjectFactory.Instance.Resolve<ITransactionLibrary>();
+
+        
         [System.Web.Mvc.HttpGet]
         public ActionResult Index()
         {
@@ -25,12 +29,20 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
             var productModel = new ProductViewModel();
             productModel.PrimaryImageUrl = currentProduct.PrimaryImageUrl;
             productModel.Name = currentProduct.DisplayName;
-
+            productModel.Sku = currentProduct.Sku;
+            
             productModel.Prices = CatalogLibrary.CalculatePrices(new List<Guid>() {currentProduct.Guid}).Items;
             productModel.Variants = MapVariants(CatalogLibrary.GetVariants(currentProduct));            
             return View(productModel);
         }
 
+        [System.Web.Mvc.HttpPost]
+        public ActionResult Index(string sku, string variantSku, int quantity)
+        {
+            TransactionLibrary.AddToBasket(quantity, sku, variantSku);
+            return Index();
+        }
+        
         private IList<ProductViewModel> MapVariants(ResultSet<Product> variants)
         {
            return variants.Select(x =>

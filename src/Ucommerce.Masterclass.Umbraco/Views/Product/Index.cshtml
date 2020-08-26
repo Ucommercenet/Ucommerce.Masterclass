@@ -20,18 +20,19 @@
         <header class="col-md-12">
             <h2 itemprop="name"><b>@Model.Name</b></h2>
         </header>
-        <form method="post">
+        <form method="post" id="@Model.Sku">
+            <input type="hidden" name="sku" value="@Model.Sku" /> 
             <div class="col-md-12 border bg-light">
                 <div class="row">
                     <div class="col-md-5 p-4">
-                        @if (hasDiscount)
+                        @if (hasDiscount) 
                         {
                             <h1 class="text-success m-0">@formattedPrice</h1>
                             <div>
                                 <span style="text-decoration: line-through;">@formattedListPrice</span>
                                 <span class="badge bg-dark">-@percentageDiscount %</span>
                             </div>
-                            
+
                             <div>
                                 <span class="font-italic" style="font-size: 10px">inc. tax @formattedTax</span>
                             </div>
@@ -46,7 +47,8 @@
                         <div class="col-md-7 p-4">
                             <div class="col-md-12">
                                 <h3>Available Variants</h3>
-                                <select>
+                                <select class="form-select" name="variantSku" required>
+                                    <option value="">Please select a variant</option>
                                     @foreach (var variant in Model.Variants)
                                     {
                                         <option value="@variant.VariantSku">@variant.Name</option>
@@ -55,6 +57,12 @@
                             </div>
                         </div>
                     }
+                </div>
+                <div class="row">
+                    <div class="col-md-12 p-4">
+                        <input type="number" name="quantity" class="col-md-12" min="1" value="1"/>
+                        <button class="btn btn-primary col-md-12 mt-2" form="@Model.Sku" type="submit"><i class="fa fa-shopping-cart"></i> Add to cart</button>
+                    </div>
                 </div>
             </div>
         </form>

@@ -13,6 +13,7 @@ namespace Ucommerce.Masterclass.Umbraco.Models
         public string VariantSku { get; set; }
 
         public string ProductName { get; set; }
-
+        public string UnitPrice { get; set; }
+        public string Tax { get; set; }
     }
 }

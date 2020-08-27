@@ -308,6 +308,7 @@
     <Content Include="Css\style.css" />
     <Content Include="Umbraco\Ucommerce\Apps\Umbraco Masterclass\MasterClassIndexDefinitions.config" />
     <Content Include="Views\Basket\Index.cshtml" />
+    <Content Include="Views\Billing\Index.cshtml" />
     <Content Include="Views\CategoryNavigation\Index.cshtml" />
     <Content Include="Views\Category\Index.cshtml" />
     <Content Include="Views\MiniBasket\Index.cshtml" />

@@ -14,6 +14,8 @@ namespace Ucommerce.Masterclass.Umbraco.Models
         public AddressViewModel ShippingAddress { get; set; }
 
         public AddressViewModel BillingAddress { get; set; }
+        
+        public bool UseAlternativeAddress { get; set; }
 
         public IList<SelectListItem> AvailableCountries { get; set; }
     }

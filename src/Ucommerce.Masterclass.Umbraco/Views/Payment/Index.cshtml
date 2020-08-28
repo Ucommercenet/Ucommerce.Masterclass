@@ -1,14 +1,36 @@
-﻿@model Ucommerce.Masterclass.Umbraco.Models.PaymentViewModel
+﻿@using System.Web.Mvc.Html
+@model Ucommerce.Masterclass.Umbraco.Models.PaymentViewModel
 @{
     Layout = "~/views/shared/TwoCol.cshtml";
 }
 
+    <div class="row">
+        <div class="col-md-12">
+            <legend>Select shipping option</legend>
+
+            @foreach (var paymentMethod in Model.AvailablePaymentMethods)
+            {
+                <div>
+                    @if (paymentMethod.Selected)
+                    {
+                        @Html.RadioButtonFor(x => x.SelectedPaymentMethodId, paymentMethod.Value, new { @checked = "checked" })
+                        <span>@paymentMethod.Text</span>
+                    }
+                    else
+                    {
+                        @Html.RadioButtonFor(x => x.SelectedPaymentMethodId, paymentMethod.Value)
+                        <span>@paymentMethod.Text</span>
+                    }
+                </div>
+            }
+        </div>
+    </div>
 
 <div class="row mt-4">
     <div class="col-md-6">
-        <a href="/shipping">
-            <button class="btn btn-secondary">Back to shipping information</button>
-        </a>
+            <a href="/shipping" class="btn btn-secondary">
+                Back to shipping method
+            </a>
     </div>
     <div class="col-md-6 text-right">
         <input type="submit" value="Preview your order" class="btn btn-primary"/>

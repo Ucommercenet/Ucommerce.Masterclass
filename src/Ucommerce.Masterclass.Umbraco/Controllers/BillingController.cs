@@ -52,7 +52,7 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
 
             addressDetails.UseAlternativeAddress = 
                 !string.IsNullOrWhiteSpace(addressDetails.BillingAddress.Line1 ) && 
-                (addressDetails.BillingAddress.Line1 == addressDetails.ShippingAddress.Line1);
+                (addressDetails.BillingAddress.Line1 != addressDetails.ShippingAddress.Line1);
             
             return View(addressDetails);
         }
@@ -75,20 +75,26 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
                 addressDetails.BillingAddress.Attention,
                 addressDetails.BillingAddress.CountryId);
 
+
+            var shippingAddress = addressDetails.BillingAddress;
+
+            if (addressDetails.UseAlternativeAddress)
+                shippingAddress = addressDetails.ShippingAddress;
+            
             TransactionLibrary.EditShippingInformation(
-                addressDetails.ShippingAddress.FirstName,
-                addressDetails.ShippingAddress.LastName,
-                addressDetails.ShippingAddress.EmailAddress,
-                addressDetails.ShippingAddress.PhoneNumber,
-                addressDetails.ShippingAddress.MobilePhoneNumber,
-                addressDetails.ShippingAddress.CompanyName,
-                addressDetails.ShippingAddress.Line1,
-                addressDetails.ShippingAddress.Line2,
-                addressDetails.ShippingAddress.PostalCode,
-                addressDetails.ShippingAddress.City,
-                addressDetails.ShippingAddress.State,
-                addressDetails.ShippingAddress.Attention,
-                addressDetails.ShippingAddress.CountryId);
+                shippingAddress.LastName,
+                shippingAddress.EmailAddress,
+                shippingAddress.PhoneNumber,
+                shippingAddress.FirstName,
+                shippingAddress.MobilePhoneNumber,
+                shippingAddress.CompanyName,
+                shippingAddress.Line1,
+                shippingAddress.Line2,
+                shippingAddress.PostalCode,
+                shippingAddress.City,
+                shippingAddress.State,
+                shippingAddress.Attention,
+                shippingAddress.CountryId);
 
             TransactionLibrary.ExecuteBasketPipeline();
 

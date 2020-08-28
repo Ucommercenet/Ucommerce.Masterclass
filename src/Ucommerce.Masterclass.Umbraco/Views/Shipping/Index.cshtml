@@ -1,16 +1,43 @@
-﻿@model Ucommerce.Masterclass.Umbraco.Models.ShippingViewModel
+﻿@using System.Web.Mvc.Html
+@model Ucommerce.Masterclass.Umbraco.Models.ShippingViewModel
 @{
     Layout = "~/views/shared/TwoCol.cshtml";
 }
 
+<form method="POST">
+    <div class="row">
+        <div class="col-md-12">
+            <legend>Select shipping option</legend>
 
-<div class="row mt-4">
-    <div class="col-md-6">
-        <a href="/billing">
-            <button class="btn btn-secondary">Back to billing information</button>
-        </a>
+            @foreach (var shippingMethod in Model.AvailableShippingMethods)
+            {
+                <div>
+                    @if (shippingMethod.Selected)
+                    {
+                        @Html.RadioButtonFor(x => x.SelectedShippingMethodId, shippingMethod.Value, new { @checked = "checked" })
+                        <span>@shippingMethod.Text</span>
+                    }
+                    else
+                    {
+                        @Html.RadioButtonFor(x => x.SelectedShippingMethodId, shippingMethod.Value)
+                        <span>@shippingMethod.Text</span>
+                    }
+                </div>
+            }
+            
+        </div>
     </div>
-    <div class="col-md-6 text-right">
-        <input type="submit" value="Continue to Payment" class="btn btn-primary"/>
+
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <a href="/billing" class="btn btn-secondary">
+                Back to billing information
+            </a>
+        </div>
+        <div class="col-md-6 text-right">
+            <input type="submit" value="Continue to Payment" class="btn btn-primary"/>
+        </div>
     </div>
-</div>
+
+</form>

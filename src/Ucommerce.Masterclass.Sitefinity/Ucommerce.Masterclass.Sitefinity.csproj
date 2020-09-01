@@ -283,16 +283,16 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Mvc\VIews\Basket\Index.cshtml" />
-    <Content Include="Mvc\VIews\Billing\Index.cshtml" />
-    <Content Include="Mvc\VIews\CategoryNavigation\Index.cshtml" />
-    <Content Include="Mvc\VIews\Category\Index.cshtml" />
-    <Content Include="Mvc\VIews\Home\Index.cshtml" />
-    <Content Include="Mvc\VIews\MiniBasket\Index.cshtml" />
-    <Content Include="Mvc\VIews\Payment\Index.cshtml" />
-    <Content Include="Mvc\VIews\Preview\Index.cshtml" />
-    <Content Include="Mvc\VIews\Product\Index.cshtml" />
-    <Content Include="Mvc\VIews\Shipping\Index.cshtml" />
+    <Content Include="Mvc\Views\Basket\Index.cshtml" />
+    <Content Include="Mvc\Views\Billing\Index.cshtml" />
+    <Content Include="Mvc\Views\CategoryNavigation\Index.cshtml" />
+    <Content Include="Mvc\Views\Category\Index.cshtml" />
+    <Content Include="Mvc\Views\Home\Index.cshtml" />
+    <Content Include="Mvc\Views\MiniBasket\Index.cshtml" />
+    <Content Include="Mvc\Views\Payment\Index.cshtml" />
+    <Content Include="Mvc\Views\Preview\Index.cshtml" />
+    <Content Include="Mvc\Views\Product\Index.cshtml" />
+    <Content Include="Mvc\Views\Shipping\Index.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

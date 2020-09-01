@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deploy", "Deploy", "{8D4B77
 ProjectSection(SolutionItems) = preProject
 	..\tools\Deploy\Create.NugetPackage.Umbraco8.ps1 = ..\tools\Deploy\Create.NugetPackage.Umbraco8.ps1
 	..\tools\Deploy\deploy.local.ps1 = ..\tools\Deploy\deploy.local.ps1
+	..\tools\Deploy\Create.NugetPackage.Sitefinity.ps1 = ..\tools\Deploy\Create.NugetPackage.Sitefinity.ps1
 EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{0A49CCC2-6F77-475C-8A76-1FF6D921C23E}"
@@ -22,6 +23,12 @@ ProjectSection(SolutionItems) = preProject
 EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ucommerce.Masterclass.Sitefinity", "Ucommerce.Masterclass.Sitefinity\Ucommerce.Masterclass.Sitefinity.csproj", "{3C9F566A-3C78-4B7A-B11E-9C6D26615554}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sitefinity", "Sitefinity", "{8ACA3189-F2FE-4F98-81D8-C9679DDF97BA}"
+ProjectSection(SolutionItems) = preProject
+	..\tools\NuGet\Sitefinity\uCommerce.Masterclass.Sitefinity.nuspec = ..\tools\NuGet\Sitefinity\uCommerce.Masterclass.Sitefinity.nuspec
+	..\tools\NuGet\Sitefinity\readme.txt = ..\tools\NuGet\Sitefinity\readme.txt
+EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +52,7 @@ Global
 		{8D4B7722-40DA-4791-8BC8-F077A41726BD} = {D0268BAC-DDBF-4D01-9B88-86D189B49AA2}
 		{0A49CCC2-6F77-475C-8A76-1FF6D921C23E} = {D0268BAC-DDBF-4D01-9B88-86D189B49AA2}
 		{9F840D65-E4F4-425A-B1C2-EDA80F882DAD} = {0A49CCC2-6F77-475C-8A76-1FF6D921C23E}
+		{8ACA3189-F2FE-4F98-81D8-C9679DDF97BA} = {0A49CCC2-6F77-475C-8A76-1FF6D921C23E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {63D94D0E-731F-4D46-9320-7FF5E5579627}

@@ -1,0 +1,162 @@
+﻿@using Ucommerce.Catalog.Models
+@model Ucommerce.Masterclass.Sitefinity.Mvc.Models.CategoryViewModel
+@{
+    const string f = "f";
+}
+<div class="row m-2">
+    <h1>@Model.Name</h1>
+</div>
+
+@if (!string.IsNullOrWhiteSpace(Model.ImageMediaUrl))
+{
+    <div class="row align-items-center">
+        <img src="@Model.ImageMediaUrl" style="width: auto; max-height: 200px;" />
+    </div>
+}
+
+<div class="row m-2">
+    <h2>@Model.TotalProductsCount Products available in @Model.Name</h2>
+</div>
+
+<div class="row m-2">
+    <div class="col">
+        @foreach (var facet in Model.Facets)
+        {
+            <div class="btn-group">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    @facet.Key
+                </button>
+                <div class="dropdown-menu">
+                    @foreach (var value in facet.FacetValues)
+                    {
+                        <a class="dropdown-item" facet-data="link">
+                            <input type="checkbox" facet-data="input" facet-data-key="@facet.Key" facet-data-value-selector='@f@value.Key' facet-data-value="@value.Key"/> @value.Key (@value.Count)
+                        </a>   
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    const params = new URLSearchParams(top.location.search);
+    let paramObj = {};
+    for(var key of params.keys()) {
+         var values = params.get(key).split('|');
+         for (var n in values) {
+             var element = document.querySelector('input[facet-data-key='+key+'][facet-data-value-selector=f'+values[n]+']');
+             if (element != null) {                 
+                element.checked = true;
+             }
+         }
+     } 
+
+</script>
+
+<script>
+
+    document.querySelectorAll('input[facet-data=input]').forEach(
+      function(element) {
+          element.addEventListener('click', function(event) { 
+            event.stopPropagation();
+            
+            var keyValueMap = {};
+            
+            document.querySelectorAll('input[facet-data=input]:checked').forEach(function(element) { 
+                var key = element.getAttribute('facet-data-key');  
+                
+                if (keyValueMap[key] == null) {
+                    keyValueMap[key] = [];
+                }
+    
+                var value = element.getAttribute('facet-data-value');  
+                
+                keyValueMap[key].push(value);
+            });
+            
+            var values = [];
+            for(var key in keyValueMap) {
+                values.push(key + "=" + keyValueMap[key].join('|'))
+            }
+            
+            var url = top.location.origin + top.location.pathname + '?' + values.join('&');
+            
+            top.location.href = url;
+          });
+      }
+    );
+    
+    document.querySelectorAll('a[facet-data=link]').forEach(
+      function(element) { 
+        element.addEventListener('click', function(event) { 
+    
+          var input = element.querySelectorAll('input')[0];     
+          input.click();
+          
+          event.stopPropagation();  
+        });
+      })
+</script>
+
+<div class="m-2 row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    
+    @foreach (var product in @Model.Products)
+    {
+        ProductPriceCalculationResult.Item productPrice = product.Prices.First(x => x.VariantSku == null);
+        
+        Ucommerce.Money yourPrice = new Ucommerce.Money(productPrice.PriceInclTax, productPrice.CurrencyISOCode);
+        bool hasDiscount = productPrice.DiscountExclTax > 0;
+        
+        Ucommerce.Money originalPrice = new Ucommerce.Money(productPrice.ListPriceInclTax, productPrice.CurrencyISOCode);
+        
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <a href="@product.Url">
+                <img src="@product.PrimaryImageUrl" class="card-img-top" alt="product image">
+                </a>
+                <div class="card-body">
+                    @if (hasDiscount)
+                    {
+                        <span class="badge" style="position: absolute; top: 20px; right: 20px; color: red; background: white; border-radius: 0;">- @Convert.ToInt32(productPrice.DiscountPercentage) %</span>
+                    }
+                    <h5 class="card-title">
+                        <a class="text-dark" href="@product.Url">
+                            @product.Name
+                        </a>
+                    </h5>
+                    <p class="card-text">
+                        <a class="text-dark" href="@product.Url">
+                            @product.ShortDescription
+                        </a>
+                    </p>
+                    @if (productPrice != null)
+                    {
+                        
+                        <p>
+                            @if (hasDiscount)
+                            {
+                                <span style="color: red; font-weight: bold">@yourPrice</span>
+
+                                <span style="text-decoration: line-through;">@originalPrice</span>
+                            }
+                            else
+                            {
+                                <span>@yourPrice</span>
+                            }
+                        </p>
+                    }
+
+                    <a href="@product.Url" class="btn btn-secondary">More Info</a>
+                    @if (product.Sellable)
+                    {
+                        <button class="btn btn-primary" form="@product.Sku" type="submit"><i class="fa fa-shopping-cart"></i> Add to cart</button>
+                        <form method="POST" id="@product.Sku">
+                            <input type="hidden" name="Sku" value="@product.Sku">
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>

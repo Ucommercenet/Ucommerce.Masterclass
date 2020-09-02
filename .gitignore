@@ -36,3 +36,4 @@ lib/Sitecore*
 lib/*SiteCore*
 src/.idea/'
 src/.idea/*
+tmp/*

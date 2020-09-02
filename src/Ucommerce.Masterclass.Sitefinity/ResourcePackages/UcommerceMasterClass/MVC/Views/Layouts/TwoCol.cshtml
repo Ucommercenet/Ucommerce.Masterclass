@@ -1,0 +1,56 @@
+﻿@using System.Web.Mvc;
+@using Telerik.Sitefinity.Frontend.Mvc.Helpers;
+@using Telerik.Sitefinity.Modules.Pages;
+@using Telerik.Sitefinity.UI.MVC;
+@using Telerik.Sitefinity.Services;
+
+<!doctype html>
+<html lang="en">
+<head>
+  @Html.Section("head")
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  @Html.StyleSheet(Url.WidgetContent("~/ResourcePackages/UcommerceMasterClass/assets/dist/css/fontawesome/css/font-awesome.min.css"), "head", true)
+  <!-- Bootstrap CSS -->
+  @Html.StyleSheet(Url.WidgetContent("~/ResourcePackages/UcommerceMasterClass/assets/dist/css/bootstrap.min.css"), "head", true)
+  @Html.StyleSheet(Url.WidgetContent("~/ResourcePackages/UcommerceMasterClass/assets/dist/css/style.css"), "head", true)
+
+  <title>Ucommerce Master class</title>
+</head>
+<body>
+<header>
+  <div class="navbar navbar-dark bg-dark shadow-sm">
+    <div class="container">
+        <a href="/" class="navbar-brand d-flex align-items-center">
+            <strong>
+                <i class="fa fa-home"></i>
+                Home
+            </strong>
+        </a>
+        @Html.SfPlaceHolder("Head")
+
+      @* @{ Html.RenderAction("Render", "MiniBasket"); } *@
+    </div>
+  </div>
+</header>
+<main>
+  <div class="container">
+    <div class="row mt-4">
+    
+      <div class="col-md-auto">
+          @Html.SfPlaceHolder("Left")
+      </div>
+      <div class="col-sm">
+          @Html.SfPlaceHolder("Right")
+      </div>
+    </div>
+  </div>
+</main>
+<script src="/ResourcePackages/UcommerceMasterClass/assets/dist/scripts/popper.min.js"></script>
+<script src="/ResourcePackages/ucommercemasterclass/assets/dist/scripts/bootstrap.min.js"></script>
+
+</body>
+
+
+</html> 

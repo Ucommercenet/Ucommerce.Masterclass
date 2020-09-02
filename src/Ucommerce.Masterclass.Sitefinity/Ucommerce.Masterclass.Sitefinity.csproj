@@ -292,13 +292,13 @@
     <Content Include="Mvc\Views\Preview\Index.cshtml" />
     <Content Include="Mvc\Views\Product\Index.cshtml" />
     <Content Include="Mvc\Views\Shipping\Index.cshtml" />
-    <Content Include="ResourcePackages\razorgenerator.directives" />
     <Content Include="ResourcePackages\UcommerceMasterClass\assets\dist\css\bootstrap.min.js" />
     <Content Include="ResourcePackages\UcommerceMasterClass\assets\dist\css\style.css" />
     <Content Include="ResourcePackages\UcommerceMasterClass\assets\dist\scripts\bootstrap.min.js" />
     <Content Include="ResourcePackages\UcommerceMasterClass\assets\dist\scripts\popper.min.js" />
     <Content Include="ResourcePackages\UcommerceMasterClass\MVC\Views\Layouts\Blank.cshtml" />
     <Content Include="ResourcePackages\UcommerceMasterClass\MVC\Views\Layouts\TwoCol.cshtml" />
+    <Content Include="ResourcePackages\UcommerceMasterClass\razorgenerator.directives" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ResourcePackages\UcommerceMasterClass\MVC\Views" />

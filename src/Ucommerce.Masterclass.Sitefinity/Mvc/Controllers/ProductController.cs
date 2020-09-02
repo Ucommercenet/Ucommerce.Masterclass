@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
 using Ucommerce.Api;
 using Ucommerce.Infrastructure;
 using Ucommerce.Masterclass.Sitefinity.Mvc.Models;
@@ -10,6 +11,7 @@ using Ucommerce.Search.Models;
 
 namespace Ucommerce.Masterclass.Sitefinity.Mvc.Controllers
 {
+    [EnhanceViewEngines]
     [Telerik.Sitefinity.Mvc.ControllerToolboxItem(Name = "Product", Title = "Product", SectionName = "MasterClass")]
     public class ProductController : Controller
     {

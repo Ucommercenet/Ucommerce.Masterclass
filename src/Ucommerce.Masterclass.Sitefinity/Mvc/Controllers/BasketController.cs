@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
 using Telerik.Sitefinity.Mvc;
 using Ucommerce.Api;
 using Ucommerce.EntitiesV2;
@@ -13,6 +14,7 @@ using Ucommerce.Masterclass.Sitefinity.Mvc.Models;
 
 namespace Ucommerce.Masterclass.Sitefinity.Mvc.Controllers
 {
+    [EnhanceViewEngines]
     [ControllerToolboxItem(Name = "Basket", Title = "Basket", SectionName = "MasterClass")]
     public class BasketController : Controller
     {

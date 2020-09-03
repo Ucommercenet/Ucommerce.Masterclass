@@ -277,9 +277,11 @@
     <Compile Include="Mvc\Models\PurchaseOrderViewModel.cs" />
     <Compile Include="Mvc\Models\ShippingViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Search\IndexDefinition.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Ucommerce\Apps\Masterclass\Masterclass.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Mvc\Views\Basket\Index.cshtml" />

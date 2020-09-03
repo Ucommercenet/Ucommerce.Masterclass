@@ -17,6 +17,9 @@ New-Item -Type Directory -Force -Path "$workingdir\content"
 
 Copy-Item -Path "$src\Mvc" -Destination "$workingdir\content" -Recurse -Force
 Copy-Item -Path "$src\ResourcePackages" -Destination "$workingdir\content" -Recurse -Force
+Copy-Item -Path "$src\Ucommerce" -Destination "$workingdir\content" -Recurse -Force
+Copy-Item -Path "$src\Search" -Destination "$workingdir\content" -Recurse -Force
+
 Copy-Item -Path "$base_dir\tools\NuGet\Sitefinity\uCommerce.Masterclass.Sitefinity.nuspec" "$workingdir" -Force
 Copy-Item -Path "$base_dir\tools\NuGet\Sitefinity\readme.txt" "$workingdir" -Force
 

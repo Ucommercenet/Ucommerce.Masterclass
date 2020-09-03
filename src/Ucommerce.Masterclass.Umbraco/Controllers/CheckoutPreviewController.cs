@@ -10,7 +10,6 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
 {
     public class CheckoutPreviewController : RenderMvcController
     {
-
         public ITransactionLibrary TransactionLibrary => ObjectFactory.Instance.Resolve<ITransactionLibrary>();
 
         [System.Web.Mvc.HttpGet]

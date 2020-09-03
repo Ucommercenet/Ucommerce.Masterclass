@@ -317,7 +317,9 @@
     <Content Include="Views\Payment\Index.cshtml" />
     <Content Include="Views\CheckoutPreview\Index.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
+    <Content Include="Views\Shared\Email.cshtml" />
     <Content Include="Views\Shared\TwoCol.cshtml" />
+    <Content Include="Views\Shared\_Email.cshtml" />
     <Content Include="Views\Shipping\Index.cshtml" />
     <Content Include="Web.config" />
   </ItemGroup>

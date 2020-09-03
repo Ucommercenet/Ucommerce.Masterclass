@@ -1,6 +1,61 @@
 ﻿@model Ucommerce.Masterclass.Sitefinity.Mvc.Models.PurchaseOrderViewModel
 @{
+    Layout = "~/views/shared/TwoCol.cshtml";
 }
+<div class="row">
+    <div class="col-md-6">
+        <legend>Billing information</legend>
+        <address>
+            @Model.BillingAddress.FirstName @Model.BillingAddress.LastName
+            <br/>
+            @Model.BillingAddress.Line1
+            <br/>
+            @Model.BillingAddress.Line2
+            <br/>
+            @Model.BillingAddress.PostalCode
+            <br/>
+            @Model.BillingAddress.City
+            <br/>
+            @Model.BillingAddress.State
+            <br/>
+            @Model.BillingAddress.CountryName
+            <br/>
+            @Model.BillingAddress.PhoneNumber
+            <br/>
+            @Model.BillingAddress.MobilePhoneNumber
+            <br/>
+            @Model.BillingAddress.EmailAddress
+                                                                                
+        </address>
+
+
+    </div>
+    <div class="col-md-6">
+        <legend>Ships to</legend>
+        <address>
+            @Model.ShippingAddress.FirstName @Model.ShippingAddress.LastName
+            <br/>
+            @Model.ShippingAddress.Line1
+            <br/>
+            @Model.ShippingAddress.Line2
+            <br/>
+            @Model.ShippingAddress.PostalCode
+            <br/>
+            @Model.ShippingAddress.City
+            <br/>
+            @Model.ShippingAddress.State
+            <br/>
+            @Model.ShippingAddress.CountryName
+            <br/>
+            @Model.ShippingAddress.PhoneNumber
+            <br/>
+            @Model.ShippingAddress.MobilePhoneNumber
+            <br/>
+            @Model.ShippingAddress.EmailAddress
+        </address>
+    </div>
+
+</div>
 
 <table class="table table-striped table-hover">
     <thead>
@@ -10,14 +65,11 @@
         <th>Tax</th>
         <th>Quantity</th>
         <th>Total</th>
-        <th></th>
     </tr>
     </thead>
     <tbody>
     @foreach (var orderline in Model.OrderLines)
     {
-        var oneLess = orderline.Quantity - 1;
-        var oneMore = orderline.Quantity + 1;
         <tr>
             <td>
                 @orderline.ProductName
@@ -29,27 +81,10 @@
                 @orderline.Tax
             </td>
             <td>
-                <form method="post" id="down_@orderline.OrderLineId" style="display: inline;">
-                    <input type="hidden" name="orderlineId" value="@orderline.OrderLineId" />
-                    <input type="hidden" name="quantity" value="@oneLess" />
-                    <button type="submit" class="btn btn-sm" form="down_@orderline.OrderLineId" >-</button>
-                </form>
                 @orderline.Quantity
-                <form method="post" id="up_@orderline.OrderLineId" style="display: inline;">
-                    <input type="hidden" name="orderlineId" value="@orderline.OrderLineId" />
-                    <input type="hidden" name="quantity" value="@oneMore" />
-                    <button type="submit" class="btn btn-sm" form="up_@orderline.OrderLineId" >+</button>
-                </form>
             </td>
             <td>                    
                 @orderline.Total
-            </td>
-            <td>
-                <form method="post" id="remove_@orderline.OrderLineId" style="display: inline;">
-                    <input type="hidden" name="orderlineId" value="@orderline.OrderLineId" />
-                    <input type="hidden" name="quantity" value="0" />
-                    <button type="submit" class="btn btn-sm" form="remove_@orderline.OrderLineId" >x</button>
-                </form>
             </td>
         </tr>
     }
@@ -83,6 +118,9 @@
         </a>
     </div>
     <div class="col-md-6 text-right">
-        <input type="submit" value="Place order" class="btn btn-primary"/>
+        <form method="post">
+            <input type="hidden" name="complete" value="1" />
+            <input type="submit" value="Place order" class="btn btn-primary"/>
+        </form>
     </div>
 </div>

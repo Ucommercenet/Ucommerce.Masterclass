@@ -260,6 +260,7 @@
     <Compile Include="Mvc\Controllers\CategoryController.cs" />
     <Compile Include="Mvc\Controllers\CategoryNavigationController.cs" />
     <Compile Include="Mvc\Controllers\MiniBasketController.cs" />
+    <Compile Include="Mvc\Controllers\OrderEmailController.cs" />
     <Compile Include="Mvc\Controllers\PaymentController.cs" />
     <Compile Include="Mvc\Controllers\PreviewController.cs" />
     <Compile Include="Mvc\Controllers\ProductController.cs" />

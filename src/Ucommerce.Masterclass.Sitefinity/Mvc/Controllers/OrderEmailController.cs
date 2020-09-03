@@ -1,6 +1,8 @@
+﻿using System;
 using System.Linq;
 using System.Web.Mvc;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
+using Telerik.Sitefinity.Mvc;
 using Ucommerce.Api;
 using Ucommerce.EntitiesV2;
 using Ucommerce.Infrastructure;
@@ -9,33 +11,32 @@ using Ucommerce.Masterclass.Sitefinity.Mvc.Models;
 namespace Ucommerce.Masterclass.Sitefinity.Mvc.Controllers
 {
     [EnhanceViewEngines]
-    [Telerik.Sitefinity.Mvc.ControllerToolboxItem(Name = "Preview", Title = "Preview", SectionName = "MasterClass")]
-    public class PreviewController : Controller
+    [ControllerToolboxItem(Name = "OrderEmail", Title = "OrderEmail", SectionName = "MasterClass")]
+    public class OrderEmailController : Controller
     {
         public ITransactionLibrary TransactionLibrary => ObjectFactory.Instance.Resolve<ITransactionLibrary>();
 
-        [System.Web.Mvc.HttpGet]
         public ActionResult Index()
         {
-            var basket = TransactionLibrary.GetBasket(false);
+            var purchaseOrder = TransactionLibrary.GetPurchaseOrder(Guid.Parse(Request.QueryString["OrderGuid"]));
 
             return View(new PurchaseOrderViewModel()
             {
-                TaxTotal = new Money(basket.TaxTotal.GetValueOrDefault(), basket.BillingCurrency.ISOCode).ToString(),
-                BillingAddress = MapAddress(TransactionLibrary.GetBillingInformation()),
-                ShippingAddress = MapAddress(TransactionLibrary.GetShippingInformation()),
-                OrderTotal = new Money(basket.OrderTotal.GetValueOrDefault(), basket.BillingCurrency.ISOCode).ToString(),
-                ShippingTotal = new Money(basket.ShippingTotal.GetValueOrDefault(), basket.BillingCurrency.ISOCode).ToString(),
-                SubTotal = new Money(basket.SubTotal.GetValueOrDefault(), basket.BillingCurrency.ISOCode).ToString(),
-                OrderLines = basket.OrderLines.Select(x => new OrderlineViewModel()
+                TaxTotal = new Money(purchaseOrder.TaxTotal.GetValueOrDefault(), purchaseOrder.BillingCurrency.ISOCode).ToString(),
+                BillingAddress = MapAddress(purchaseOrder.BillingAddress),
+                ShippingAddress = MapAddress(purchaseOrder.Shipments.First().ShipmentAddress),
+                OrderTotal = new Money(purchaseOrder.OrderTotal.GetValueOrDefault(), purchaseOrder.BillingCurrency.ISOCode).ToString(),
+                ShippingTotal = new Money(purchaseOrder.ShippingTotal.GetValueOrDefault(), purchaseOrder.BillingCurrency.ISOCode).ToString(),
+                SubTotal = new Money(purchaseOrder.SubTotal.GetValueOrDefault(), purchaseOrder.BillingCurrency.ISOCode).ToString(),
+                OrderLines = purchaseOrder.OrderLines.Select(x => new OrderlineViewModel()
                 {
                     Quantity = x.Quantity,
                     ProductName = x.ProductName,
                     OrderLineId = x.OrderLineId,
                     Sku = x.Sku,
-                    Total = new Money(x.Total.GetValueOrDefault(), basket.BillingCurrency.ISOCode).ToString(),
-                    UnitPrice = new Money(x.Price, basket.BillingCurrency.ISOCode).ToString(),
-                    Tax = new Money(x.VAT, basket.BillingCurrency.ISOCode).ToString(),
+                    Total = new Money(x.Total.GetValueOrDefault(), purchaseOrder.BillingCurrency.ISOCode).ToString(),
+                    UnitPrice = new Money(x.Price, purchaseOrder.BillingCurrency.ISOCode).ToString(),
+                    Tax = new Money(x.VAT, purchaseOrder.BillingCurrency.ISOCode).ToString(),
                 }).ToList()
             });
         }
@@ -59,13 +60,6 @@ namespace Ucommerce.Masterclass.Sitefinity.Mvc.Controllers
             addressModel.CountryName = address.Country.Name;
 
             return addressModel;
-        }
-
-
-        [HttpPost]
-        public ActionResult Index(int checkout)
-        {
-            return Redirect("/preview");
         }
     }
 }

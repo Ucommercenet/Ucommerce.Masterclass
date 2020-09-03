@@ -22,11 +22,11 @@ namespace Ucommerce.Masterclass.Sitefinity.Mvc.Models
         public string TaxTotal { get; set; }
 
         public string DiscountTotal { get; set; }
-
         public string ShippingTotal { get; set; }
 
         public string PaymentTotal { get; set; }
 
         public int RemoveOrderlineId { get; set; }
+        
     }
 }

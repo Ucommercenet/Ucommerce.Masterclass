@@ -27,5 +27,6 @@ namespace Ucommerce.Masterclass.Sitefinity.Mvc.Models
         public string CompanyName { get; set; }
 
         public int CountryId { get; set; }
+        public string CountryName { get; set; }
     }
 }

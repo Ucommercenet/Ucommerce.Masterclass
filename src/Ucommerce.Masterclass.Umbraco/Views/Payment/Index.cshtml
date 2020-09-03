@@ -3,6 +3,7 @@
 @{
     Layout = "~/views/shared/TwoCol.cshtml";
 }
+<form method="post">
 
     <div class="row">
         <div class="col-md-12">
@@ -28,11 +29,13 @@
 
 <div class="row mt-4">
     <div class="col-md-6">
-            <a href="/shipping" class="btn btn-secondary">
-                Back to shipping method
-            </a>
+        <a href="/shipping" class="btn btn-secondary">
+            Back to shipping method
+        </a>
     </div>
     <div class="col-md-6 text-right">
         <input type="submit" value="Preview your order" class="btn btn-primary"/>
     </div>
 </div>
+
+</form>

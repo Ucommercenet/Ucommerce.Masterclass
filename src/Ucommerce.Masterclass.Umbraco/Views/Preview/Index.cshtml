@@ -11,14 +11,11 @@
         <th>Tax</th>
         <th>Quantity</th>
         <th>Total</th>
-        <th></th>
     </tr>
     </thead>
     <tbody>
     @foreach (var orderline in Model.OrderLines)
     {
-        var oneLess = orderline.Quantity - 1;
-        var oneMore = orderline.Quantity + 1;
         <tr>
             <td>
                 @orderline.ProductName
@@ -30,27 +27,10 @@
                 @orderline.Tax
             </td>
             <td>
-                <form method="post" id="down_@orderline.OrderLineId" style="display: inline;">
-                    <input type="hidden" name="orderlineId" value="@orderline.OrderLineId" />
-                    <input type="hidden" name="quantity" value="@oneLess" />
-                    <button type="submit" class="btn btn-sm" form="down_@orderline.OrderLineId" >-</button>
-                </form>
                 @orderline.Quantity
-                <form method="post" id="up_@orderline.OrderLineId" style="display: inline;">
-                    <input type="hidden" name="orderlineId" value="@orderline.OrderLineId" />
-                    <input type="hidden" name="quantity" value="@oneMore" />
-                    <button type="submit" class="btn btn-sm" form="up_@orderline.OrderLineId" >+</button>
-                </form>
             </td>
             <td>                    
                 @orderline.Total
-            </td>
-            <td>
-                <form method="post" id="remove_@orderline.OrderLineId" style="display: inline;">
-                    <input type="hidden" name="orderlineId" value="@orderline.OrderLineId" />
-                    <input type="hidden" name="quantity" value="0" />
-                    <button type="submit" class="btn btn-sm" form="remove_@orderline.OrderLineId" >x</button>
-                </form>
             </td>
         </tr>
     }

@@ -307,13 +307,15 @@
   <ItemGroup>
     <Content Include="Css\style.css" />
     <Content Include="Umbraco\Ucommerce\Apps\Umbraco Masterclass\MasterClassIndexDefinitions.config" />
+    <Content Include="Views\OrderConfirmation\Index.cshtml" />
+    <Content Include="Views\OrderPlaced\Index.cshtml" />
     <Content Include="Views\Basket\Index.cshtml" />
     <Content Include="Views\Billing\Index.cshtml" />
     <Content Include="Views\CategoryNavigation\Index.cshtml" />
     <Content Include="Views\Category\Index.cshtml" />
     <Content Include="Views\MiniBasket\Index.cshtml" />
     <Content Include="Views\Payment\Index.cshtml" />
-    <Content Include="Views\Preview\Index.cshtml" />
+    <Content Include="Views\CheckoutPreview\Index.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\Shared\TwoCol.cshtml" />
     <Content Include="Views\Shipping\Index.cshtml" />
@@ -326,8 +328,10 @@
     <Compile Include="Controllers\CategoryNavigationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MiniBasketController.cs" />
+    <Compile Include="Controllers\OrderConfirmationController.cs" />
+    <Compile Include="Controllers\OrderPlacedController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
-    <Compile Include="Controllers\PreviewController.cs" />
+    <Compile Include="Controllers\CheckoutPreviewController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ShippingController.cs" />
     <Compile Include="IndexDefinitions\MasterclassIndexDefinition.cs" />

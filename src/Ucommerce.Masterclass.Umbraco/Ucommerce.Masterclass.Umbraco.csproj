@@ -317,6 +317,7 @@
     <Content Include="Views\Payment\Index.cshtml" />
     <Content Include="Views\CheckoutPreview\Index.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
+    <Content Include="Views\Shared\blank.cshtml" />
     <Content Include="Views\Shared\Email.cshtml" />
     <Content Include="Views\Shared\TwoCol.cshtml" />
     <Content Include="Views\Shared\_Email.cshtml" />

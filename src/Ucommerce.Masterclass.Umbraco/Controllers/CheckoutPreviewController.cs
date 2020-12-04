@@ -15,27 +15,7 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
         [System.Web.Mvc.HttpGet]
         public ActionResult Index()
         {
-            var basket = TransactionLibrary.GetBasket(false);
-
-            return View(new PurchaseOrderViewModel()
-            {
-                TaxTotal = new Money(basket.TaxTotal.GetValueOrDefault(), basket.BillingCurrency.ISOCode).ToString(),
-                BillingAddress = MapAddress(TransactionLibrary.GetBillingInformation()),
-                ShippingAddress = MapAddress(TransactionLibrary.GetShippingInformation()),
-                OrderTotal = new Money(basket.OrderTotal.GetValueOrDefault(), basket.BillingCurrency.ISOCode).ToString(),
-                ShippingTotal = new Money(basket.ShippingTotal.GetValueOrDefault(), basket.BillingCurrency.ISOCode).ToString(),
-                SubTotal = new Money(basket.SubTotal.GetValueOrDefault(), basket.BillingCurrency.ISOCode).ToString(),
-                OrderLines = basket.OrderLines.Select(x => new OrderlineViewModel()
-                {
-                    Quantity = x.Quantity,
-                    ProductName = x.ProductName,
-                    OrderLineId = x.OrderLineId,
-                    Sku = x.Sku,
-                    Total = new Money(x.Total.GetValueOrDefault(), basket.BillingCurrency.ISOCode).ToString(),
-                    UnitPrice = new Money(x.Price, basket.BillingCurrency.ISOCode).ToString(),
-                    Tax = new Money(x.VAT, basket.BillingCurrency.ISOCode).ToString(),
-                }).ToList()
-            });
+            return View();
         }
 
         private AddressViewModel MapAddress(OrderAddress address)
@@ -63,7 +43,6 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
         [HttpPost]
         public ActionResult Index(int complete)
         {
-            TransactionLibrary.RequestPayments();
             return Redirect("/complete");
         }
     }

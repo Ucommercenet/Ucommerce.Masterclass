@@ -7,7 +7,6 @@ namespace Ucommerce.Masterclass.Sitefinity.Search
     {
         public IndexDefinition() : base()
         {
-            this.Facet("");
         }
     }
 }

@@ -15,21 +15,7 @@ namespace Ucommerce.Masterclass.Sitefinity.Mvc.Controllers
 
         public ActionResult Index()
         {
-            var miniBasketViewModel = new MiniBasketViewModel();
-
-            if (!TransactionLibrary.HasBasket())
-            {
-                miniBasketViewModel.Empty = true;
-            
-                return View(miniBasketViewModel);
-            }
-            
-            var basket = TransactionLibrary.GetBasket(false);
-            
-            miniBasketViewModel.Empty = false;
-            miniBasketViewModel.OrderTotal = new Money(basket.OrderTotal.GetValueOrDefault(0), basket.BillingCurrency.ISOCode).ToString();
-            miniBasketViewModel.ItemsInCart = basket.OrderLines.Sum(x => x.Quantity);
-            return View(miniBasketViewModel);
+            return View();
         }
     }
 }

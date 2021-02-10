@@ -316,6 +316,7 @@
     <Content Include="Views\MiniBasket\Index.cshtml" />
     <Content Include="Views\Payment\Index.cshtml" />
     <Content Include="Views\CheckoutPreview\Index.cshtml" />
+    <Content Include="Views\ProductSearchResult\Index.cshtml" />
     <Content Include="Views\ProductSearch\Index.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\Shared\blank.cshtml" />
@@ -339,6 +340,7 @@
     <Compile Include="Controllers\CheckoutPreviewController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ProductSearchController.cs" />
+    <Compile Include="Controllers\ProductSearchResultController.cs" />
     <Compile Include="Controllers\ShippingController.cs" />
     <Compile Include="IndexDefinitions\MasterclassIndexDefinition.cs" />
     <Compile Include="Models\AddressDetailsViewModel.cs" />

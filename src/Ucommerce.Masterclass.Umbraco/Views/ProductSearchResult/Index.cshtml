@@ -1,0 +1,67 @@
+﻿@using Ucommerce.Catalog.Models
+@model Ucommerce.Masterclass.Umbraco.Models.ProductListViewModel
+@{
+    Layout = "~/views/shared/TwoCol.cshtml";
+
+}
+<div class="m-2 row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    
+    @foreach (var product in @Model.ProductViewModels)
+    {
+        ProductPriceCalculationResult.Item productPrice = product.Prices.First(x => x.VariantSku == null);
+        
+        Ucommerce.Money yourPrice = new Ucommerce.Money(productPrice.PriceInclTax, productPrice.CurrencyISOCode);
+        bool hasDiscount = productPrice.DiscountExclTax > 0;
+        
+        Ucommerce.Money originalPrice = new Ucommerce.Money(productPrice.ListPriceInclTax, productPrice.CurrencyISOCode);
+        
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <a href="@product.Url">
+                <img src="@product.PrimaryImageUrl" class="card-img-top" alt="product image">
+                </a>
+                <div class="card-body">
+                    @if (hasDiscount)
+                    {
+                        <span class="badge" style="position: absolute; top: 20px; right: 20px; color: red; background: white; border-radius: 0;">- @Convert.ToInt32(productPrice.DiscountPercentage) %</span>
+                    }
+                    <h5 class="card-title">
+                        <a class="text-dark" href="@product.Url">
+                            @product.Name
+                        </a>
+                    </h5>
+                    <p class="card-text">
+                        <a class="text-dark" href="@product.Url">
+                            @product.ShortDescription
+                        </a>
+                    </p>
+                    @if (productPrice != null)
+                    {
+                        
+                        <p>
+                            @if (hasDiscount)
+                            {
+                                <span style="color: red; font-weight: bold">@yourPrice</span>
+
+                                <span style="text-decoration: line-through;">@originalPrice</span>
+                            }
+                            else
+                            {
+                                <span>@yourPrice</span>
+                            }
+                        </p>
+                    }
+
+                    <a href="@product.Url" class="btn btn-secondary">More Info</a>
+                    @if (product.Sellable)
+                    {
+                        <button class="btn btn-primary" form="@product.Sku" type="submit"><i class="fa fa-shopping-cart"></i> Add to cart</button>
+                        <form method="POST" id="@product.Sku">
+                            <input type="hidden" name="Sku" value="@product.Sku">
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>

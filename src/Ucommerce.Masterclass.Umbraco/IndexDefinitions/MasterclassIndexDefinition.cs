@@ -9,15 +9,7 @@ namespace Ucommerce.Masterclass.Umbraco.IndexDefinitions
     {
         public MasterclassIndexDefinition() : base()
         {
-            this.Field(p => p["Color"], typeof(IEnumerable<string>));
-            this.Field(p => p["ShoeSize"], typeof(string));
 
-            this.Field(p => p.Name, IndexOptions.FullText);
-
-            this.Facet("Color");
-            
-            this.Facet("Color");
-            this.Facet("ShoeSize");
         }
     }
 }

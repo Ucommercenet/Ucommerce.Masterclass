@@ -3,7 +3,7 @@ Repository for Nuget packages for Umbraco and Sitefinity Master class
 
 This is *not* how you get started with training. This repository represents the assets needed to create the nuget packages for running the actual master class. If you are interested in getting started, head on over to
 
-http://academy.ucommerce.net
+https://academy.ucommerce.net
 
 ## Generating a local nuget package
 

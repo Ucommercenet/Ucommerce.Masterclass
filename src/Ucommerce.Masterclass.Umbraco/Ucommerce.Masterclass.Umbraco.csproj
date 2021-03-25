@@ -317,7 +317,6 @@
   <ItemGroup>
     <Compile Include="Controllers\BasketController.cs" />
     <Compile Include="Controllers\BillingController.cs" />
-    <Compile Include="Controllers\CatalogController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CategoryNavigationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />

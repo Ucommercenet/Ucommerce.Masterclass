@@ -250,6 +250,8 @@
     <Compile Include="Mvc\Controllers\PaymentController.cs" />
     <Compile Include="Mvc\Controllers\PreviewController.cs" />
     <Compile Include="Mvc\Controllers\ProductController.cs" />
+    <Compile Include="Mvc\Controllers\ProductSearchResultController.cs" />
+    <Compile Include="Mvc\Controllers\SearchController.cs" />
     <Compile Include="Mvc\Controllers\ShippingController.cs" />
     <Compile Include="Mvc\Models\AddressDetailsViewModel.cs" />
     <Compile Include="Mvc\Models\AddressViewModel.cs" />
@@ -280,7 +282,9 @@
     <Content Include="Mvc\Views\MiniBasket\Index.cshtml" />
     <Content Include="Mvc\Views\Payment\Index.cshtml" />
     <Content Include="Mvc\Views\Preview\Index.cshtml" />
+    <Content Include="Mvc\Views\ProductSearchResult\Index.cshtml" />
     <Content Include="Mvc\Views\Product\Index.cshtml" />
+    <Content Include="Mvc\Views\Search\Index.cshtml" />
     <Content Include="Mvc\Views\Shipping\Index.cshtml" />
     <Content Include="ResourcePackages\UcommerceMasterClass\assets\dist\css\bootstrap.min.js" />
     <Content Include="ResourcePackages\UcommerceMasterClass\assets\dist\css\style.css" />
@@ -290,7 +294,6 @@
     <Content Include="ResourcePackages\UcommerceMasterClass\MVC\Views\Layouts\TwoCol.cshtml" />
     <Content Include="ResourcePackages\UcommerceMasterClass\razorgenerator.directives" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
          Other similar extension points exist, see Microsoft.Common.targets.

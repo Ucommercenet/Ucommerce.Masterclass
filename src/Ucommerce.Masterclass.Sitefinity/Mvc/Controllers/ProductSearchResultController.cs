@@ -3,15 +3,17 @@ using System.Linq;
 using System.Web.Mvc;
 using Ucommerce.Api;
 using Ucommerce.Infrastructure;
-using Ucommerce.Masterclass.Umbraco.Models;
+using Ucommerce.Masterclass.Sitefinity.Mvc.Models;
+using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers.Attributes;
 using Ucommerce.Search;
 using Ucommerce.Search.Models;
 using Ucommerce.Search.Slugs;
-using Umbraco.Web.Mvc;
 
 namespace Ucommerce.Masterclass.Umbraco.Controllers
 {
-    public class ProductSearchResultController : RenderMvcController
+    [EnhanceViewEngines]
+    [Telerik.Sitefinity.Mvc.ControllerToolboxItem(Name = "SearchResult", Title = "SearchResult", SectionName = "MasterClass")]
+    public class ProductSearchResultController : Controller
     {
         public ICatalogLibrary CatalogLibrary => ObjectFactory.Instance.Resolve<ICatalogLibrary>();
         public IUrlService UrlService => ObjectFactory.Instance.Resolve<IUrlService>();
@@ -33,7 +35,7 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
             var model = new ProductListViewModel();
 
             var searchTerm = GetSearchTerm();
-
+            
             return View(model);
         }
         

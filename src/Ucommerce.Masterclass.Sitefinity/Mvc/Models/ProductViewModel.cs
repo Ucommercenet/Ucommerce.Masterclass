@@ -3,6 +3,16 @@ using Ucommerce.Catalog.Models;
 
 namespace Ucommerce.Masterclass.Sitefinity.Mvc.Models
 {
+    public class ProductListViewModel
+    {
+        public ProductListViewModel()
+        {
+            ProductViewModels = new List<ProductViewModel>();
+        }
+        
+        public IList<ProductViewModel> ProductViewModels { get; set; }
+    }
+    
     public class ProductViewModel
     {
         public ProductViewModel()

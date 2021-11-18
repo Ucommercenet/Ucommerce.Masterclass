@@ -3,6 +3,15 @@ using Ucommerce.Catalog.Models;
 
 namespace Ucommerce.Masterclass.Umbraco.Models
 {
+    public class ProductListViewModel
+    {
+        public ProductListViewModel()
+        {
+            ProductViewModels = new List<ProductViewModel>();
+        }
+        
+        public IList<ProductViewModel> ProductViewModels { get; set; }
+    }
     public class ProductViewModel
     {
         public ProductViewModel()

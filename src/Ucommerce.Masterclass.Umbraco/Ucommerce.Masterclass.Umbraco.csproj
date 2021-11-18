@@ -315,6 +315,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Composers\UcommerceComposer.cs" />
     <Compile Include="Controllers\BasketController.cs" />
     <Compile Include="Controllers\BillingController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />

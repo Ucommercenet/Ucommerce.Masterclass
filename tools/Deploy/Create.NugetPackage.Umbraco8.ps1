@@ -16,6 +16,7 @@ New-Item -Type Directory -Force -Path "$workingdir\lib"
 New-Item -Type Directory -Force -Path "$workingdir\content"
 
 Copy-Item -Path "$src\Controllers" -Destination "$workingdir\content" -Recurse -Force
+Copy-Item -Path "$src\Composers" -Destination "$workingdir\content" -Recurse -Force
 Copy-Item -Path "$src\Views" -Destination "$workingdir\content" -Recurse -Force
 Copy-Item -Path "$src\Models" -Destination "$workingdir\content" -Recurse -Force
 Copy-Item -Path "$base_dir\tools\NuGet\Umbraco\uCommerce.Masterclass.Umbraco.nuspec" "$workingdir" -Force

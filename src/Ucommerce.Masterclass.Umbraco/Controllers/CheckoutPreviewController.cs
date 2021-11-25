@@ -63,7 +63,7 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
         [HttpPost]
         public ActionResult Index(int complete)
         {
-            TransactionLibrary.RequestPayments();
+            // TransactionLibrary.RequestPayments();
             return Redirect("/complete");
         }
     }

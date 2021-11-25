@@ -80,15 +80,20 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
             categoryModel.Name = currentCategory.Name;
             categoryModel.ImageMediaUrl = currentCategory.ImageMediaUrl;
 
-            var facetDictionary = System.Web.HttpContext.Current.Request.QueryString.ToFacets().ToFacetDictionary();
+            var facetDictionary = GetFacetsDictionary();
 
-            var facetResultSet = CatalogLibrary.GetProducts(currentCategory.Guid, facetDictionary);
+            FacetResultSet<Product> facetResultSet = CatalogLibrary.GetProducts(currentCategory.Guid, facetDictionary);
             
             categoryModel.Facets = MapFacets(facetResultSet.Facets);
             categoryModel.TotalProductsCount = facetResultSet.TotalCount;
             categoryModel.Products = MapProducts(facetResultSet.Results);
             
             return View("/views/category/index.cshtml", categoryModel);
+        }
+
+        private static FacetDictionary GetFacetsDictionary()
+        {
+            return System.Web.HttpContext.Current.Request.QueryString.ToFacets().ToFacetDictionary();
         }
 
         private IList<FacetsViewModel> MapFacets(IList<Facet> facets)

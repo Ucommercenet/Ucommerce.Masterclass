@@ -30,9 +30,9 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
             productModel.PrimaryImageUrl = currentProduct.PrimaryImageUrl;
             productModel.Name = currentProduct.DisplayName;
             productModel.Sku = currentProduct.Sku;
-            
             productModel.Prices = CatalogLibrary.CalculatePrices(new List<Guid>() {currentProduct.Guid}).Items;
-            productModel.Variants = MapVariants(CatalogLibrary.GetVariants(currentProduct));            
+            productModel.Variants = MapVariants(CatalogLibrary.GetVariants(currentProduct));     
+            
             return View(productModel);
         }
 

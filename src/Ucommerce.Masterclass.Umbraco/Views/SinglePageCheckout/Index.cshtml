@@ -1,0 +1,69 @@
+﻿@using Ucommerce
+@using Ucommerce.Catalog.Models
+
+@{
+    Layout = "~/Views/shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="row mt-4">
+    
+        <div class="col-sm">
+            <div class="row">
+                <div class="col-md-6 bg-light">
+                    <legend>Address information</legend>
+                    <div class="mb-3">
+                        <label for="billingfirstname" class="form-label">First name</label>
+                        <input type="text" class="form-control" id="billingfirstname"></input>
+                    </div>
+                    <div class="mb-3">
+                        <label for="billinglastname" class="form-label">Last name</label>
+                        <input type="text" class="form-control" id="billinglastname"></input>
+                    </div>
+                    <div class="mb-3">
+                        <label for="billingaddress" class="form-label">Address</label>
+                        <input type="text" class="form-control" id="billingaddress"></input>
+                    </div>
+                    <div class="mb-3">
+                        <label for="billingcity" class="form-label">City</label>
+                        <input type="text" class="form-control" id="billingcity"></input>
+                    </div>
+                    <div class="mb-3">
+                        <label for="billingpostal" class="form-label">Postal Code</label>
+                        <input type="text" class="form-control" id="billingpostal"></input>
+                    </div>
+                    <div class="mb-3">
+                        <label for="billingcountry" class="form-label">Country</label>
+                        <input type="text" class="form-control" id="billingcountry"></input>
+                    </div>
+                    <div class="mb-3">
+                        <label for="billingemail" class="form-label">Email</label>
+                        <input type="text" class="form-control" id="billingemail"></input>
+                    </div>
+                    <div class="mb-3">
+                        <label for="billingphone" class="form-label">Phone</label>
+                        <input type="text" class="form-control" id="billingphone"></input>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm">
+            <div class="row">
+                <div class="col-md-6 bg-light">
+                    <legend>Shipping Method</legend>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 bg-light">
+                    <legend>Payment Method</legend>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <form method="post">
+                    <input type="hidden" name="complete" value="1"/>
+                    <input type="submit" value="Place order" class="btn btn-primary"/>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

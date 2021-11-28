@@ -55,7 +55,7 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
             addressModel.State = address.State;
             addressModel.Attention = address.Attention;
             addressModel.CompanyName = address.CompanyName;
-            addressModel.CountryName = address.Country.Name;
+            addressModel.Country = new CountryViewModel();
 
             return addressModel;
         }

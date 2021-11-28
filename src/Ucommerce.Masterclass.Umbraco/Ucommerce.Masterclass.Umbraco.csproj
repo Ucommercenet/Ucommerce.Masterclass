@@ -327,18 +327,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\CheckoutController.cs" />
+    <Compile Include="Composers\UcommerceComposer.cs" />
     <Compile Include="Controllers\BasketController.cs" />
-    <Compile Include="Controllers\BillingController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CategoryNavigationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MiniBasketController.cs" />
     <Compile Include="Controllers\OrderConfirmationController.cs" />
     <Compile Include="Controllers\OrderPlacedController.cs" />
-    <Compile Include="Controllers\PaymentController.cs" />
-    <Compile Include="Controllers\CheckoutPreviewController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
-    <Compile Include="Controllers\ShippingController.cs" />
     <Compile Include="Controllers\SinglePageCheckoutController.cs" />
     <Compile Include="IndexDefinitions\MasterclassIndexDefinition.cs" />
     <Compile Include="Models\AddressDetailsViewModel.cs" />
@@ -347,12 +344,15 @@
     <Compile Include="Models\CategoryNavigationViewModel.cs" />
     <Compile Include="Models\CategoryViewModel.cs" />
     <Compile Include="Models\CheckoutViewModel.cs" />
+    <Compile Include="Models\CountryViewModel.cs" />
     <Compile Include="Models\FacetsViewModel.cs" />
     <Compile Include="Models\MiniBasketViewModel.cs" />
     <Compile Include="Models\OrderlineViewModel.cs" />
+    <Compile Include="Models\PaymentMethodViewModel.cs" />
     <Compile Include="Models\PaymentViewModel.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
     <Compile Include="Models\PurchaseOrderViewModel.cs" />
+    <Compile Include="Models\ShippingMethodViewModel.cs" />
     <Compile Include="Models\ShippingViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

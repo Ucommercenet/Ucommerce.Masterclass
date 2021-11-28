@@ -7,11 +7,11 @@ namespace Ucommerce.Masterclass.Umbraco.Models
     {
         public PaymentViewModel()
         {
-            AvailablePaymentMethods = new List<SelectListItem>();	
+            AvailablePaymentMethods = new List<PaymentMethodViewModel>();	
         }
 
-        public IList<SelectListItem> AvailablePaymentMethods { get; set; }
+        public IList<PaymentMethodViewModel> AvailablePaymentMethods { get; set; }
 
-        public int SelectedPaymentMethodId { get; set; }
+        public PaymentMethodViewModel SelectedPaymentMethod { get; set; }
     }
 }

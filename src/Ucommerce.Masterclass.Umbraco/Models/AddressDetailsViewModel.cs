@@ -9,7 +9,7 @@ namespace Ucommerce.Masterclass.Umbraco.Models
         {
             ShippingAddress = new AddressViewModel();
             BillingAddress = new AddressViewModel();
-            AvailableCountries = new List<SelectListItem>();
+            AvailableCountries = new List<CountryViewModel>();
         }
         public AddressViewModel ShippingAddress { get; set; }
 
@@ -17,6 +17,6 @@ namespace Ucommerce.Masterclass.Umbraco.Models
         
         public bool UseAlternativeAddress { get; set; }
 
-        public IList<SelectListItem> AvailableCountries { get; set; }
+        public IList<CountryViewModel> AvailableCountries { get; set; }
     }
 }

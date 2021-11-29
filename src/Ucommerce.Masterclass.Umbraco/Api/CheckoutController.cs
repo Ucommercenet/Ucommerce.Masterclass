@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 using Ucommerce.Api;
+using Ucommerce.EntitiesV2;
 using Ucommerce.Masterclass.Umbraco.Models;
 using Umbraco.Web.WebApi;
 
@@ -19,6 +20,8 @@ namespace Ucommerce.Masterclass.Umbraco.Api
         {
             var checkoutModel = new CheckoutViewModel();
             
+            var basket = _transactionLibrary.GetBasket();
+
             var countries = _transactionLibrary.GetCountries();
             var billingInformation = _transactionLibrary.GetBillingInformation();
             var selectedCountry = billingInformation.Country ?? countries.First();
@@ -39,7 +42,21 @@ namespace Ucommerce.Masterclass.Umbraco.Api
             checkoutModel.PaymentViewModel.AvailablePaymentMethods = availablePaymentMethods.Select(x => new PaymentMethodViewModel() { Name = x.Name, PaymentMethodId = x.PaymentMethodId}).ToList();
             checkoutModel.ShippingViewModel.AvailableShippingMethods = availableShippingMethods.Select(x => new ShippingMethodViewModel() { Name = x.Name, ShippingMethodId = x.ShippingMethodId}).ToList();
 
-            var purchaseOrder = _transactionLibrary.GetBasket();
+            ShippingMethod selectedShippingMethod = basket.Shipments.FirstOrDefault()?.ShippingMethod;
+            if (selectedShippingMethod != null)
+            {
+                checkoutModel.ShippingViewModel.SelectedShippingMethod = new ShippingMethodViewModel()
+                    { Name = selectedShippingMethod.Name, ShippingMethodId = selectedShippingMethod.ShippingMethodId };
+            }
+
+            PaymentMethod selectedPaymentMethod = basket.Payments.FirstOrDefault()?.PaymentMethod;
+            if (selectedPaymentMethod != null)
+            {
+                checkoutModel.PaymentViewModel.SelectedPaymentMethod = new PaymentMethodViewModel()
+                    { Name = selectedPaymentMethod.Name, PaymentMethodId = selectedPaymentMethod.PaymentMethodId };
+            }
+            
+            var purchaseOrder = basket;
             checkoutModel.OrderTotal =
                 new Money(purchaseOrder.OrderTotal.GetValueOrDefault(), purchaseOrder.BillingCurrency.ISOCode)
                     .ToString();
@@ -52,6 +69,16 @@ namespace Ucommerce.Masterclass.Umbraco.Api
             EnsureBasketForTesting();
 
             return MapViewModel();
+        }
+
+        [HttpGet]
+        public PaymentRequestViewModel GetPaymentPageUrl()
+        {
+            var basket = _transactionLibrary.GetBasket();
+            return new PaymentRequestViewModel()
+            {
+                PaymentPageUrl = _transactionLibrary.GetPaymentPageUrl(basket.Payments.First())
+            };
         }
 
         [HttpPost]
@@ -89,6 +116,16 @@ namespace Ucommerce.Masterclass.Umbraco.Api
                 state: address.State ?? "",
                 countryId: address.Country.CountryId
             );
+
+            if (checkoutViewModel?.ShippingViewModel?.SelectedShippingMethod?.ShippingMethodId != null)
+            {
+                _transactionLibrary.CreateShipment(checkoutViewModel.ShippingViewModel.SelectedShippingMethod.ShippingMethodId, Constants.DefaultShipmentAddressName, true);
+            }
+            
+            if (checkoutViewModel?.PaymentViewModel?.SelectedPaymentMethod?.PaymentMethodId != null)
+            {
+                _transactionLibrary.CreatePayment(checkoutViewModel.PaymentViewModel.SelectedPaymentMethod.PaymentMethodId);
+            }
 
             return MapViewModel();
         }

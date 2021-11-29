@@ -11,6 +11,6 @@ namespace Ucommerce.Masterclass.Umbraco.Models
         }
         public IList<ShippingMethodViewModel> AvailableShippingMethods { get; set; }
 
-        public PaymentMethodViewModel SelectedShippingMethod { get; set; }
+        public ShippingMethodViewModel SelectedShippingMethod { get; set; }
     }
 }

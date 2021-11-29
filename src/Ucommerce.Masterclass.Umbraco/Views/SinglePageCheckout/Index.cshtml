@@ -32,7 +32,7 @@
                     </div>
                     <div class="col-6">
                         <label for="billingcountry" class="form-label">Country</label>
-                           <select v-on:blur="update" name="" id="billingcountry" v-model="CheckoutModel.AddressViewModel.Country" class="form-control">
+                           <select v-on:change="update" name="" id="billingcountry" v-model="CheckoutModel.AddressViewModel.Country" class="form-control">
                              <option value="" disabled>Select a country</option> 
                              <option :value="country" v-for="country in CheckoutModel.Countries">{{ country.Name }}</option> 
                           </select> 
@@ -52,7 +52,7 @@
                 <div class="col-md-12 bg-light">
                     <legend>Shipping Method</legend>
                     <div v-for="shippingMethod in CheckoutModel.ShippingViewModel.AvailableShippingMethods">
-                        <input :value="shippingMethod" type="radio" v-model="CheckoutModel.ShippingViewModel.SelectedShippingMethod" /> {{ shippingMethod.Name }} 
+                        <input v-on:change="update" :value="shippingMethod" type="radio" v-model="CheckoutModel.ShippingViewModel.SelectedShippingMethod" /> {{ shippingMethod.Name }} 
                     </div>
                 </div> 
             </div>
@@ -60,13 +60,13 @@
                 <div class="col-md-12 bg-light">
                     <legend>Payment Method</legend>
                     <div v-for="paymentMethod in CheckoutModel.PaymentViewModel.AvailablePaymentMethods">
-                        <input :value="paymentMethod" type="radio" v-model="CheckoutModel.PaymentViewModel.SelectedPaymentMethod" /> {{ paymentMethod.Name }} 
+                        <input v-on:change="update" :value="paymentMethod" type="radio" v-model="CheckoutModel.PaymentViewModel.SelectedPaymentMethod" /> {{ paymentMethod.Name }} 
                     </div>
                 </div>
             </div>
 
             <div class="row">
-                <button class="btn btn-primary">Complete Order - {{CheckoutModel.OrderTotal}}</button>
+                <button v-on:click="complete" class="btn btn-primary">Complete Order - {{CheckoutModel.OrderTotal}}</button>
             </div>
         </div>
     </div>
@@ -85,10 +85,15 @@
           }
         }
       },
+      
       methods: {
         update: function(e){
             axios.post('/umbraco/api/checkout/update',this.CheckoutModel).then(response => { this.CheckoutModel = response.data; });
-        }
+        },
+        
+        complete: function (e) {
+            axios.get('/umbraco/api/checkout/getpaymentpageurl').then(response => { top.location.href = response.data.PaymentPageUrl; })
+        }    
       },
       beforeMount(){    
           axios.get('/umbraco/api/checkout/get').then(response => { this.CheckoutModel = response.data; } ); 

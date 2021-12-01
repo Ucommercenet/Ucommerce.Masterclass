@@ -8,56 +8,72 @@
 <div class="container" id="app-checkout">
     <div class="row mt-4">
         <div class="col-8">
-            <div class="row bg-light">
-                    <legend>Address information</legend>
-                    <div class="col-6">
-                        <label for="billingfirstname" class="form-label">First name</label>
-                        <input type="text" v-on:blur="update" v-model="CheckoutModel.AddressViewModel.FirstName" class="form-control" id="billingfirstname"></input>
-                    </div>
-                    <div class="col-6">
-                        <label for="billinglastname" class="form-label">Last name</label>
-                        <input type="text" v-on:blur="update" v-model="CheckoutModel.AddressViewModel.LastName" class="form-control" id="billinglastname"></input>
-                    </div>
-                    <div class="col-6">
-                        <label for="billingaddress" class="form-label">Address</label>
-                        <input type="text" v-on:blur="update" class="form-control" v-model="CheckoutModel.AddressViewModel.Line1" id="billingaddress"></input>
-                    </div>
-                    <div class="col-6">
-                        <label for="billingcity" class="form-label">City</label>
-                        <input type="text" v-on:blur="update" v-model="CheckoutModel.AddressViewModel.City" class="form-control" id="billingcity"></input>
-                    </div>
-                    <div class="col-6">
-                        <label for="billingpostal" class="form-label">Postal Code</label>
-                        <input type="text" v-on:blur="update" v-model="CheckoutModel.AddressViewModel.PostalCode" class="form-control" id="billingpostal"></input>
-                    </div>
-                    <div class="col-6">
-                        <label for="billingcountry" class="form-label">Country</label>
-                           <select v-on:change="update" name="" id="billingcountry" v-model="CheckoutModel.AddressViewModel.Country" class="form-control">
-                             <option value="" disabled>Select a country</option> 
-                             <option :value="country" v-for="country in CheckoutModel.Countries">{{ country.Name }}</option> 
-                          </select> 
-                    </div>
-                    <div class="col-6">
-                        <label for="billingemail" class="form-label">Email</label>
-                        <input type="text" v-on:blur="update" v-model="CheckoutModel.AddressViewModel.EmailAddress" class="form-control" id="billingemail"></input>
-                    </div>
-                    <div class="col-6">
-                        <label for="billingphone" class="form-label">Phone</label>
-                        <input v-on:blur="update" v-model="CheckoutModel.AddressViewModel.PhoneNumber" type="text" class="form-control" id="billingphone"></input>
+            <div class="row bg-light p-3 me-1">
+                <legend>Basket</legend>
+                    <div class="row" v-for="orderLine in CheckoutModel.PurchaseOrderViewModel.OrderLines">
+                        <div class="col-4">
+                            {{orderLine.ProductName}}
+                        </div>
+                        <div class="col-4 text-center">
+                            <span style="cursor: pointer;" v-on:click="updateOrderLine(orderLine.OrderLineId, orderLine.Quantity - 1)">-</span>
+                            {{orderLine.Quantity}}
+                            <span style="cursor: pointer;" v-on:click="updateOrderLine(orderLine.OrderLineId, orderLine.Quantity + 1)">+</span>
+                        </div>
+                        <div class="col-4 text-end">
+                            {{orderLine.Total}}
+                        </div>
                     </div>
             </div>
+            <div class="row bg-light p-3 mt-4 me-1">
+                <legend>Address information</legend>
+                <div class="col-6">
+                    <label for="billingfirstname" class="form-label">First name</label>
+                    <input type="text" v-on:blur="update" v-model="CheckoutModel.AddressViewModel.FirstName" class="form-control" id="billingfirstname"></input>
+                </div>
+                <div class="col-6">
+                    <label for="billinglastname" class="form-label">Last name</label>
+                    <input type="text" v-on:blur="update" v-model="CheckoutModel.AddressViewModel.LastName" class="form-control" id="billinglastname"></input>
+                </div>
+                <div class="col-6">
+                    <label for="billingaddress" class="form-label">Address</label>
+                    <input type="text" v-on:blur="update" class="form-control" v-model="CheckoutModel.AddressViewModel.Line1" id="billingaddress"></input>
+                </div>
+                <div class="col-6">
+                    <label for="billingcity" class="form-label">City</label>
+                    <input type="text" v-on:blur="update" v-model="CheckoutModel.AddressViewModel.City" class="form-control" id="billingcity"></input>
+                </div>
+                <div class="col-6">
+                    <label for="billingpostal" class="form-label">Postal Code</label>
+                    <input type="text" v-on:blur="update" v-model="CheckoutModel.AddressViewModel.PostalCode" class="form-control" id="billingpostal"></input>
+                </div>
+                <div class="col-6">
+                    <label for="billingcountry" class="form-label">Country</label>
+                    <select v-on:change="update" name="" id="billingcountry" v-model="CheckoutModel.AddressViewModel.Country" class="form-control">
+                        <option value="" disabled>Select a country</option>
+                        <option :value="country" v-for="country in CheckoutModel.Countries">{{ country.Name }}</option>
+                    </select>
+                </div>
+                <div class="col-6">
+                    <label for="billingemail" class="form-label">Email</label>
+                    <input type="text" v-on:blur="update" v-model="CheckoutModel.AddressViewModel.EmailAddress" class="form-control" id="billingemail"></input>
+                </div>
+                <div class="col-6">
+                    <label for="billingphone" class="form-label">Phone</label>
+                    <input v-on:blur="update" v-model="CheckoutModel.AddressViewModel.PhoneNumber" type="text" class="form-control" id="billingphone"></input>
+                </div>
+            </div>
         </div>
-        <div class="col-4">
-            <div class="row">
-                <div class="col-md-12 bg-light">
+        <div class="col-4 p-0">
+            <div class="row bg-light p-3 ms-1">
+                <div class="col-md-12">
                     <legend>Shipping Method</legend>
                     <div v-for="shippingMethod in CheckoutModel.ShippingViewModel.AvailableShippingMethods">
                         <input v-on:change="update" :value="shippingMethod" type="radio" v-model="CheckoutModel.ShippingViewModel.SelectedShippingMethod" /> {{ shippingMethod.Name }} 
                     </div>
                 </div> 
             </div>
-            <div class="row">
-                <div class="col-md-12 bg-light">
+            <div class="row bg-light p-3 mt-4 ms-1">
+                <div class="col-md-12">
                     <legend>Payment Method</legend>
                     <div v-for="paymentMethod in CheckoutModel.PaymentViewModel.AvailablePaymentMethods">
                         <input v-on:change="update" :value="paymentMethod" type="radio" v-model="CheckoutModel.PaymentViewModel.SelectedPaymentMethod" /> {{ paymentMethod.Name }} 
@@ -65,7 +81,7 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row p-3 mt-4 ms-1">
                 <button v-on:click="complete" class="btn btn-primary">Complete Order - {{CheckoutModel.OrderTotal}}</button>
             </div>
         </div>
@@ -91,6 +107,13 @@
             axios.post('/umbraco/api/checkout/update',this.CheckoutModel).then(response => { this.CheckoutModel = response.data; });
         },
         
+        updateOrderLine: function(orderLineId, newQuantity) {
+            axios.post('/umbraco/api/checkout/updateorderline', 
+            {
+              OrderLineId: orderLineId,
+              NewQuantity: newQuantity
+            }).then(response => this.CheckoutModel = response.data)
+        },
         complete: function (e) {
             axios.get('/umbraco/api/checkout/getpaymentpageurl').then(response => { top.location.href = response.data.PaymentPageUrl; })
         }    

@@ -16,10 +16,25 @@ namespace Ucommerce.Masterclass.Umbraco.Api
             _transactionLibrary = transactionLibrary;
         }
 
+        public CheckoutViewModel Get()
+        {
+            return MapViewModel();
+        }
+
+        [HttpGet]
+        public PaymentRequestViewModel GetPaymentPageUrl()
+        {
+            var basket = _transactionLibrary.GetBasket();
+            return new PaymentRequestViewModel()
+            {
+                PaymentPageUrl = _transactionLibrary.GetPaymentPageUrl(basket.Payments.First())
+            };
+        }
+
         private CheckoutViewModel MapViewModel()
         {
             var checkoutModel = new CheckoutViewModel();
-            
+
             var basket = _transactionLibrary.GetBasket();
 
             var countries = _transactionLibrary.GetCountries();
@@ -34,108 +49,34 @@ namespace Ucommerce.Masterclass.Umbraco.Api
             checkoutModel.AddressViewModel.Country = new CountryViewModel() { Name = selectedCountry.Name, CountryId = selectedCountry.CountryId };
             checkoutModel.AddressViewModel.EmailAddress = billingInformation.EmailAddress;
             checkoutModel.AddressViewModel.PhoneNumber = billingInformation.MobilePhoneNumber;
-            
+
             var availablePaymentMethods = _transactionLibrary.GetPaymentMethods(selectedCountry);
             var availableShippingMethods = _transactionLibrary.GetShippingMethods(selectedCountry);
-            
-            checkoutModel.Countries = countries.Select(x => new CountryViewModel() { Name = x.Name, CountryId = x.CountryId}).ToList();
-            checkoutModel.PaymentViewModel.AvailablePaymentMethods = availablePaymentMethods.Select(x => new PaymentMethodViewModel() { Name = x.Name, PaymentMethodId = x.PaymentMethodId}).ToList();
-            checkoutModel.ShippingViewModel.AvailableShippingMethods = availableShippingMethods.Select(x => new ShippingMethodViewModel() { Name = x.Name, ShippingMethodId = x.ShippingMethodId}).ToList();
+
+            checkoutModel.Countries = countries.Select(x => new CountryViewModel() { Name = x.Name, CountryId = x.CountryId }).ToList();
+            checkoutModel.PaymentViewModel.AvailablePaymentMethods = availablePaymentMethods.Select(x => new PaymentMethodViewModel() { Name = x.Name, PaymentMethodId = x.PaymentMethodId }).ToList();
+            checkoutModel.ShippingViewModel.AvailableShippingMethods = availableShippingMethods.Select(x => new ShippingMethodViewModel() { Name = x.Name, ShippingMethodId = x.ShippingMethodId }).ToList();
 
             ShippingMethod selectedShippingMethod = basket.Shipments.FirstOrDefault()?.ShippingMethod;
             if (selectedShippingMethod != null)
             {
                 checkoutModel.ShippingViewModel.SelectedShippingMethod = new ShippingMethodViewModel()
-                    { Name = selectedShippingMethod.Name, ShippingMethodId = selectedShippingMethod.ShippingMethodId };
+                { Name = selectedShippingMethod.Name, ShippingMethodId = selectedShippingMethod.ShippingMethodId };
             }
 
             PaymentMethod selectedPaymentMethod = basket.Payments.FirstOrDefault()?.PaymentMethod;
             if (selectedPaymentMethod != null)
             {
                 checkoutModel.PaymentViewModel.SelectedPaymentMethod = new PaymentMethodViewModel()
-                    { Name = selectedPaymentMethod.Name, PaymentMethodId = selectedPaymentMethod.PaymentMethodId };
+                { Name = selectedPaymentMethod.Name, PaymentMethodId = selectedPaymentMethod.PaymentMethodId };
             }
-            
+
             var purchaseOrder = basket;
             checkoutModel.OrderTotal =
                 new Money(purchaseOrder.OrderTotal.GetValueOrDefault(), purchaseOrder.BillingCurrency.ISOCode)
                     .ToString();
-            
+
             return checkoutModel;
-        }
-        
-        public CheckoutViewModel Get()
-        {
-            EnsureBasketForTesting();
-
-            return MapViewModel();
-        }
-
-        [HttpGet]
-        public PaymentRequestViewModel GetPaymentPageUrl()
-        {
-            var basket = _transactionLibrary.GetBasket();
-            return new PaymentRequestViewModel()
-            {
-                PaymentPageUrl = _transactionLibrary.GetPaymentPageUrl(basket.Payments.First())
-            };
-        }
-
-        [HttpPost]
-        public CheckoutViewModel Update(CheckoutViewModel checkoutViewModel)
-        {
-            var address = checkoutViewModel.AddressViewModel;
-            _transactionLibrary.EditBillingInformation(
-                firstName: address.FirstName ?? "",
-                lastName: address.LastName ?? "",
-                emailAddress: address.EmailAddress ?? "",
-                phoneNumber: address.PhoneNumber,
-                mobilePhoneNumber: address.PhoneNumber,
-                company: address.CompanyName ?? "",
-                line1: address.Line1 ?? "",
-                line2: address.Line2 ?? "",
-                postalCode: address.PostalCode ?? "",
-                city: address.City ?? "", 
-                attention: address.Attention ?? "",
-                state: address.State ?? "",
-                countryId: address.Country.CountryId
-            );
-            
-            _transactionLibrary.EditShippingInformation(
-                firstName: address.FirstName ?? "",
-                lastName: address.LastName ?? "",
-                emailAddress: address.EmailAddress ?? "",
-                phoneNumber: address.PhoneNumber,
-                mobilePhoneNumber: address.PhoneNumber,
-                company: address.CompanyName ?? "",
-                line1: address.Line1 ?? "",
-                line2: address.Line2 ?? "",
-                postalCode: address.PostalCode ?? "",
-                city: address.City ?? "", 
-                attention: address.Attention ?? "",
-                state: address.State ?? "",
-                countryId: address.Country.CountryId
-            );
-
-            if (checkoutViewModel?.ShippingViewModel?.SelectedShippingMethod?.ShippingMethodId != null)
-            {
-                _transactionLibrary.CreateShipment(checkoutViewModel.ShippingViewModel.SelectedShippingMethod.ShippingMethodId, Constants.DefaultShipmentAddressName, true);
-            }
-            
-            if (checkoutViewModel?.PaymentViewModel?.SelectedPaymentMethod?.PaymentMethodId != null)
-            {
-                _transactionLibrary.CreatePayment(checkoutViewModel.PaymentViewModel.SelectedPaymentMethod.PaymentMethodId);
-            }
-
-            return MapViewModel();
-        }
-
-        private void EnsureBasketForTesting()
-        {
-            if (!_transactionLibrary.HasBasket())
-            {
-                _transactionLibrary.AddToBasket(1, "100-000-001", "001", executeBasketPipeline: true);
-            } 
         }
     }
 }

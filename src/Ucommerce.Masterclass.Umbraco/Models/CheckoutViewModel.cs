@@ -11,6 +11,9 @@ namespace Ucommerce.Masterclass.Umbraco.Models
             PaymentViewModel = new PaymentViewModel();
             ShippingViewModel = new ShippingViewModel();
         }
+        
+        public PurchaseOrderViewModel PurchaseOrderViewModel { get; set; }
+        
         public AddressViewModel AddressViewModel { get; set; }
         
         public PaymentViewModel PaymentViewModel { get; set; }

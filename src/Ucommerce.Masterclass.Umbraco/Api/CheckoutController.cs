@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using Ucommerce.Api;
 using Ucommerce.EntitiesV2;
+using Ucommerce.Extensions;
 using Ucommerce.Masterclass.Umbraco.Models;
 using Umbraco.Web.WebApi;
 
@@ -41,6 +42,8 @@ namespace Ucommerce.Masterclass.Umbraco.Api
             var billingInformation = _transactionLibrary.GetBillingInformation();
             var selectedCountry = billingInformation.Country ?? countries.First();
 
+            checkoutModel.PurchaseOrderViewModel = MapPurchaseOrder(basket);
+            
             checkoutModel.AddressViewModel.FirstName = billingInformation.FirstName;
             checkoutModel.AddressViewModel.LastName = billingInformation.LastName;
             checkoutModel.AddressViewModel.Line1 = billingInformation.Line1;
@@ -75,8 +78,32 @@ namespace Ucommerce.Masterclass.Umbraco.Api
             checkoutModel.OrderTotal =
                 new Money(purchaseOrder.OrderTotal.GetValueOrDefault(), purchaseOrder.BillingCurrency.ISOCode)
                     .ToString();
-
+            
             return checkoutModel;
+        }
+
+        private PurchaseOrderViewModel MapPurchaseOrder(Ucommerce.EntitiesV2.PurchaseOrder basket)
+        {
+            var model = new PurchaseOrderViewModel();
+
+            model.OrderLines = basket.OrderLines.Select(orderLine => new OrderlineViewModel()
+            {
+                Quantity = orderLine.Quantity,
+                ProductName = orderLine.ProductName,
+                Total = new Money(orderLine.Total.GetValueOrDefault(), basket.BillingCurrency.ISOCode).ToString(),
+                OrderLineId = orderLine.OrderLineId
+            }).ToList();
+            
+            return model;
+        }
+
+        [HttpPost]
+        public CheckoutViewModel UpdateOrderLine(UpdateOrderLineRequest updateOrderLineRequest)
+        {
+            _transactionLibrary.UpdateLineItemByOrderLineId(updateOrderLineRequest.OrderLineId, updateOrderLineRequest.NewQuantity);
+            _transactionLibrary.ExecuteBasketPipeline();
+
+            return MapViewModel();
         }
     }
 }

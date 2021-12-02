@@ -105,7 +105,7 @@
                 <div class="col-md-12">
                     <legend>Shipping Method</legend>
                     <div v-for="shippingMethod in CheckoutModel.ShippingViewModel.AvailableShippingMethods">
-                        <input v-on:change="updateShippingMethod" :value="shippingMethod" type="radio" v-model="CheckoutModel.ShippingViewModel.SelectedShippingMethod" /> {{ shippingMethod.Name }}
+                        <input v-on:change="updateShippingMethod" :value="shippingMethod" type="radio" v-model="CheckoutModel.ShippingViewModel.SelectedShippingMethod" :disabled="CheckoutModel.AddressViewModel.FirstName === null" /> {{ shippingMethod.Name }}
                     </div>
                 </div>
             </div>
@@ -139,9 +139,8 @@
             }
         },
         methods: {
-
             refreshBasket: function () {
-                axios.get('/umbraco/api/checkout/get', this.CheckoutModel).then(response => { this.CheckoutModel = response.data; });
+                axios.get('/umbraco/api/basket/get', this.CheckoutModel).then(response => { this.CheckoutModel = response.data; });
             },
             updateShippingAddress: function () {
                 axios.post('/umbraco/api/addresses/updateShipping', this.CheckoutModel).then(response => {
@@ -177,12 +176,14 @@
                 else
                     alert("Please provide all information");
             },
-            updateOrderLine: function(orderLineId, newQuantity) {
-                axios.post('/umbraco/api/checkout/updateorderline', 
+            updateOrderLine: function (orderLineId, newQuantity) {
+                axios.post('/umbraco/api/basket/updateorderline',
                     {
                         OrderLineId: orderLineId,
                         NewQuantity: newQuantity
-                    }).then(response => this.CheckoutModel = response.data)
+                    }).then(response => {
+                        this.refreshBasket();
+                    });
             }
         },
         beforeMount() {

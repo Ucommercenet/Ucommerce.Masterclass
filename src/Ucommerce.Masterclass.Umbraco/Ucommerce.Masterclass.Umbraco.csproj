@@ -326,6 +326,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\BasketController.cs" />
     <Compile Include="Api\PaymentMethodController.cs" />
     <Compile Include="Api\ShippingMethodController.cs" />
     <Compile Include="Api\AddressesController.cs" />
@@ -352,12 +353,12 @@
     <Compile Include="Models\MiniBasketViewModel.cs" />
     <Compile Include="Models\OrderlineViewModel.cs" />
     <Compile Include="Models\PaymentMethodViewModel.cs" />
-    <Compile Include="Models\PaymentRequestViewModel.cs" />
     <Compile Include="Models\PaymentViewModel.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
     <Compile Include="Models\PurchaseOrderViewModel.cs" />
     <Compile Include="Models\ShippingMethodViewModel.cs" />
     <Compile Include="Models\ShippingViewModel.cs" />
+    <Compile Include="Models\UpdateOrderLineRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

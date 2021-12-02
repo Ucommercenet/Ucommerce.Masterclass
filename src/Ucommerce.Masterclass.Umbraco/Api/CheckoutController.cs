@@ -1,8 +1,6 @@
 ﻿using System.Linq;
-using System.Web.Mvc;
+using System.Web.Http;
 using Ucommerce.Api;
-using Ucommerce.EntitiesV2;
-using Ucommerce.Extensions;
 using Ucommerce.Masterclass.Umbraco.Models;
 using Umbraco.Web.WebApi;
 
@@ -17,69 +15,11 @@ namespace Ucommerce.Masterclass.Umbraco.Api
             _transactionLibrary = transactionLibrary;
         }
 
-        public CheckoutViewModel Get()
-        {
-            return MapViewModel();
-        }
-
-        [HttpGet]
-        public PaymentRequestViewModel GetPaymentPageUrl()
+        [System.Web.Mvc.HttpGet]
+        public IHttpActionResult GetPaymentPageUrl()
         {
             var basket = _transactionLibrary.GetBasket();
-            return new PaymentRequestViewModel()
-            {
-                PaymentPageUrl = _transactionLibrary.GetPaymentPageUrl(basket.Payments.First())
-            };
-        }
-
-        private CheckoutViewModel MapViewModel()
-        {
-            var checkoutModel = new CheckoutViewModel();
-
-            var basket = _transactionLibrary.GetBasket();
-
-            var countries = _transactionLibrary.GetCountries();
-            var billingInformation = _transactionLibrary.GetBillingInformation();
-            var selectedCountry = billingInformation.Country ?? countries.First();
-
-            checkoutModel.PurchaseOrderViewModel = MapPurchaseOrder(basket);
-            
-            checkoutModel.AddressViewModel.FirstName = billingInformation.FirstName;
-            checkoutModel.AddressViewModel.LastName = billingInformation.LastName;
-            checkoutModel.AddressViewModel.Line1 = billingInformation.Line1;
-            checkoutModel.AddressViewModel.City = billingInformation.City;
-            checkoutModel.AddressViewModel.PostalCode = billingInformation.PostalCode;
-            checkoutModel.AddressViewModel.Country = new CountryViewModel() { Name = selectedCountry.Name, CountryId = selectedCountry.CountryId };
-            checkoutModel.AddressViewModel.EmailAddress = billingInformation.EmailAddress;
-            checkoutModel.AddressViewModel.PhoneNumber = billingInformation.MobilePhoneNumber;
-
-            var availablePaymentMethods = _transactionLibrary.GetPaymentMethods(selectedCountry);
-            var availableShippingMethods = _transactionLibrary.GetShippingMethods(selectedCountry);
-
-            checkoutModel.Countries = countries.Select(x => new CountryViewModel() { Name = x.Name, CountryId = x.CountryId }).ToList();
-            checkoutModel.PaymentViewModel.AvailablePaymentMethods = availablePaymentMethods.Select(x => new PaymentMethodViewModel() { Name = x.Name, PaymentMethodId = x.PaymentMethodId }).ToList();
-            checkoutModel.ShippingViewModel.AvailableShippingMethods = availableShippingMethods.Select(x => new ShippingMethodViewModel() { Name = x.Name, ShippingMethodId = x.ShippingMethodId }).ToList();
-
-            ShippingMethod selectedShippingMethod = basket.Shipments.FirstOrDefault()?.ShippingMethod;
-            if (selectedShippingMethod != null)
-            {
-                checkoutModel.ShippingViewModel.SelectedShippingMethod = new ShippingMethodViewModel()
-                { Name = selectedShippingMethod.Name, ShippingMethodId = selectedShippingMethod.ShippingMethodId };
-            }
-
-            PaymentMethod selectedPaymentMethod = basket.Payments.FirstOrDefault()?.PaymentMethod;
-            if (selectedPaymentMethod != null)
-            {
-                checkoutModel.PaymentViewModel.SelectedPaymentMethod = new PaymentMethodViewModel()
-                { Name = selectedPaymentMethod.Name, PaymentMethodId = selectedPaymentMethod.PaymentMethodId };
-            }
-
-            var purchaseOrder = basket;
-            checkoutModel.OrderTotal =
-                new Money(purchaseOrder.OrderTotal.GetValueOrDefault(), purchaseOrder.BillingCurrency.ISOCode)
-                    .ToString();
-            
-            return checkoutModel;
+            return Json(_transactionLibrary.GetPaymentPageUrl(basket.Payments.First()));
         }
 
         private PurchaseOrderViewModel MapPurchaseOrder(Ucommerce.EntitiesV2.PurchaseOrder basket)
@@ -95,15 +35,6 @@ namespace Ucommerce.Masterclass.Umbraco.Api
             }).ToList();
             
             return model;
-        }
-
-        [HttpPost]
-        public CheckoutViewModel UpdateOrderLine(UpdateOrderLineRequest updateOrderLineRequest)
-        {
-            _transactionLibrary.UpdateLineItemByOrderLineId(updateOrderLineRequest.OrderLineId, updateOrderLineRequest.NewQuantity);
-            _transactionLibrary.ExecuteBasketPipeline();
-
-            return MapViewModel();
         }
     }
 }

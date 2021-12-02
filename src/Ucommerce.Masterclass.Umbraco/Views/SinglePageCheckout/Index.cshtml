@@ -23,7 +23,7 @@
                         {{orderLine.Total}}
                     </div>
                 </div>
-                <legend>Address information</legend>
+                <legend>Billing information</legend>
                 <div class="col-6">
                     <label for="billingfirstname" class="form-label">First name</label>
                     <input type="text" v-on:blur="updateBillingAddress" v-model="CheckoutModel.AddressViewModel.FirstName" class="form-control" id="billingfirstname"></input>
@@ -59,47 +59,49 @@
                     <label for="billingphone" class="form-label">Phone</label>
                     <input v-on:blur="updateBillingAddress" v-model="CheckoutModel.AddressViewModel.PhoneNumber" type="text" class="form-control" id="billingphone"></input>
                 </div>
+                <div class="col-12">
+                    <label for="showShippingAddressFields" class="form-label">Use a different shipping address</label>
+                    <input type="checkbox" id="showShippingAddressFields" v-model="CheckoutModel.DifferentShippingAddress" v-on:click="CheckoutModel.DifferentShippingAddress = !CheckoutModel.DifferentShippingAddress" />
+                </div>
             </div>
-            @*TODO: Shipping address
-
-                <div class="row bg-light p-3 mt-4 me-1">
-                    <legend>Address information</legend>
-                    <div class="col-6">
-                        <label for="billingfirstname" class="form-label">First name</label>
-                        <input type="text" v-on:blur="update" v-model="CheckoutModel.AddressViewModel.FirstName" class="form-control" id="billingfirstname"></input>
-                    </div>
-                    <div class="col-6">
-                        <label for="billinglastname" class="form-label">Last name</label>
-                        <input type="text" v-on:blur="update" v-model="CheckoutModel.AddressViewModel.LastName" class="form-control" id="billinglastname"></input>
-                    </div>
-                    <div class="col-6">
-                        <label for="billingaddress" class="form-label">Address</label>
-                        <input type="text" v-on:blur="update" class="form-control" v-model="CheckoutModel.AddressViewModel.Line1" id="billingaddress"></input>
-                    </div>
-                    <div class="col-6">
-                        <label for="billingcity" class="form-label">City</label>
-                        <input type="text" v-on:blur="update" v-model="CheckoutModel.AddressViewModel.City" class="form-control" id="billingcity"></input>
-                    </div>
-                    <div class="col-6">
-                        <label for="billingpostal" class="form-label">Postal Code</label>
-                        <input type="text" v-on:blur="update" v-model="CheckoutModel.AddressViewModel.PostalCode" class="form-control" id="billingpostal"></input>
-                    </div>
-                    <div class="col-6">
-                        <label for="billingcountry" class="form-label">Country</label>
-                        <select v-on:change="update" name="" id="billingcountry" v-model="CheckoutModel.AddressViewModel.Country" class="form-control">
-                            <option value="" disabled>Select a country</option>
-                            <option :value="country" v-for="country in CheckoutModel.Countries">{{ country.Name }}</option>
-                        </select>
-                    </div>
-                    <div class="col-6">
-                        <label for="billingemail" class="form-label">Email</label>
-                        <input type="text" v-on:blur="update" v-model="CheckoutModel.AddressViewModel.EmailAddress" class="form-control" id="billingemail"></input>
-                    </div>
-                    <div class="col-6">
-                        <label for="billingphone" class="form-label">Phone</label>
-                        <input v-on:blur="update" v-model="CheckoutModel.AddressViewModel.PhoneNumber" type="text" class="form-control" id="billingphone"></input>
-                    </div>
-                </div>*@
+            <div class="row bg-light p-3 mt-4 me-1" v-if="CheckoutModel.DifferentShippingAddress">
+                <legend>Shipping information</legend>
+                <div class="col-6">
+                    <label for="shippingfirstname" class="form-label">First name</label>
+                    <input type="text" v-on:blur="updateShippingAddress" v-model="CheckoutModel.ShippingAddressViewModel.FirstName" class="form-control" id="shippingfirstname"></input>
+                </div>
+                <div class="col-6">
+                    <label for="shippinglastname" class="form-label">Last name</label>
+                    <input type="text" v-on:blur="updateShippingAddress" v-model="CheckoutModel.ShippingAddressViewModel.LastName" class="form-control" id="shippinglastname"></input>
+                </div>
+                <div class="col-6">
+                    <label for="shippingaddress" class="form-label">Address</label>
+                    <input type="text" v-on:blur="updateShippingAddress" class="form-control" v-model="CheckoutModel.ShippingAddressViewModel.Line1" id="shippingaddress"></input>
+                </div>
+                <div class="col-6">
+                    <label for="shippingcity" class="form-label">City</label>
+                    <input type="text" v-on:blur="updateShippingAddress" v-model="CheckoutModel.ShippingAddressViewModel.City" class="form-control" id="shippingcity"></input>
+                </div>
+                <div class="col-6">
+                    <label for="shippingpostal" class="form-label">Postal Code</label>
+                    <input type="text" v-on:blur="updateShippingAddress" v-model="CheckoutModel.ShippingAddressViewModel.PostalCode" class="form-control" id="shippingpostal"></input>
+                </div>
+                <div class="col-6">
+                    <label for="shippingcountry" class="form-label">Country</label>
+                    <select v-on:change="updateShippingAddress" name="" id="shippingcountry" v-model="CheckoutModel.ShippingAddressViewModel.Country" class="form-control">
+                        <option value="" disabled>Select a country</option>
+                        <option :value="country" v-for="country in CheckoutModel.Countries">{{ country.Name }}</option>
+                    </select>
+                </div>
+                <div class="col-6">
+                    <label for="shippingemail" class="form-label">Email</label>
+                    <input type="text" v-on:blur="updateShippingAddress" v-model="CheckoutModel.ShippingAddressViewModel.EmailAddress" class="form-control" id="shippingemail"></input>
+                </div>
+                <div class="col-6">
+                    <label for="shippingphone" class="form-label">Phone</label>
+                    <input v-on:blur="updateShippingAddress" v-model="CheckoutModel.ShippingAddressViewModel.PhoneNumber" type="text" class="form-control" id="shippingphone"></input>
+                </div>
+            </div>
         </div>
         <div class="col-4 p-0">
             <div class="row bg-light p-3 ms-1">
@@ -134,8 +136,10 @@
             CheckoutModel: {
                 PurchaseOrderViewModel: {},
                 AddressViewModel: {},
+                ShippingAddressViewModel: {},
                 ShippingViewModel: {},
-                PaymentViewModel: {}
+                PaymentViewModel: {},
+                DifferentShippingAddress: false
             },
             CheckoutSteps: {
                 shippingAddressSatisfied: false,
@@ -146,19 +150,27 @@
         },
         methods: {
             refreshBasket: function () {
-                axios.get('/umbraco/api/basket/get', this.CheckoutModel).then(response => { this.CheckoutModel = response.data; });
+                axios.get('/umbraco/api/basket/get', this.CheckoutModel).then(response => {
+                    this.CheckoutModel = response.data;
+                });
             },
             updateShippingAddress: function () {
-                axios.post('/umbraco/api/addresses/updateShipping', this.CheckoutModel).then(response => {
+                axios.post('/umbraco/api/addresses/updateShipping', this.CheckoutModel.ShippingAddressViewModel).then(response => {
                     this.refreshBasket();
                     this.CheckoutSteps.shippingAddressSatisfied = true;
                 });
             },
             updateBillingAddress: function () {
-                axios.post('/umbraco/api/addresses/updateBilling', this.CheckoutModel).then(response => {
+                axios.post('/umbraco/api/addresses/updateBilling', this.CheckoutModel.AddressViewModel).then(response => {
                     this.refreshBasket();
                     this.CheckoutSteps.billingAddressSatisfied = true;
                 });
+
+                if (!this.CheckoutModel.DifferentShippingAddress)
+                    axios.post('/umbraco/api/addresses/updateShipping', this.CheckoutModel.AddressViewModel).then(response => {
+                        this.refreshBasket();
+                        this.CheckoutSteps.shippingAddressSatisfied = true;
+                    });
             },
             updateShippingMethod: function () {
                 axios.post('/umbraco/api/shippingMethod/update', this.CheckoutModel).then(response => {

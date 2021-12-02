@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Web.Http;
+using Newtonsoft.Json;
 using Ucommerce.Api;
 using Ucommerce.EntitiesV2;
 using Ucommerce.Masterclass.Umbraco.Models;
@@ -32,19 +33,20 @@ namespace Ucommerce.Masterclass.Umbraco.Api
 
         private CheckoutViewModel MapViewModel()
         {
+            var checkoutModel = new CheckoutViewModel();
+
             if (!_transactionLibrary.HasBasket())
                 return null;
-
-            var checkoutModel = new CheckoutViewModel();
 
             var basket = _transactionLibrary.GetBasket();
 
             var countries = _transactionLibrary.GetCountries();
             var billingInformation = _transactionLibrary.GetBillingInformation();
+            var shippingInformation = _transactionLibrary.GetShippingInformation();
             var selectedCountry = billingInformation.Country ?? countries.First();
 
             checkoutModel.PurchaseOrderViewModel = MapPurchaseOrder(basket);
-            
+
             checkoutModel.AddressViewModel.FirstName = billingInformation.FirstName;
             checkoutModel.AddressViewModel.LastName = billingInformation.LastName;
             checkoutModel.AddressViewModel.Line1 = billingInformation.Line1;
@@ -53,6 +55,19 @@ namespace Ucommerce.Masterclass.Umbraco.Api
             checkoutModel.AddressViewModel.Country = new CountryViewModel() { Name = selectedCountry.Name, CountryId = selectedCountry.CountryId };
             checkoutModel.AddressViewModel.EmailAddress = billingInformation.EmailAddress;
             checkoutModel.AddressViewModel.PhoneNumber = billingInformation.MobilePhoneNumber;
+
+            var selectedShippingCountry = shippingInformation.Country ?? countries.First();
+
+            checkoutModel.ShippingAddressViewModel.FirstName = shippingInformation.FirstName;
+            checkoutModel.ShippingAddressViewModel.LastName = shippingInformation.LastName;
+            checkoutModel.ShippingAddressViewModel.Line1 = shippingInformation.Line1;
+            checkoutModel.ShippingAddressViewModel.City = shippingInformation.City;
+            checkoutModel.ShippingAddressViewModel.PostalCode = shippingInformation.PostalCode;
+            checkoutModel.ShippingAddressViewModel.Country = new CountryViewModel() { Name = selectedShippingCountry.Name, CountryId = selectedShippingCountry.CountryId };
+            checkoutModel.ShippingAddressViewModel.EmailAddress = shippingInformation.EmailAddress;
+            checkoutModel.ShippingAddressViewModel.PhoneNumber = shippingInformation.MobilePhoneNumber;
+
+            checkoutModel.DifferentShippingAddress = IsAddressesDifferent(checkoutModel.ShippingAddressViewModel, checkoutModel.AddressViewModel);
 
             var availablePaymentMethods = _transactionLibrary.GetPaymentMethods(selectedCountry);
             var availableShippingMethods = _transactionLibrary.GetShippingMethods(selectedCountry);
@@ -79,8 +94,13 @@ namespace Ucommerce.Masterclass.Umbraco.Api
             checkoutModel.OrderTotal =
                 new Money(purchaseOrder.OrderTotal.GetValueOrDefault(), purchaseOrder.BillingCurrency.ISOCode)
                     .ToString();
-            
+
             return checkoutModel;
+        }
+
+        private bool IsAddressesDifferent(AddressViewModel addressOne, AddressViewModel addressTwo)
+        {
+            return JsonConvert.SerializeObject(addressOne) != JsonConvert.SerializeObject(addressTwo);
         }
 
         private PurchaseOrderViewModel MapPurchaseOrder(Ucommerce.EntitiesV2.PurchaseOrder basket)

@@ -17,9 +17,8 @@ namespace Ucommerce.Masterclass.Umbraco.Api
         }
 
         [HttpPost]
-        public IHttpActionResult UpdateBilling(CheckoutViewModel checkoutViewModel)
+        public IHttpActionResult UpdateBilling(AddressViewModel address)
         {
-            var address = checkoutViewModel.AddressViewModel;
             _transactionLibrary.EditBillingInformation(
                 firstName: address.FirstName ?? "",
                 lastName: address.LastName ?? "",
@@ -40,10 +39,8 @@ namespace Ucommerce.Masterclass.Umbraco.Api
         }
 
         [System.Web.Mvc.HttpPost]
-        public IHttpActionResult UpdateShipping(CheckoutViewModel checkoutViewModel)
+        public IHttpActionResult UpdateShipping(AddressViewModel address)
         {
-            var address = checkoutViewModel.AddressViewModel;
-
             _transactionLibrary.EditShippingInformation(
                 firstName: address.FirstName ?? "",
                 lastName: address.LastName ?? "",

@@ -140,12 +140,6 @@
                 ShippingViewModel: {},
                 PaymentViewModel: {},
                 DifferentShippingAddress: false
-            },
-            CheckoutSteps: {
-                shippingAddressSatisfied: false,
-                billingAddressSatisfied: false,
-                shippingMethodSatisfied: false,
-                paymentMethodSatisfied: false
             }
         },
         methods: {
@@ -157,36 +151,33 @@
             updateShippingAddress: function () {
                 axios.post('/umbraco/api/addresses/updateShipping', this.CheckoutModel.ShippingAddressViewModel).then(response => {
                     this.refreshBasket();
-                    this.CheckoutSteps.shippingAddressSatisfied = true;
                 });
             },
             updateBillingAddress: function () {
                 axios.post('/umbraco/api/addresses/updateBilling', this.CheckoutModel.AddressViewModel).then(response => {
                     this.refreshBasket();
-                    this.CheckoutSteps.billingAddressSatisfied = true;
                 });
 
                 if (!this.CheckoutModel.DifferentShippingAddress)
                     axios.post('/umbraco/api/addresses/updateShipping', this.CheckoutModel.AddressViewModel).then(response => {
                         this.refreshBasket();
-                        this.CheckoutSteps.shippingAddressSatisfied = true;
                     });
             },
             updateShippingMethod: function () {
                 axios.post('/umbraco/api/shippingMethod/update', this.CheckoutModel).then(response => {
                     this.refreshBasket();
-                    this.CheckoutSteps.shippingMethodSatisfied = true;
                 });
             },
             updatePaymentMethod: function () {
                 axios.post('/umbraco/api/paymentMethod/update', this.CheckoutModel).then(response => {
                     this.refreshBasket();
-                    this.CheckoutSteps.paymentMethodSatisfied = true;
                 });
             },
             checkoutStepsSatisfied: function () {
-                return Object.values(this.CheckoutSteps)
-                    .every(step => step === true);
+                return Object.values(this.CheckoutModel)
+                    .every(step =>
+                        typeof step != "undefined"
+                    );
             },
             complete: function (e) {
                 if (this.checkoutStepsSatisfied())

@@ -19,7 +19,7 @@ namespace Ucommerce.Masterclass.Umbraco.Api
 
         public CheckoutViewModel Get()
         {
-            return MapViewModel();
+            return GetCheckoutModel();
         }
 
         [System.Web.Mvc.HttpPost]
@@ -31,7 +31,7 @@ namespace Ucommerce.Masterclass.Umbraco.Api
             return Ok();
         }
 
-        private CheckoutViewModel MapViewModel()
+        private CheckoutViewModel GetCheckoutModel()
         {
             var checkoutModel = new CheckoutViewModel();
 
@@ -90,13 +90,26 @@ namespace Ucommerce.Masterclass.Umbraco.Api
                 { Name = selectedPaymentMethod.Name, PaymentMethodId = selectedPaymentMethod.PaymentMethodId };
             }
 
-            var purchaseOrder = basket;
+            checkoutModel.Discount =
+                new Money(basket.Discount.GetValueOrDefault(), basket.BillingCurrency.ISOCode)
+                    .ToString(); 
+            checkoutModel.SubTotal =
+                new Money(basket.SubTotal.GetValueOrDefault(), basket.BillingCurrency.ISOCode)
+                    .ToString(); 
+            checkoutModel.TaxTotal =
+                new Money(basket.TaxTotal.GetValueOrDefault(), basket.BillingCurrency.ISOCode)
+                    .ToString();
+            checkoutModel.ShippingTotal =
+                new Money(basket.ShippingTotal.GetValueOrDefault(), basket.BillingCurrency.ISOCode).ToString();
+            checkoutModel.PaymentTotal =
+                new Money(basket.PaymentTotal.GetValueOrDefault(), basket.BillingCurrency.ISOCode).ToString();
             checkoutModel.OrderTotal =
-                new Money(purchaseOrder.OrderTotal.GetValueOrDefault(), purchaseOrder.BillingCurrency.ISOCode)
+                new Money(basket.OrderTotal.GetValueOrDefault(), basket.BillingCurrency.ISOCode)
                     .ToString();
 
             return checkoutModel;
         }
+
 
         private bool IsAddressesDifferent(AddressViewModel addressOne, AddressViewModel addressTwo)
         {
@@ -111,7 +124,10 @@ namespace Ucommerce.Masterclass.Umbraco.Api
             {
                 Quantity = orderLine.Quantity,
                 ProductName = orderLine.ProductName,
+                Discount = orderLine.Discount,
                 Total = new Money(orderLine.Total.GetValueOrDefault(), basket.BillingCurrency.ISOCode).ToString(),
+                TotalWithDiscount =
+                    new Money(orderLine.Price - orderLine.Discount, basket.BillingCurrency.ISOCode).ToString(),
                 OrderLineId = orderLine.OrderLineId
             }).ToList();
             

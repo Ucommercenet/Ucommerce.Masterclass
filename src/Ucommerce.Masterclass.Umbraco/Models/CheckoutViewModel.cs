@@ -25,7 +25,12 @@ namespace Ucommerce.Masterclass.Umbraco.Models
         public ShippingViewModel ShippingViewModel { get; set; }
         
         public string OrderTotal { get; set; }
+        public string SubTotal { get; set; }
+        public string TaxTotal { get; set; }
+        public string Discount { get; set; }
         public bool DifferentShippingAddress { get; set; }
+        public string ShippingTotal { get; set; }
+        public string PaymentTotal { get; set; }
     }
 }
 

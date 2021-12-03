@@ -21,9 +21,73 @@
                             @orderLine.Quantity
                         </div>
                         <div class="col-4 text-end">
-                            @orderLine.Total
+                            @if (orderLine.Discount.HasValue && orderLine.Discount > 0)
+                            {
+                                <span style="text-decoration: line-through">
+                                    @orderLine.Total
+                                </span>
+                                @orderLine.TotalWithDiscount
+                            }
+                            else
+                            {
+                                @orderLine.Total
+                            }
                         </div>
                     }
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        Sub total
+                    </div>
+                    <div class="col-4"></div>
+                    <div class="col-4 text-end">
+                        {{ CheckoutModel.SubTotal }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        VAT
+                    </div>
+                    <div class="col-4"></div>
+                    <div class="col-4 text-end">
+                        {{ CheckoutModel.TaxTotal }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        Discounts
+                    </div>
+                    <div class="col-4"></div>
+                    <div class="col-4 text-end">
+                        {{ CheckoutModel.Discount }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        Shipping Total
+                    </div>
+                    <div class="col-4"></div>
+                    <div class="col-4 text-end">
+                        {{ CheckoutModel.ShippingTotal }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        Payment Total
+                    </div>
+                    <div class="col-4"></div>
+                    <div class="col-4 text-end">
+                        {{ CheckoutModel.PaymentTotal }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        Order Total
+                    </div>
+                    <div class="col-4"></div>
+                    <div class="col-4 text-end">
+                        {{ CheckoutModel.OrderTotal }}
+                    </div>
                 </div>
             </div>
             <div class="row bg-light p-3 mt-4 me-1">

@@ -55,10 +55,21 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
             purchaseOrderViewModel.ShippingAddress.EmailAddress = shippingInformation.EmailAddress;
             purchaseOrderViewModel.ShippingAddress.PhoneNumber = shippingInformation.MobilePhoneNumber;
 
-            var purchaseOrder = basket;
-            purchaseOrderViewModel.OrderTotal =
-                new Money(purchaseOrder.OrderTotal.GetValueOrDefault(), purchaseOrder.BillingCurrency.ISOCode)
+            purchaseOrderViewModel.DiscountTotal =
+                new Money(basket.Discount.GetValueOrDefault(), basket.BillingCurrency.ISOCode)
                     .ToString();
+            purchaseOrderViewModel.SubTotal =
+                new Money(basket.SubTotal.GetValueOrDefault(), basket.BillingCurrency.ISOCode)
+                    .ToString();
+            purchaseOrderViewModel.TaxTotal =
+                new Money(basket.TaxTotal.GetValueOrDefault(), basket.BillingCurrency.ISOCode)
+                    .ToString();
+            purchaseOrderViewModel.ShippingTotal =
+                new Money(basket.ShippingTotal.GetValueOrDefault(), basket.BillingCurrency.ISOCode).ToString();
+            purchaseOrderViewModel.PaymentTotal =
+                new Money(basket.PaymentTotal.GetValueOrDefault(), basket.BillingCurrency.ISOCode).ToString();
+            purchaseOrderViewModel.OrderTotal =
+                new Money(basket.OrderTotal.GetValueOrDefault(), basket.BillingCurrency.ISOCode).ToString();
 
             return View(purchaseOrderViewModel);
         }
@@ -72,6 +83,9 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
                 Quantity = orderLine.Quantity,
                 ProductName = orderLine.ProductName,
                 Total = new Money(orderLine.Total.GetValueOrDefault(), basket.BillingCurrency.ISOCode).ToString(),
+                TotalWithDiscount =
+                    new Money(orderLine.Total.GetValueOrDefault() - orderLine.Discount, basket.BillingCurrency.ISOCode).ToString(),
+                Discount = orderLine.Discount,
                 OrderLineId = orderLine.OrderLineId
             }).ToList();
 

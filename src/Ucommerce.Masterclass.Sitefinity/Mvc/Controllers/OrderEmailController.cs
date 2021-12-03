@@ -18,27 +18,7 @@ namespace Ucommerce.Masterclass.Sitefinity.Mvc.Controllers
 
         public ActionResult Index()
         {
-            var purchaseOrder = TransactionLibrary.GetPurchaseOrder(Guid.Parse(Request.QueryString["OrderGuid"]));
-
-            return View(new PurchaseOrderViewModel()
-            {
-                TaxTotal = new Money(purchaseOrder.TaxTotal.GetValueOrDefault(), purchaseOrder.BillingCurrency.ISOCode).ToString(),
-                BillingAddress = MapAddress(purchaseOrder.BillingAddress),
-                ShippingAddress = MapAddress(purchaseOrder.Shipments.First().ShipmentAddress),
-                OrderTotal = new Money(purchaseOrder.OrderTotal.GetValueOrDefault(), purchaseOrder.BillingCurrency.ISOCode).ToString(),
-                ShippingTotal = new Money(purchaseOrder.ShippingTotal.GetValueOrDefault(), purchaseOrder.BillingCurrency.ISOCode).ToString(),
-                SubTotal = new Money(purchaseOrder.SubTotal.GetValueOrDefault(), purchaseOrder.BillingCurrency.ISOCode).ToString(),
-                OrderLines = purchaseOrder.OrderLines.Select(x => new OrderlineViewModel()
-                {
-                    Quantity = x.Quantity,
-                    ProductName = x.ProductName,
-                    OrderLineId = x.OrderLineId,
-                    Sku = x.Sku,
-                    Total = new Money(x.Total.GetValueOrDefault(), purchaseOrder.BillingCurrency.ISOCode).ToString(),
-                    UnitPrice = new Money(x.Price, purchaseOrder.BillingCurrency.ISOCode).ToString(),
-                    Tax = new Money(x.VAT, purchaseOrder.BillingCurrency.ISOCode).ToString(),
-                }).ToList()
-            });
+            return View();
         }
         
         private AddressViewModel MapAddress(OrderAddress address)

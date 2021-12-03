@@ -1,7 +1,5 @@
-﻿using System.Linq;
-using System.Web.Http;
+﻿using System.Web.Http;
 using Ucommerce.Api;
-using Ucommerce.EntitiesV2;
 using Ucommerce.Masterclass.Umbraco.Models;
 using Umbraco.Web.WebApi;
 

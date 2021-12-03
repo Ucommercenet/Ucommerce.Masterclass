@@ -16,8 +16,6 @@ namespace Ucommerce.Masterclass.Umbraco.Composers
             
             //Services for checkout
             composition.RegisterFor<Ucommerce.Api.ITransactionLibrary, Ucommerce.Api.TransactionLibrary>(x => Ucommerce.Infrastructure.ObjectFactory.Instance.Resolve<ITransactionLibrary>());
-            
-            
         }
     }
 }

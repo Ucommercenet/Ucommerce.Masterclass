@@ -12,7 +12,6 @@ using Ucommerce.Search.Facets;
 using Ucommerce.Search.Models;
 using Ucommerce.Search.Slugs;
 using Umbraco.Core;
-using Umbraco.Core.Packaging;
 using Umbraco.Web.Mvc;
 
 namespace Ucommerce.Masterclass.Umbraco.Controllers
@@ -28,17 +27,17 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
             }
 
             parameters.RemoveAll(kvp =>
-                new [] { "umbDebugShowTrace", "product", "variant", "category", "categories", "catalog"}
+                new[] { "umbDebugShowTrace", "product", "variant", "category", "categories", "catalog" }
                     .Contains(kvp.Key));
 
             var facetsForQuerying = new List<Facet>();
 
             foreach (var parameter in parameters)
             {
-                var facet = new Facet {FacetValues = new List<FacetValue>(), Name = parameter.Key};
-                foreach (var value in parameter.Value.Split(new[] {'|'}, StringSplitOptions.RemoveEmptyEntries))
+                var facet = new Facet { FacetValues = new List<FacetValue>(), Name = parameter.Key };
+                foreach (var value in parameter.Value.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries))
                 {
-                    facet.FacetValues.Add(new FacetValue() {Value = value});
+                    facet.FacetValues.Add(new FacetValue() { Value = value });
                 }
 
                 facetsForQuerying.Add(facet);
@@ -55,12 +54,12 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
         public ICatalogContext CatalogContext => ObjectFactory.Instance.Resolve<ICatalogContext>();
 
         public ITransactionLibrary TransactionLibrary => ObjectFactory.Instance.Resolve<ITransactionLibrary>();
-        
+
         public IUrlService UrlService => ObjectFactory.Instance.Resolve<IUrlService>();
 
         public CategoryController()
         {
-            
+
         }
 
         [System.Web.Mvc.HttpPost]
@@ -74,7 +73,7 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
         public ActionResult Index()
         {
             var currentCategory = CatalogContext.CurrentCategory;
-            
+
             var categoryModel = new CategoryViewModel();
 
             categoryModel.Name = currentCategory.Name;
@@ -83,11 +82,11 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
             var facetDictionary = GetFacetsDictionary();
 
             FacetResultSet<Product> facetResultSet = CatalogLibrary.GetProducts(currentCategory.Guid, facetDictionary);
-            
+
             categoryModel.Facets = MapFacets(facetResultSet.Facets);
             categoryModel.TotalProductsCount = facetResultSet.TotalCount;
             categoryModel.Products = MapProducts(facetResultSet.Results);
-            
+
             return View("/views/category/index.cshtml", categoryModel);
         }
 
@@ -114,7 +113,7 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
                         Key = facetValue.Value
                     });
                 }
-                
+
                 facetsToReturn.Add(facetsViewModel);
             }
 
@@ -124,7 +123,7 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
         private IList<ProductViewModel> MapProducts(IList<Product> products)
         {
             var prices = CatalogLibrary.CalculatePrices(products.Select(x => x.Guid).ToList());
-            
+
             return products.Select(product => new ProductViewModel()
             {
                 LongDescription = product.LongDescription,
@@ -135,7 +134,7 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
                 Name = product.DisplayName,
                 Prices = prices.Items.Where(price => price.ProductGuid == product.Guid && price.PriceGroupGuid == CatalogContext.CurrentPriceGroup.Guid).ToList(),
                 ShortDescription = product.ShortDescription,
-                Url = UrlService.GetUrl(CatalogContext.CurrentCatalog, new []{ CatalogContext.CurrentCategory }, product)
+                Url = UrlService.GetUrl(CatalogContext.CurrentCatalog, new[] { CatalogContext.CurrentCategory }, product)
             }).ToList();
         }
     }

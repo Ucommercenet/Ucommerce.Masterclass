@@ -19,7 +19,7 @@
                             @orderLine.Quantity
                         </div>
                         <div class="col-4 text-end">
-                            @if (orderLine.Discount.HasValue && orderLine.Discount > 0)
+                            @if (orderLine.Discount > 0)
                             {
                                 <span style="text-decoration: line-through">
                                     @orderLine.Total
@@ -88,7 +88,6 @@
                     </div>
                 </div>
             </div>
-            </div>
             <div class="row bg-light p-3 mt-4 me-1">
                 <legend>Billing information</legend>
                 <div class="col-6">
@@ -113,7 +112,7 @@
                 </div>
                 <div class="col-6">
                     <label class="form-label">Country</label>
-                    @Model.BillingAddress.Country
+                    @Model.BillingAddress.Country.Name
                 </div>
                 <div class="col-6">
                     <label class="form-label">Email</label>
@@ -148,7 +147,7 @@
                 </div>
                 <div class="col-6">
                     <label class="form-label">Country</label>
-                    @Model.ShippingAddress.Country
+                    @Model.ShippingAddress.Country.Name
                 </div>
                 <div class="col-6">
                     <label class="form-label">Email</label>

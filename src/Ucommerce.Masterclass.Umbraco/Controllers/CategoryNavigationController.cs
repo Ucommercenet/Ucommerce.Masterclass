@@ -1,12 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Http;
 using System.Web.Mvc;
 using Ucommerce.Api;
 using Ucommerce.Infrastructure;
 using Ucommerce.Masterclass.Umbraco.Models;
-using Ucommerce.Search;
 using Ucommerce.Search.Models;
 using Ucommerce.Search.Slugs;
 using Umbraco.Web.Mvc;
@@ -25,7 +23,7 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
         {
             var catalogContext = ObjectFactory.Instance.Resolve<ICatalogContext>();
             var catalogLibrary = ObjectFactory.Instance.Resolve<ICatalogLibrary>();
-            
+
             var model = new CategoryNavigationViewModel();
 
             model.CurrentCategoryGuid = catalogContext.CurrentCategory?.Guid ?? new Guid();
@@ -37,7 +35,7 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
         {
             var allSubCategoryIds = categories.SelectMany(cat => cat.Categories).Distinct().ToList();
             var subCategoriesById = CatalogLibrary.GetCategories(allSubCategoryIds).ToDictionary(cat => cat.Guid);
-            
+
             return categories.Select(x => new CategoryViewModel()
             {
                 Guid = x.Guid,

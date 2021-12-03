@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Http;
 using Ucommerce.Api;
 using Umbraco.Web.WebApi;

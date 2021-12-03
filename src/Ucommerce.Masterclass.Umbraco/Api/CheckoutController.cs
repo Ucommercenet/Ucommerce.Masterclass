@@ -1,7 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Http;
 using Ucommerce.Api;
-using Ucommerce.Masterclass.Umbraco.Models;
 using Umbraco.Web.WebApi;
 
 namespace Ucommerce.Masterclass.Umbraco.Api
@@ -18,7 +18,10 @@ namespace Ucommerce.Masterclass.Umbraco.Api
         [System.Web.Mvc.HttpGet]
         public IHttpActionResult GetPaymentPageUrl()
         {
-            var basket = _transactionLibrary.GetBasket();
+            var basket = _transactionLibrary.GetBasket(); 
+            
+            if (!basket.Payments.Any()) return BadRequest("Missing Payment");
+
             return Json(_transactionLibrary.GetPaymentPageUrl(basket.Payments.First()));
         }
     }

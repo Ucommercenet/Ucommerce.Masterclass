@@ -238,10 +238,20 @@
                         );
                 },
                 complete: function (e) {
-                    if (this.checkoutStepsSatisfied())
+                    if (this.checkoutStepsSatisfied()) {
                         axios.get('/umbraco/api/checkout/getpaymentpageurl').then(response => {
                             top.location.href = response.data;
-                        });
+                        }).catch(function (error) {
+                            if (error.response) {
+                                // The request was made and the server responded with a status code
+                                // that falls out of the range of 2xx
+                                alert("Please provide all information");
+                                console.log(error.response);
+                            } else {
+                                console.log('Error', error.message);
+                            }
+                        });;
+                    }
                     else
                         alert("Please provide all information");
                 },

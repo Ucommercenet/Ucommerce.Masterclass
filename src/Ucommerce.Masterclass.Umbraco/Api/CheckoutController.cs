@@ -21,20 +21,5 @@ namespace Ucommerce.Masterclass.Umbraco.Api
             var basket = _transactionLibrary.GetBasket();
             return Json(_transactionLibrary.GetPaymentPageUrl(basket.Payments.First()));
         }
-
-        private PurchaseOrderViewModel MapPurchaseOrder(Ucommerce.EntitiesV2.PurchaseOrder basket)
-        {
-            var model = new PurchaseOrderViewModel();
-
-            model.OrderLines = basket.OrderLines.Select(orderLine => new OrderlineViewModel()
-            {
-                Quantity = orderLine.Quantity,
-                ProductName = orderLine.ProductName,
-                Total = new Money(orderLine.Total.GetValueOrDefault(), basket.BillingCurrency.ISOCode).ToString(),
-                OrderLineId = orderLine.OrderLineId
-            }).ToList();
-            
-            return model;
-        }
     }
 }

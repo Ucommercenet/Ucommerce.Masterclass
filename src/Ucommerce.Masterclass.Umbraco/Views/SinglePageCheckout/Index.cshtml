@@ -181,7 +181,9 @@
             },
             complete: function (e) {
                 if (this.checkoutStepsSatisfied())
-                    axios.get('/umbraco/api/checkout/getpaymentpageurl').then(response => { top.location.href = response.data.PaymentPageUrl; });
+                    axios.get('/umbraco/api/checkout/getpaymentpageurl').then(response => {
+                        top.location.href = response.data;
+                    });
                 else
                     alert("Please provide all information");
             },

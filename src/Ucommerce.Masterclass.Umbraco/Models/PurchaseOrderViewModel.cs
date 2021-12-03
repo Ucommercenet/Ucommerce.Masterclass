@@ -7,6 +7,8 @@ namespace Ucommerce.Masterclass.Umbraco.Models
         public PurchaseOrderViewModel()
         {
             OrderLines = new List<OrderlineViewModel>();
+            BillingAddress = new AddressViewModel();
+            ShippingAddress = new AddressViewModel();
         }
 
         public AddressViewModel BillingAddress { get; set; }

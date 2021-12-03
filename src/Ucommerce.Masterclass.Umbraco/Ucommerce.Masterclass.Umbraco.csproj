@@ -327,6 +327,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\BasketController.cs" />
+    <Compile Include="Controllers\ConfirmationEmailController.cs" />
     <Compile Include="Api\PaymentMethodController.cs" />
     <Compile Include="Api\ShippingMethodController.cs" />
     <Compile Include="Api\AddressesController.cs" />
@@ -365,6 +366,7 @@
     <None Include="packages.config" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\ConfirmationEmail\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -372,6 +374,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

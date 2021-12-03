@@ -327,6 +327,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\BasketController.cs" />
+    <Compile Include="Controllers\ConfirmationController.cs" />
     <Compile Include="Controllers\ConfirmationEmailController.cs" />
     <Compile Include="Api\PaymentMethodController.cs" />
     <Compile Include="Api\ShippingMethodController.cs" />
@@ -367,6 +368,8 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\ConfirmationEmail\Index.cshtml" />
+    <Content Include="Views\Confirmation\Index.cshtml" />
+    <Content Include="Umbraco\Ucommerce\Apps\Umbraco Masterclass\MasterClassIndex.Core.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

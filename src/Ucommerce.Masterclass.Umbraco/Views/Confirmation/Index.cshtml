@@ -1,7 +1,9 @@
 ﻿@using Ucommerce
 @using Ucommerce.Catalog.Models
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+@{
+    Layout = "~/views/shared/TwoCol.cshtml";
+}
 
 <div class="container" id="app-checkout">
     <h2>Thanks for your order!</h2>
@@ -95,6 +97,5 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>

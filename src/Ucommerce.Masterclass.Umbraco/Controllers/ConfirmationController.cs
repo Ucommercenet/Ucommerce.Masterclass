@@ -12,11 +12,9 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
 {
     public class ConfirmationController : RenderMvcController
     {
-        private readonly ITransactionLibrary _transactionLibrary;
-
-        public ConfirmationController(ITransactionLibrary transactionLibrary)
+        public ConfirmationController()
         {
-            _transactionLibrary = transactionLibrary;
+
         }
 
         [System.Web.Mvc.HttpGet]
@@ -27,7 +25,7 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
             if (orderGuidParameterFromQueryString.IsNullOrWhiteSpace())
                 return View(new PurchaseOrderViewModel());
 
-            var basket = _transactionLibrary.GetPurchaseOrder(Guid.Parse(orderGuidParameterFromQueryString));
+            Ucommerce.EntitiesV2.PurchaseOrder basket = GetBasket(orderGuidParameterFromQueryString);
 
             var billingInformation = basket.GetBillingAddress();
             var shippingInformation = basket.GetShippingAddress("Shipment");
@@ -72,6 +70,11 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
                 new Money(basket.OrderTotal.GetValueOrDefault(), basket.BillingCurrency.ISOCode).ToString();
 
             return View(purchaseOrderViewModel);
+        }
+
+        private Ucommerce.EntitiesV2.PurchaseOrder GetBasket(string orderGuidParameterFromQueryString)
+        {
+            throw new NotImplementedException();
         }
 
         private PurchaseOrderViewModel MapPurchaseOrder(PurchaseOrder basket)

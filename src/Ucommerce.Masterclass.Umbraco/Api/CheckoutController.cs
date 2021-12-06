@@ -1,27 +1,30 @@
 ﻿using System.Linq;
 using System.Web.Http;
 using Ucommerce.Api;
+using Ucommerce.EntitiesV2;
 using Umbraco.Web.WebApi;
 
 namespace Ucommerce.Masterclass.Umbraco.Api
 {
     public class CheckoutController : UmbracoApiController
     {
-        private readonly ITransactionLibrary _transactionLibrary;
-
-        public CheckoutController(ITransactionLibrary transactionLibrary)
+        public CheckoutController()
         {
-            _transactionLibrary = transactionLibrary;
         }
 
         [System.Web.Mvc.HttpGet]
         public IHttpActionResult GetPaymentPageUrl()
         {
-            var basket = _transactionLibrary.GetBasket(); 
+            Ucommerce.EntitiesV2.PurchaseOrder basket = GetBasket(); 
             
             if (!basket.Payments.Any()) return BadRequest("Missing Payment");
 
             return Json("");
+        }
+
+        private PurchaseOrder GetBasket()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

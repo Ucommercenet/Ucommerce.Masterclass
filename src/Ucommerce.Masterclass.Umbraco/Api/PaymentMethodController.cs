@@ -7,11 +7,8 @@ namespace Ucommerce.Masterclass.Umbraco.Api
 {
     public class PaymentMethodController : UmbracoApiController
     {
-        private readonly ITransactionLibrary _transactionLibrary;
-
-        public PaymentMethodController(ITransactionLibrary transactionLibrary)
+        public PaymentMethodController()
         {
-            _transactionLibrary = transactionLibrary;
         }
 
         [HttpPost]

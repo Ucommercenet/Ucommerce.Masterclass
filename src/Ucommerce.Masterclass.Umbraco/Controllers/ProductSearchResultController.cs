@@ -12,18 +12,9 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
 {
     public class ProductSearchResultController : RenderMvcController
     {
-        private readonly ICatalogLibrary _catalogLibrary;
-        private readonly IUrlService _urlService;
-        private readonly ICatalogContext _catalogContext;
-        private readonly IIndex<Product> _productIndex;
-
-        public ProductSearchResultController(ICatalogLibrary catalogLibrary, IUrlService urlService, 
-            ICatalogContext catalogContext, IIndex<Ucommerce.Search.Models.Product> productIndex)
+        public ProductSearchResultController()
         {
-            _catalogLibrary = catalogLibrary;
-            _urlService = urlService;
-            _catalogContext = catalogContext;
-            _productIndex = productIndex;
+
         }
 
         public ActionResult Index()
@@ -32,7 +23,7 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
 
             var searchTerm = GetSearchTerm();
 
-            model.ProductViewModels = MapProducts(result.Results);
+            // model.ProductViewModels = MapProducts(result.Results);
 
             return View(model);
         }
@@ -44,20 +35,7 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
 
         private IList<ProductViewModel> MapProducts(IList<Product> products)
         {
-            var prices = _catalogLibrary.CalculatePrices(products.Select(x => x.Guid).ToList());
-            
-            return products.Select(product => new ProductViewModel()
-            {
-                LongDescription = product.LongDescription,
-                IsVariant = product.ProductType == ProductType.Variant,
-                Sellable = product.ProductType == ProductType.Product || product.ProductType == ProductType.Variant,
-                PrimaryImageUrl = product.PrimaryImageUrl,
-                Sku = product.Sku,
-                Name = product.DisplayName,
-                Prices = prices.Items.Where(price => price.ProductGuid == product.Guid && price.PriceGroupGuid == _catalogContext.CurrentPriceGroup.Guid).ToList(),
-                ShortDescription = product.ShortDescription,
-                Url = _urlService.GetUrl(_catalogContext.CurrentCatalog, product)
-            }).ToList();
+            return new List<ProductViewModel>();
         }
     }
 }

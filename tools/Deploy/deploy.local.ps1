@@ -1,9 +1,5 @@
 # Website root folder (website is deployed here)
-<<<<<<< HEAD
 $website_root = "C:\inetpub\u8\website"
-=======
-$website_root = "C:\inetpub\u8\website\CMS"
->>>>>>> masterclass-complete
 
 # Temporarily change to the correct folder containing script
 $scriptPath = (Get-Variable MyInvocation -Scope Script).Value.MyCommand.Path

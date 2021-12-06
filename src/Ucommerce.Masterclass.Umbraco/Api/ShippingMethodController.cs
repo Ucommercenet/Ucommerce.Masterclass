@@ -24,7 +24,7 @@ namespace Ucommerce.Masterclass.Umbraco.Api
                 return Ok();
             }
 
-            return InternalServerError();
+            return BadRequest("Missing Shipping method");
         }
     }
 }

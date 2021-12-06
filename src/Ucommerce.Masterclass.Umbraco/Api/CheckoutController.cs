@@ -21,7 +21,7 @@ namespace Ucommerce.Masterclass.Umbraco.Api
             
             if (!basket.Payments.Any()) return BadRequest("Missing Payment");
 
-            return Json(_transactionLibrary.GetPaymentPageUrl(basket.Payments.First()));
+            return Json("");
         }
     }
 }

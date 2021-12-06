@@ -27,18 +27,7 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
         [System.Web.Mvc.HttpGet]
         public ActionResult Index()
         {
-            //TODO: Task 01 - Fetch and present the current Product
-            var currentProduct = _catalogContext.CurrentProduct;
-
             var productModel = new ProductViewModel();
-            productModel.PrimaryImageUrl = currentProduct.PrimaryImageUrl;
-            productModel.Name = currentProduct.DisplayName;
-            productModel.Sku = currentProduct.Sku;
-
-            productModel.Prices = _catalogLibrary.CalculatePrices(new List<Guid>() { currentProduct.Guid }).Items;
-
-            //TODO: Task 02 - Ensure your code accounts for product Families
-            productModel.Variants = MapVariants(_catalogLibrary.GetVariants(currentProduct));
             
             return View(productModel);
         }
@@ -46,18 +35,12 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
         [System.Web.Mvc.HttpPost]
         public ActionResult Index(string sku, string variantSku, int quantity)
         {
-            _transactionLibrary.AddToBasket(quantity, sku, variantSku);
             return Index();
         }
 
         private IList<ProductViewModel> MapVariants(ResultSet<Product> variants)
         {
-            return variants.Select(x =>
-                 new ProductViewModel
-                 {
-                     Name = x.DisplayName,
-                     VariantSku = x.VariantSku
-                 }).ToList();
+            throw new NotImplementedException();
         }
     }
 }

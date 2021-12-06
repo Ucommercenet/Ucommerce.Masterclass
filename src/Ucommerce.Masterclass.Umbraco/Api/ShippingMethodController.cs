@@ -19,8 +19,6 @@ namespace Ucommerce.Masterclass.Umbraco.Api
         {
             if (checkoutViewModel?.ShippingViewModel?.SelectedShippingMethod?.ShippingMethodId != null)
             {
-                _transactionLibrary.CreateShipment(checkoutViewModel.ShippingViewModel.SelectedShippingMethod.ShippingMethodId, Constants.DefaultShipmentAddressName, true);
-                
                 return Ok();
             }
 

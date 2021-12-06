@@ -32,15 +32,6 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
 
             var searchTerm = GetSearchTerm();
 
-            var result = _productIndex.Find<Ucommerce.Search.Models.Product>()
-                .Where(
-                    x =>
-                        x.LongDescription == Match.FullText(searchTerm) ||
-                        x.Name == Match.Wildcard($"*{searchTerm}*") ||
-                        x.Sku == Match.Literal(searchTerm) ||
-                        x.Name == Match.Literal(searchTerm) ||
-                        x.DisplayName == Match.Wildcard($"*{searchTerm}*")).ToList();
-
             model.ProductViewModels = MapProducts(result.Results);
 
             return View(model);

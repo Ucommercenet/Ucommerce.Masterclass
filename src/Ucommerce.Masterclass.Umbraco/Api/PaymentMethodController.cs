@@ -19,8 +19,6 @@ namespace Ucommerce.Masterclass.Umbraco.Api
         {
             if (checkoutViewModel?.PaymentViewModel?.SelectedPaymentMethod?.PaymentMethodId != null)
             {
-                _transactionLibrary.CreatePayment(checkoutViewModel.PaymentViewModel.SelectedPaymentMethod.PaymentMethodId);
-               
                 return Ok();
             }
 

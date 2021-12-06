@@ -32,8 +32,6 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
 
             var searchTerm = GetSearchTerm();
 
-            model.ProductViewModels = MapProducts(result.Results);
-
             return View(model);
         }
 

@@ -27,6 +27,7 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
         [System.Web.Mvc.HttpGet]
         public ActionResult Index()
         {
+            //TODO: Task 01 - Fetch and present the current Product
             var currentProduct = _catalogContext.CurrentProduct;
 
             var productModel = new ProductViewModel();
@@ -35,7 +36,10 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
             productModel.Sku = currentProduct.Sku;
 
             productModel.Prices = _catalogLibrary.CalculatePrices(new List<Guid>() { currentProduct.Guid }).Items;
+
+            //TODO: Task 02 - Ensure your code accounts for product Families
             productModel.Variants = MapVariants(_catalogLibrary.GetVariants(currentProduct));
+            
             return View(productModel);
         }
 

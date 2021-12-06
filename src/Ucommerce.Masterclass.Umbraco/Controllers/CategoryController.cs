@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Web.Mvc;
 using Ucommerce.Api;
-using Ucommerce.Infrastructure;
 using Ucommerce.Masterclass.Umbraco.Extensions;
 using Ucommerce.Masterclass.Umbraco.Models;
 using Ucommerce.Search.Extensions;
@@ -30,6 +29,7 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
         [System.Web.Mvc.HttpGet]
         public ActionResult Index()
         {
+            //TODO: Task 01: Present the category
             var currentCategory = _catalogContext.CurrentCategory;
 
             var categoryModel = new CategoryViewModel();
@@ -43,12 +43,14 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
 
             categoryModel.Facets = MapFacets(facetResultSet.Facets);
             categoryModel.TotalProductsCount = facetResultSet.TotalCount;
+
+            //TODO: Task 02: Present the product within the current category
             categoryModel.Products = MapProducts(facetResultSet.Results);
 
             return View("/views/category/index.cshtml", categoryModel);
         }
 
-        private static FacetDictionary GetFacetsDictionary()
+        private FacetDictionary GetFacetsDictionary()
         {
             return System.Web.HttpContext.Current.Request.QueryString.ToFacets().ToFacetDictionary();
         }

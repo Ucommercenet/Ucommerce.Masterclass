@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using Ucommerce.Api;
+using Ucommerce.Infrastructure;
 using Ucommerce.Masterclass.Umbraco.Extensions;
 using Ucommerce.Masterclass.Umbraco.Models;
 using Ucommerce.Search.Extensions;
@@ -16,23 +17,14 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
     {
         private readonly ICatalogLibrary _catalogLibrary;
         private readonly ICatalogContext _catalogContext;
-        private readonly ITransactionLibrary _transactionLibrary;
         private readonly IUrlService _urlService;
 
         public CategoryController(ICatalogLibrary catalogLibrary, ICatalogContext catalogContext,
-            ITransactionLibrary transactionLibrary, IUrlService urlService)
+            IUrlService urlService)
         {
             _catalogLibrary = catalogLibrary;
             _catalogContext = catalogContext;
-            _transactionLibrary = transactionLibrary;
             _urlService = urlService;
-        }
-
-        [System.Web.Mvc.HttpPost]
-        public ActionResult Index(string sku)
-        {
-            _transactionLibrary.AddToBasket(1, sku);
-            return Index();
         }
 
         [System.Web.Mvc.HttpGet]

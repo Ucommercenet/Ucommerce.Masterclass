@@ -396,7 +396,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\ConfirmationEmail\Index.cshtml" />
     <Content Include="Views\Confirmation\Index.cshtml" />
-    <Content Include="Umbraco\Ucommerce\Apps\Umbraco Masterclass\MasterClassIndex.Core.config" />
+    <Content Include="Umbraco\Ucommerce\Apps\Umbraco Masterclass\MasterClassIndex.AbsoluteUrlService.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

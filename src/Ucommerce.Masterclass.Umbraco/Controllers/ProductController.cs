@@ -13,32 +13,36 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
 {
     public class ProductController : RenderMvcController
     {
-        public ICatalogContext CatalogContext => ObjectFactory.Instance.Resolve<ICatalogContext>();
+        private readonly ICatalogContext _catalogContext;
+        private readonly ICatalogLibrary _catalogLibrary;
+        private readonly ITransactionLibrary _transactionLibrary;
 
-        public ICatalogLibrary CatalogLibrary => ObjectFactory.Instance.Resolve<ICatalogLibrary>();
-
-        public ITransactionLibrary TransactionLibrary => ObjectFactory.Instance.Resolve<ITransactionLibrary>();
-
+        public ProductController(ICatalogContext catalogContext, ICatalogLibrary catalogLibrary, ITransactionLibrary transactionLibrary )
+        {
+            _catalogContext = catalogContext;
+            _catalogLibrary = catalogLibrary;
+            _transactionLibrary = transactionLibrary;
+        }
 
         [System.Web.Mvc.HttpGet]
         public ActionResult Index()
         {
-            var currentProduct = CatalogContext.CurrentProduct;
+            var currentProduct = _catalogContext.CurrentProduct;
 
             var productModel = new ProductViewModel();
             productModel.PrimaryImageUrl = currentProduct.PrimaryImageUrl;
             productModel.Name = currentProduct.DisplayName;
             productModel.Sku = currentProduct.Sku;
 
-            productModel.Prices = CatalogLibrary.CalculatePrices(new List<Guid>() { currentProduct.Guid }).Items;
-            productModel.Variants = MapVariants(CatalogLibrary.GetVariants(currentProduct));
+            productModel.Prices = _catalogLibrary.CalculatePrices(new List<Guid>() { currentProduct.Guid }).Items;
+            productModel.Variants = MapVariants(_catalogLibrary.GetVariants(currentProduct));
             return View(productModel);
         }
 
         [System.Web.Mvc.HttpPost]
         public ActionResult Index(string sku, string variantSku, int quantity)
         {
-            TransactionLibrary.AddToBasket(quantity, sku, variantSku);
+            _transactionLibrary.AddToBasket(quantity, sku, variantSku);
             return Index();
         }
 

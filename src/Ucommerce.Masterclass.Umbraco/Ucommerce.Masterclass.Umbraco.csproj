@@ -371,6 +371,7 @@
     <Compile Include="Controllers\SinglePageCheckoutController.cs" />
     <Compile Include="Controllers\ProductSearchController.cs" />
     <Compile Include="Controllers\ProductSearchResultController.cs" />
+    <Compile Include="Extensions\FacetedQueryStringExtensions.cs" />
     <Compile Include="IndexDefinitions\MasterclassIndexDefinition.cs" />
     <Compile Include="Models\AddressViewModel.cs" />
     <Compile Include="Models\CategoryNavigationViewModel.cs" />

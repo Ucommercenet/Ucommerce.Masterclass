@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Web.Mvc;
 using Ucommerce.Api;
-using Ucommerce.Infrastructure;
 using Ucommerce.Masterclass.Umbraco.Extensions;
 using Ucommerce.Masterclass.Umbraco.Models;
 using Ucommerce.Search.Extensions;
@@ -15,25 +14,31 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
 {
     public class CategoryController : RenderMvcController
     {
-        public ICatalogLibrary CatalogLibrary => ObjectFactory.Instance.Resolve<ICatalogLibrary>();
+        private readonly ICatalogLibrary _catalogLibrary;
+        private readonly ICatalogContext _catalogContext;
+        private readonly ITransactionLibrary _transactionLibrary;
+        private readonly IUrlService _urlService;
 
-        public ICatalogContext CatalogContext => ObjectFactory.Instance.Resolve<ICatalogContext>();
-
-        public ITransactionLibrary TransactionLibrary => ObjectFactory.Instance.Resolve<ITransactionLibrary>();
-
-        public IUrlService UrlService => ObjectFactory.Instance.Resolve<IUrlService>();
+        public CategoryController(ICatalogLibrary catalogLibrary, ICatalogContext catalogContext,
+            ITransactionLibrary transactionLibrary, IUrlService urlService)
+        {
+            _catalogLibrary = catalogLibrary;
+            _catalogContext = catalogContext;
+            _transactionLibrary = transactionLibrary;
+            _urlService = urlService;
+        }
 
         [System.Web.Mvc.HttpPost]
         public ActionResult Index(string sku)
         {
-            TransactionLibrary.AddToBasket(1, sku);
+            _transactionLibrary.AddToBasket(1, sku);
             return Index();
         }
 
         [System.Web.Mvc.HttpGet]
         public ActionResult Index()
         {
-            var currentCategory = CatalogContext.CurrentCategory;
+            var currentCategory = _catalogContext.CurrentCategory;
 
             var categoryModel = new CategoryViewModel();
 
@@ -42,7 +47,7 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
 
             var facetDictionary = GetFacetsDictionary();
 
-            FacetResultSet<Product> facetResultSet = CatalogLibrary.GetProducts(currentCategory.Guid, facetDictionary);
+            FacetResultSet<Product> facetResultSet = _catalogLibrary.GetProducts(currentCategory.Guid, facetDictionary);
 
             categoryModel.Facets = MapFacets(facetResultSet.Facets);
             categoryModel.TotalProductsCount = facetResultSet.TotalCount;
@@ -83,7 +88,7 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
 
         private IList<ProductViewModel> MapProducts(IList<Product> products)
         {
-            var prices = CatalogLibrary.CalculatePrices(products.Select(x => x.Guid).ToList());
+            var prices = _catalogLibrary.CalculatePrices(products.Select(x => x.Guid).ToList());
 
             return products.Select(product => new ProductViewModel()
             {
@@ -93,9 +98,9 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
                 PrimaryImageUrl = product.PrimaryImageUrl,
                 Sku = product.Sku,
                 Name = product.DisplayName,
-                Prices = prices.Items.Where(price => price.ProductGuid == product.Guid && price.PriceGroupGuid == CatalogContext.CurrentPriceGroup.Guid).ToList(),
+                Prices = prices.Items.Where(price => price.ProductGuid == product.Guid && price.PriceGroupGuid == _catalogContext.CurrentPriceGroup.Guid).ToList(),
                 ShortDescription = product.ShortDescription,
-                Url = UrlService.GetUrl(CatalogContext.CurrentCatalog, new[] { CatalogContext.CurrentCategory }, product)
+                Url = _urlService.GetUrl(_catalogContext.CurrentCatalog, new[] { _catalogContext.CurrentCategory }, product)
             }).ToList();
         }
     }

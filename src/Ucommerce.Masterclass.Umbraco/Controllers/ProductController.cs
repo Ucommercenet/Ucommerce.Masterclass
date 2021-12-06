@@ -13,15 +13,9 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
 {
     public class ProductController : RenderMvcController
     {
-        private readonly ICatalogContext _catalogContext;
-        private readonly ICatalogLibrary _catalogLibrary;
-        private readonly ITransactionLibrary _transactionLibrary;
-
-        public ProductController(ICatalogContext catalogContext, ICatalogLibrary catalogLibrary, ITransactionLibrary transactionLibrary )
+        public ProductController()
         {
-            _catalogContext = catalogContext;
-            _catalogLibrary = catalogLibrary;
-            _transactionLibrary = transactionLibrary;
+
         }
 
         [System.Web.Mvc.HttpGet]

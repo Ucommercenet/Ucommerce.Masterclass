@@ -16,16 +16,9 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
 {
     public class CategoryController : RenderMvcController
     {
-        private readonly ICatalogLibrary _catalogLibrary;
-        private readonly ICatalogContext _catalogContext;
-        private readonly IUrlService _urlService;
-
-        public CategoryController(ICatalogLibrary catalogLibrary, ICatalogContext catalogContext,
-            IUrlService urlService)
+        public CategoryController()
         {
-            _catalogLibrary = catalogLibrary;
-            _catalogContext = catalogContext;
-            _urlService = urlService;
+
         }
 
         [System.Web.Mvc.HttpGet]

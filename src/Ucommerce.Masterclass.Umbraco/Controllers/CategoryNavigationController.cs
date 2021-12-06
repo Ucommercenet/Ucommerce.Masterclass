@@ -12,15 +12,9 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
 {
     public class CategoryNavigationController : SurfaceController
     {
-        private readonly ICatalogLibrary _catalogLibrary;
-        private readonly IUrlService _urlService;
-        private readonly ICatalogContext _catalogContext;
-
-        public CategoryNavigationController(ICatalogLibrary catalogLibrary, IUrlService urlService, ICatalogContext catalogContext)
+        public CategoryNavigationController()
         {
-            _catalogLibrary = catalogLibrary;
-            _urlService = urlService;
-            _catalogContext = catalogContext;
+
         }
 
         public ActionResult CategoryNavigation()

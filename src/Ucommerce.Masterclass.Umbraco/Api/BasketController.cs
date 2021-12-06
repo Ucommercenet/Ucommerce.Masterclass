@@ -12,11 +12,8 @@ namespace Ucommerce.Masterclass.Umbraco.Api
 {
     public class BasketController : UmbracoApiController
     {
-        private readonly ITransactionLibrary _transactionLibrary;
-
-        public BasketController(ITransactionLibrary transactionLibrary)
+        public BasketController()
         {
-            _transactionLibrary = transactionLibrary;
         }
 
         public CheckoutViewModel Get()

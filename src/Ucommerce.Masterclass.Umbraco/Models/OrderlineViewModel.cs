@@ -15,5 +15,7 @@ namespace Ucommerce.Masterclass.Umbraco.Models
         public string ProductName { get; set; }
         public string UnitPrice { get; set; }
         public string Tax { get; set; }
+        public string TotalWithDiscount { get; set; }
+        public decimal Discount { get; set; }
     }
 }

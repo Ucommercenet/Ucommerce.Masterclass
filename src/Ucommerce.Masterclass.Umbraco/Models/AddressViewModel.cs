@@ -2,6 +2,10 @@ namespace Ucommerce.Masterclass.Umbraco.Models
 {
     public class AddressViewModel
     {
+        public AddressViewModel()
+        {
+            Country = new CountryViewModel();
+        }
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
@@ -26,8 +30,6 @@ namespace Ucommerce.Masterclass.Umbraco.Models
 
         public string CompanyName { get; set; }
 
-        public int CountryId { get; set; }
-        
-        public string CountryName { get; set; }
+        public CountryViewModel Country { get; set; }
     }
 }

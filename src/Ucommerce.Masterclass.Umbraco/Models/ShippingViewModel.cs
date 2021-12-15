@@ -7,10 +7,10 @@ namespace Ucommerce.Masterclass.Umbraco.Models
     {
         public ShippingViewModel()
         {
-            AvailableShippingMethods = new List<SelectListItem>();
+            AvailableShippingMethods = new List<ShippingMethodViewModel>();
         }
-        public IList<SelectListItem> AvailableShippingMethods { get; set; }
+        public IList<ShippingMethodViewModel> AvailableShippingMethods { get; set; }
 
-        public int SelectedShippingMethodId { get; set; }
+        public ShippingMethodViewModel SelectedShippingMethod { get; set; }
     }
 }

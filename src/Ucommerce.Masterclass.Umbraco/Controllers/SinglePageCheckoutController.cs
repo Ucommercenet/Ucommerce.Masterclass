@@ -3,7 +3,7 @@ using Umbraco.Web.Mvc;
 
 namespace Ucommerce.Masterclass.Umbraco.Controllers
 {
-    public class OrderPlacedController : RenderMvcController 
+    public class SinglePageCheckoutController : RenderMvcController
     {
         public ActionResult Index()
         {

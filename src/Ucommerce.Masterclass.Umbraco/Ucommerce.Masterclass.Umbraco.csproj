@@ -269,41 +269,53 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="Ucommerce, Version=9.5.2.21284, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Ucommerce, Version=9.5.2.21284, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\uCommerce.Core.9.5.2.21284\lib\net45\Ucommerce.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Ucommerce.Admin, Version=9.5.2.21284, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Ucommerce.Admin, Version=9.5.2.21284, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\uCommerce.Core.9.5.2.21284\lib\net45\Ucommerce.Admin.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Ucommerce.Api, Version=9.5.2.21284, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Ucommerce.Api, Version=9.5.2.21284, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\uCommerce.Core.9.5.2.21284\lib\net45\Ucommerce.Api.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Ucommerce.Infrastructure, Version=9.5.2.21284, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Ucommerce.Infrastructure, Version=9.5.2.21284, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\uCommerce.Core.9.5.2.21284\lib\net45\Ucommerce.Infrastructure.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Ucommerce.Installer, Version=9.5.2.21284, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Ucommerce.Installer, Version=9.5.2.21284, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\uCommerce.Core.9.5.2.21284\lib\net45\Ucommerce.Installer.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Ucommerce.NHibernate, Version=9.5.2.21284, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Ucommerce.NHibernate, Version=9.5.2.21284, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\uCommerce.Core.9.5.2.21284\lib\net45\Ucommerce.NHibernate.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Ucommerce.Pipelines, Version=9.5.2.21284, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Ucommerce.Pipelines, Version=9.5.2.21284, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\uCommerce.Core.9.5.2.21284\lib\net45\Ucommerce.Pipelines.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Ucommerce.Presentation, Version=9.5.2.21284, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Ucommerce.Presentation, Version=9.5.2.21284, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\uCommerce.Core.9.5.2.21284\lib\net45\Ucommerce.Presentation.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Ucommerce.Search, Version=9.5.2.21284, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Ucommerce.Search, Version=9.5.2.21284, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\uCommerce.Core.9.5.2.21284\lib\net45\Ucommerce.Search.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Ucommerce.SqlMultiReaderConnector, Version=9.5.2.21284, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Ucommerce.SqlMultiReaderConnector, Version=9.5.2.21284, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\uCommerce.Core.9.5.2.21284\lib\net45\Ucommerce.SqlMultiReaderConnector.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Ucommerce.SystemHttp, Version=9.5.2.21284, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Ucommerce.SystemHttp, Version=9.5.2.21284, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\uCommerce.Core.9.5.2.21284\lib\net45\Ucommerce.SystemHttp.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Ucommerce.SystemWeb, Version=9.5.2.21284, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Ucommerce.SystemWeb, Version=9.5.2.21284, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\uCommerce.Core.9.5.2.21284\lib\net45\Ucommerce.SystemWeb.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Umbraco.Core, Version=8.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\UmbracoCms.Core.8.17.1\lib\net472\Umbraco.Core.dll</HintPath>
@@ -329,15 +341,9 @@
   <ItemGroup>
     <Content Include="Css\style.css" />
     <Content Include="Umbraco\Ucommerce\Apps\Umbraco Masterclass\MasterClassIndexDefinitions.config" />
-    <Content Include="Views\OrderConfirmation\Index.cshtml" />
-    <Content Include="Views\OrderPlaced\Index.cshtml" />
-    <Content Include="Views\Basket\Index.cshtml" />
-    <Content Include="Views\Billing\Index.cshtml" />
     <Content Include="Views\CategoryNavigation\Index.cshtml" />
     <Content Include="Views\Category\Index.cshtml" />
     <Content Include="Views\MiniBasket\Index.cshtml" />
-    <Content Include="Views\Payment\Index.cshtml" />
-    <Content Include="Views\CheckoutPreview\Index.cshtml" />
     <Content Include="Views\ProductSearchResult\Index.cshtml" />
     <Content Include="Views\ProductSearch\Index.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
@@ -345,44 +351,52 @@
     <Content Include="Views\Shared\Email.cshtml" />
     <Content Include="Views\Shared\TwoCol.cshtml" />
     <Content Include="Views\Shared\_Email.cshtml" />
-    <Content Include="Views\Shipping\Index.cshtml" />
+    <Content Include="Views\SinglePageCheckout\Index.cshtml" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\BasketController.cs" />
+    <Compile Include="Controllers\ConfirmationController.cs" />
+    <Compile Include="Controllers\ConfirmationEmailController.cs" />
+    <Compile Include="Api\PaymentMethodController.cs" />
+    <Compile Include="Api\ShippingMethodController.cs" />
+    <Compile Include="Api\AddressesController.cs" />
+    <Compile Include="Api\CheckoutController.cs" />
     <Compile Include="Composers\UcommerceComposer.cs" />
-    <Compile Include="Controllers\BasketController.cs" />
-    <Compile Include="Controllers\BillingController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CategoryNavigationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MiniBasketController.cs" />
-    <Compile Include="Controllers\OrderConfirmationController.cs" />
-    <Compile Include="Controllers\OrderPlacedController.cs" />
-    <Compile Include="Controllers\PaymentController.cs" />
-    <Compile Include="Controllers\CheckoutPreviewController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\SinglePageCheckoutController.cs" />
     <Compile Include="Controllers\ProductSearchController.cs" />
     <Compile Include="Controllers\ProductSearchResultController.cs" />
-    <Compile Include="Controllers\ShippingController.cs" />
+    <Compile Include="Extensions\FacetedQueryStringExtensions.cs" />
     <Compile Include="IndexDefinitions\MasterclassIndexDefinition.cs" />
-    <Compile Include="Models\AddressDetailsViewModel.cs" />
     <Compile Include="Models\AddressViewModel.cs" />
-    <Compile Include="Models\AddToBasketViewModel.cs" />
     <Compile Include="Models\CategoryNavigationViewModel.cs" />
     <Compile Include="Models\CategoryViewModel.cs" />
+    <Compile Include="Models\CheckoutViewModel.cs" />
+    <Compile Include="Models\CountryViewModel.cs" />
     <Compile Include="Models\FacetsViewModel.cs" />
     <Compile Include="Models\MiniBasketViewModel.cs" />
     <Compile Include="Models\OrderlineViewModel.cs" />
+    <Compile Include="Models\PaymentMethodViewModel.cs" />
     <Compile Include="Models\PaymentViewModel.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
     <Compile Include="Models\PurchaseOrderViewModel.cs" />
+    <Compile Include="Models\ShippingMethodViewModel.cs" />
     <Compile Include="Models\ShippingViewModel.cs" />
+    <Compile Include="Models\UpdateOrderLineRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\ConfirmationEmail\Index.cshtml" />
+    <Content Include="Views\Confirmation\Index.cshtml" />
+    <Content Include="Umbraco\Ucommerce\Apps\Umbraco Masterclass\MasterClassIndex.AbsoluteUrlService.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -390,6 +404,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

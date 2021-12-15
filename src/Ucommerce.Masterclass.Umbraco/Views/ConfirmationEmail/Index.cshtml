@@ -1,0 +1,164 @@
+﻿@using Ucommerce
+@using Ucommerce.Catalog.Models
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+
+<div class="container" id="app-checkout">
+    <h2>Thanks for your order!</h2>
+    <div class="row mt-4">
+        <div class="col-8">
+            <div class="row bg-light p-3 me-1">
+                <legend>Basket</legend>
+                <div class="row" v-for="">
+                    @foreach (var orderLine in Model.OrderLines)
+                    {
+                        <div class="col-4">
+                            @orderLine.ProductName
+                        </div>
+                        <div class="col-4 text-center">
+                            @orderLine.Quantity
+                        </div>
+                        <div class="col-4 text-end">
+                            @if (orderLine.Discount > 0)
+                            {
+                                <span style="text-decoration: line-through">
+                                    @orderLine.Total
+                                </span>
+                                @orderLine.TotalWithDiscount
+                            }
+                            else
+                            {
+                                @orderLine.Total
+                            }
+                        </div>
+                    }
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        Sub total
+                    </div>
+                    <div class="col-4"></div>
+                    <div class="col-4 text-end">
+                        {{ CheckoutModel.SubTotal }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        VAT
+                    </div>
+                    <div class="col-4"></div>
+                    <div class="col-4 text-end">
+                        {{ CheckoutModel.TaxTotal }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        Discounts
+                    </div>
+                    <div class="col-4"></div>
+                    <div class="col-4 text-end">
+                        {{ CheckoutModel.Discount }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        Shipping Total
+                    </div>
+                    <div class="col-4"></div>
+                    <div class="col-4 text-end">
+                        {{ CheckoutModel.ShippingTotal }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        Payment Total
+                    </div>
+                    <div class="col-4"></div>
+                    <div class="col-4 text-end">
+                        {{ CheckoutModel.PaymentTotal }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        Order Total
+                    </div>
+                    <div class="col-4"></div>
+                    <div class="col-4 text-end">
+                        {{ CheckoutModel.OrderTotal }}
+                    </div>
+                </div>
+            </div>
+            <div class="row bg-light p-3 mt-4 me-1">
+                <legend>Billing information</legend>
+                <div class="col-6">
+                    <label class="form-label">First name:</label>
+                    @Model.BillingAddress.FirstName
+                </div>
+                <div class="col-6">
+                    <label class="form-label">Last name</label>
+                    @Model.BillingAddress.LastName
+                </div>
+                <div class="col-6">
+                    <label class="form-label">Address</label>
+                    @Model.BillingAddress.Line1
+                </div>
+                <div class="col-6">
+                    <label class="form-label">City</label>
+                    @Model.BillingAddress.City
+                </div>
+                <div class="col-6">
+                    <label class="form-label">Postal Code</label>
+                    @Model.BillingAddress.PostalCode
+                </div>
+                <div class="col-6">
+                    <label class="form-label">Country</label>
+                    @Model.BillingAddress.Country.Name
+                </div>
+                <div class="col-6">
+                    <label class="form-label">Email</label>
+                    @Model.BillingAddress.EmailAddress
+                </div>
+                <div class="col-6">
+                    <label class="form-label">Phone</label>
+                    @Model.BillingAddress.PhoneNumber
+                </div>
+            </div>
+            <div class="row bg-light p-3 mt-4 me-1">
+                <legend>Shipping information</legend>
+                <div class="col-6">
+                    <label class="form-label">First name</label>
+                    @Model.ShippingAddress.FirstName
+                </div>
+                <div class="col-6">
+                    <label class="form-label">Last name</label>
+                    @Model.ShippingAddress.LastName
+                </div>
+                <div class="col-6">
+                    <label class="form-label">Address</label>
+                    @Model.ShippingAddress.Line1
+                </div>
+                <div class="col-6">
+                    <label class="form-label">City</label>
+                    @Model.ShippingAddress.City
+                </div>
+                <div class="col-6">
+                    <label class="form-label">Postal Code</label>
+                    @Model.ShippingAddress.PostalCode
+                </div>
+                <div class="col-6">
+                    <label class="form-label">Country</label>
+                    @Model.ShippingAddress.Country.Name
+                </div>
+                <div class="col-6">
+                    <label class="form-label">Email</label>
+                    @Model.ShippingAddress.EmailAddress
+                </div>
+                <div class="col-6">
+                    <label class="form-label">Phone</label>
+                    @Model.ShippingAddress.PhoneNumber
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

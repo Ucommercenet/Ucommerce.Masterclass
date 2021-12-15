@@ -28,8 +28,18 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
 
             return View("/views/category/index.cshtml", categoryModel);
         }
+        
+        private FacetDictionary GetFacetsDictionary()
+        {
+            return System.Web.HttpContext.Current.Request.QueryString.ToFacets().ToFacetDictionary();
+        }
 
         private IList<ProductViewModel> MapProducts(IList<Product> products)
+        {
+            throw new NotImplementedException();
+        }
+
+        private IList<FacetsViewModel> MapFacets(IList<Facet> facets)
         {
             throw new NotImplementedException();
         }

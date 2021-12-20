@@ -3,6 +3,20 @@ using System.Collections.Generic;
 
 namespace Ucommerce.Masterclass.Umbraco.Models
 {
+    public class LoginViewModel
+    {
+        public bool IsLoggedIn { get; set; }
+        
+        public string UserName { get; set; }
+    }
+
+    public class LoginRequestViewModel
+    {
+        public string Username { get; set; }
+        
+        public string Password { get; set; }
+    }
+    
     public class CategoryViewModel
     {
         public CategoryViewModel()

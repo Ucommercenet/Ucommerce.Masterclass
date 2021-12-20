@@ -1,18 +1,27 @@
-﻿@model TModel
-
+﻿@using Umbraco.Web
+@model Ucommerce.Masterclass.Umbraco.Models.LoginViewModel
 @{
-    Layout = null;
+    string status = Model.IsLoggedIn ? Model.UserName : "Login";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <title>title</title>
-</head>
-<body>
-<div>
-      
+<div class="dropdown">
+    <button class="dropdown-toggle btn btn-link text-white" type="button" id="LoginButton" data-bs-toggle="dropdown" aria-expanded="false">
+        @status
+    </button>
+    <div class="dropdown-menu row" aria-labelledby="LoginButton">
+        @using (Html.BeginUmbracoForm("Post", "LoginNavigation"))
+        {
+            <div class="col-12">
+                <label for="userName" class="form-label">Username</label>
+                <input type="text" class="form-control" id="userName" name="Username" />
+            </div>
+            <div class="col-12">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" name="Password" id="password" />
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+        }
+    </div>
 </div>
-</body>
-</html>

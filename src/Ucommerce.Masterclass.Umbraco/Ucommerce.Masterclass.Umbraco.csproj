@@ -343,6 +343,7 @@
     <Content Include="Umbraco\Ucommerce\Apps\Umbraco Masterclass\MasterClassIndexDefinitions.config" />
     <Content Include="Views\CategoryNavigation\Index.cshtml" />
     <Content Include="Views\Category\Index.cshtml" />
+    <Content Include="Views\LoginNavigation\index.cshtml" />
     <Content Include="Views\MiniBasket\Index.cshtml" />
     <Content Include="Views\ProductSearchResult\Index.cshtml" />
     <Content Include="Views\ProductSearch\Index.cshtml" />
@@ -366,6 +367,7 @@
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CategoryNavigationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginNavigationController.cs" />
     <Compile Include="Controllers\MiniBasketController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\SinglePageCheckoutController.cs" />
@@ -404,7 +406,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

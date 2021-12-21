@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using Ucommerce.Masterclass.Umbraco.Models;
 using Umbraco.Web.Mvc;
 
@@ -21,6 +22,13 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
         public ActionResult Post(LoginRequestViewModel request)
         {
             Members.Login(request.Username, request.Password);
+            return RedirectToCurrentUmbracoPage();
+        }
+
+        [HttpPost]
+        public ActionResult Logout()
+        {
+            Members.Logout();
             return RedirectToCurrentUmbracoPage();
         }
     }

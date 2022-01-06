@@ -187,87 +187,100 @@
     </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
-    <script>
-        var app = new Vue({
-            el: '#app-checkout',
-            data: {
-                CheckoutModel: {
-                    PurchaseOrderViewModel: {},
-                    AddressViewModel: {},
-                    ShippingAddressViewModel: {},
-                    ShippingViewModel: {},
-                    PaymentViewModel: {},
-                    DifferentShippingAddress: false
-                }
-            },
-            methods: {
-                refreshBasket: function () {
-                    axios.get('/umbraco/api/basket/get', this.CheckoutModel).then(response => {
-                        this.CheckoutModel = response.data;
-                    });
-                },
-                updateShippingAddress: function () {
-                    axios.post('/umbraco/api/addresses/updateShipping', this.CheckoutModel.ShippingAddressViewModel).then(response => {
-                        this.refreshBasket();
-                    });
-                },
-                updateBillingAddress: function () {
-                    axios.post('/umbraco/api/addresses/updateBilling', this.CheckoutModel.AddressViewModel).then(response => {
-                        this.refreshBasket();
-                    });
-
-                    if (!this.CheckoutModel.DifferentShippingAddress)
-                        axios.post('/umbraco/api/addresses/updateShipping', this.CheckoutModel.AddressViewModel).then(response => {
-                            this.refreshBasket();
-                        });
-                },
-                updateShippingMethod: function () {
-                    axios.post('/umbraco/api/shippingMethod/update', this.CheckoutModel).then(response => {
-                        this.refreshBasket();
-                    });
-                },
-                updatePaymentMethod: function () {
-                    axios.post('/umbraco/api/paymentMethod/update', this.CheckoutModel).then(response => {
-                        this.refreshBasket();
-                    });
-                },
-                checkoutStepsSatisfied: function () {
-                    return Object.values(this.CheckoutModel)
-                        .every(step =>
-                            typeof step != "undefined"
-                        );
-                },
-                complete: function (e) {
-                    if (this.checkoutStepsSatisfied()) {
-                        axios.get('/umbraco/api/checkout/getpaymentpageurl').then(response => {
-                            top.location.href = response.data;
-                        }).catch(function (error) {
-                            if (error.response) {
-                                // The request was made and the server responded with a status code
-                                // that falls out of the range of 2xx
-                                alert("Please provide all information");
-                                console.log(error.response);
-                            } else {
-                                console.log('Error', error.message);
-                            }
-                        });;
-                    }
-                    else
-                        alert("Please provide all information");
-                },
-                updateOrderLine: function (orderLineId, newQuantity) {
-                    axios.post('/umbraco/api/basket/updateorderline',
-                        {
-                            OrderLineId: orderLineId,
-                            NewQuantity: newQuantity
-                        }).then(response => {
-                            this.refreshBasket();
-                        });
-                }
-            },
-            beforeMount() {
-                this.refreshBasket();
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+<script>
+    var app = new Vue({
+        el: '#app-checkout',
+        data: {
+            UpdatingAddressesInProgress: false,
+            CheckoutModel: {
+                PurchaseOrderViewModel: {},
+                AddressViewModel: {},
+                ShippingAddressViewModel: {},
+                ShippingViewModel: {},
+                PaymentViewModel: {},
+                DifferentShippingAddress: false
             }
-        })
-    </script>
+        },
+        methods: {
+            refreshBasket: function () {
+                axios.get('/umbraco/api/basket/get', this.CheckoutModel).then(response => {
+                    this.CheckoutModel = response.data;
+                });
+            },
+            updateShippingAddress: function () {
+                if (!this.UpdatingAddressesInProgress) {
+                    this.UpdatingAddressesInProgress = true;
+                    setTimeout(function () {
+                        axios.post('/umbraco/api/addresses/updateShipping', this.CheckoutModel.ShippingAddressViewModel).then(response => {
+                            this.UpdatingAddressesInProgress = false;
+                            this.refreshBasket();
+                        });
+                    }.bind(this), 200);
+                }
+            },
+            updateBillingAddress: function () {
+                if (!this.UpdatingAddressesInProgress) {
+                    this.UpdatingAddressesInProgress = true;
+                    setTimeout(function () {
+                        axios.post('/umbraco/api/addresses/updateBilling', this.CheckoutModel.AddressViewModel).then(response => {
+                            this.refreshBasket();
+                            this.UpdatingAddressesInProgress = false;
+                        });
+
+                        if (!this.CheckoutModel.DifferentShippingAddress)
+                            axios.post('/umbraco/api/addresses/updateShipping', this.CheckoutModel.AddressViewModel).then(response => {
+                                this.refreshBasket();
+                            });
+                    }.bind(this), 200);
+                }
+            },
+            updateShippingMethod: function () {
+                axios.post('/umbraco/api/shippingMethod/update', this.CheckoutModel).then(response => {
+                    this.refreshBasket();
+                });
+            },
+            updatePaymentMethod: function () {
+                axios.post('/umbraco/api/paymentMethod/update', this.CheckoutModel).then(response => {
+                    this.refreshBasket();
+                });
+            },
+            checkoutStepsSatisfied: function () {
+                return Object.values(this.CheckoutModel)
+                    .every(step =>
+                        typeof step != "undefined" || step != null
+                    );
+            },
+            complete: function (e) {
+                if (this.checkoutStepsSatisfied()) {
+                    axios.get('/umbraco/api/checkout/getpaymentpageurl').then(response => {
+                        top.location.href = response.data;
+                    }).catch(function (error) {
+                        if (error.response) {
+                            // The request was made and the server responded with a status code
+                            // that falls out of the range of 2xx
+                            alert("Please provide all information");
+                            console.log(error.response);
+                        } else {
+                            console.log('Error', error.message);
+                        }
+                    });;
+                }
+                else
+                    alert("Please provide all information");
+            },
+            updateOrderLine: function (orderLineId, newQuantity) {
+                axios.post('/umbraco/api/basket/updateorderline',
+                    {
+                        OrderLineId: orderLineId,
+                        NewQuantity: newQuantity
+                    }).then(response => {
+                        this.refreshBasket();
+                    });
+            }
+        },
+        beforeMount() {
+            this.refreshBasket();
+        }
+    })
+</script>

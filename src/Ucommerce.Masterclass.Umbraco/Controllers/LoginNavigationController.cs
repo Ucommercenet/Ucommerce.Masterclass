@@ -1,15 +1,22 @@
-﻿using System;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Ucommerce.Masterclass.Umbraco.Models;
 using Umbraco.Web.Mvc;
+using Umbraco.Web.Security;
 
 namespace Ucommerce.Masterclass.Umbraco.Controllers
 {
     public class LoginNavigationController : SurfaceController
     {
+        private readonly MembershipHelper _membershipHelper;
+
+        public LoginNavigationController(MembershipHelper membershipHelper)
+        {
+            _membershipHelper = membershipHelper;
+        }
+
         public ActionResult Render()
         {
-            var loginStatusModel = Members.GetCurrentLoginStatus();
+            var loginStatusModel = _membershipHelper.GetCurrentLoginStatus();
             var loginViewModel = new LoginViewModel();
 
             loginViewModel.UserName = loginStatusModel.Username;
@@ -21,14 +28,14 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
         [HttpPost]
         public ActionResult Post(LoginRequestViewModel request)
         {
-            Members.Login(request.Username, request.Password);
+            _membershipHelper.Login(request.Username, request.Password);
             return RedirectToCurrentUmbracoPage();
         }
 
         [HttpPost]
         public ActionResult Logout()
         {
-            Members.Logout();
+            _membershipHelper.Logout();
             return RedirectToCurrentUmbracoPage();
         }
     }

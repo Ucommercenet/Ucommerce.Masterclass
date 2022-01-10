@@ -381,6 +381,8 @@
     <Compile Include="Models\CheckoutViewModel.cs" />
     <Compile Include="Models\CountryViewModel.cs" />
     <Compile Include="Models\FacetsViewModel.cs" />
+    <Compile Include="Models\LoginRequestViewModel.cs" />
+    <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\MiniBasketViewModel.cs" />
     <Compile Include="Models\OrderlineViewModel.cs" />
     <Compile Include="Models\PaymentMethodViewModel.cs" />

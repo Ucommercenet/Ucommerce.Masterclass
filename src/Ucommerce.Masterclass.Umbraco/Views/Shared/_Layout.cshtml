@@ -20,16 +20,16 @@
 <body>
 <header>
   <div class="navbar navbar-dark bg-dark shadow-sm">
-    <div class="container">
-      <a href="/" class="navbar-brand d-flex align-items-center">
-        <strong>
-          <i class="fa fa-home"></i>
-          Home
-        </strong>
-      </a>
-      @{ Html.RenderAction("ProductSearch", "ProductSearch"); }
-      @{ Html.RenderAction("Render", "MiniBasket"); }
-      @{ Html.RenderAction("Render", "LoginNavigation"); }
+      <div class="container">
+          <a href="/" class="navbar-brand d-flex align-items-center">
+              <strong>
+                  <i class="fa fa-home"></i>
+                  Home
+              </strong>
+          </a>
+          @{ Html.RenderAction("ProductSearch", "ProductSearch"); }
+          @{ Html.RenderAction("Render", "LoginNavigation"); }
+          @{ Html.RenderAction("Render", "MiniBasket"); }
 
       </div>
   </div>

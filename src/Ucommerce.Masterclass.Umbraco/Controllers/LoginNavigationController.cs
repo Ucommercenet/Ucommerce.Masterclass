@@ -29,14 +29,17 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
         public ActionResult Post(LoginRequestViewModel request)
         {
             _membershipHelper.Login(request.Username, request.Password);
-            return RedirectToCurrentUmbracoPage();
+            
+            return Redirect(System.Web.HttpContext.Current.Request?.UrlReferrer?.AbsoluteUri ?? "/");
         }
 
         [HttpPost]
         public ActionResult Logout()
         {
             _membershipHelper.Logout();
-            return RedirectToCurrentUmbracoPage();
+            
+            return Redirect(System.Web.HttpContext.Current.Request?.UrlReferrer?.AbsoluteUri ?? "/");
+
         }
     }
 }

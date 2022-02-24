@@ -10,23 +10,23 @@
         <div class="col-8">
             <div class="row bg-light p-3 me-1">
                 <legend>Basket</legend>
-                <div class="row" v-for="orderLine in CheckoutModel.PurchaseOrderViewModel.OrderLines">
+                <div class="row" v-for="orderLine in CheckoutModel.purchaseOrderViewModel.orderLines">
                     <div class="col-4">
-                        {{orderLine.ProductName}}
+                        {{orderLine.productName}}
                     </div>
                     <div class="col-4 text-center">
-                        <span style="cursor: pointer;" v-on:click="updateOrderLine(orderLine.OrderLineId, orderLine.Quantity - 1)">-</span>
-                        {{orderLine.Quantity}}
-                        <span style="cursor: pointer;" v-on:click="updateOrderLine(orderLine.OrderLineId, orderLine.Quantity + 1)">+</span>
+                        <span style="cursor: pointer;" v-on:click="updateOrderLine(orderLine.orderLineId, orderLine.quantity - 1)">-</span>
+                        {{orderLine.quantity}}
+                        <span style="cursor: pointer;" v-on:click="updateOrderLine(orderLine.orderLineId, orderLine.quantity + 1)">+</span>
                     </div>
-                    <div class="col-4 text-end" v-if="orderLine.Discount">
+                    <div class="col-4 text-end" v-if="orderLine.discount">
                         <span style="text-decoration: line-through">
-                            {{orderLine.Total}}
+                            {{orderLine.total}}
                         </span>
-                        {{orderLine.TotalWithDiscount}}
+                        {{orderLine.totalWithDiscount}}
                     </div>
                     <div class="col-4 text-end" v-else>
-                        {{orderLine.Total}}
+                        {{orderLine.total}}
                     </div>
                 </div>
             </div>
@@ -34,80 +34,80 @@
                 <legend>Billing information</legend>
                 <div class="col-6">
                     <label for="billingfirstname" class="form-label">First name</label>
-                    <input type="text" v-on:blur="updateBillingAddress" v-model="CheckoutModel.AddressViewModel.FirstName" class="form-control" id="billingfirstname"></input>
+                    <input type="text" v-on:blur="updateBillingAddress" v-model="CheckoutModel.addressViewModel.firstName" class="form-control" id="billingfirstname"></input>
                 </div>
                 <div class="col-6">
                     <label for="billinglastname" class="form-label">Last name</label>
-                    <input type="text" v-on:blur="updateBillingAddress" v-model="CheckoutModel.AddressViewModel.LastName" class="form-control" id="billinglastname"></input>
+                    <input type="text" v-on:blur="updateBillingAddress" v-model="CheckoutModel.addressViewModel.lastName" class="form-control" id="billinglastname"></input>
                 </div>
                 <div class="col-6">
                     <label for="billingaddress" class="form-label">Address</label>
-                    <input type="text" v-on:blur="updateBillingAddress" class="form-control" v-model="CheckoutModel.AddressViewModel.Line1" id="billingaddress"></input>
+                    <input type="text" v-on:blur="updateBillingAddress" class="form-control" v-model="CheckoutModel.addressViewModel.line1" id="billingaddress"></input>
                 </div>
                 <div class="col-6">
                     <label for="billingcity" class="form-label">City</label>
-                    <input type="text" v-on:blur="updateBillingAddress" v-model="CheckoutModel.AddressViewModel.City" class="form-control" id="billingcity"></input>
+                    <input type="text" v-on:blur="updateBillingAddress" v-model="CheckoutModel.addressViewModel.city" class="form-control" id="billingcity"></input>
                 </div>
                 <div class="col-6">
                     <label for="billingpostal" class="form-label">Postal Code</label>
-                    <input type="text" v-on:blur="updateBillingAddress" v-model="CheckoutModel.AddressViewModel.PostalCode" class="form-control" id="billingpostal"></input>
+                    <input type="text" v-on:blur="updateBillingAddress" v-model="CheckoutModel.addressViewModel.postalCode" class="form-control" id="billingpostal"></input>
                 </div>
                 <div class="col-6">
                     <label for="billingcountry" class="form-label">Country</label>
-                    <select v-on:change="updateBillingAddress" name="" id="billingcountry" v-model="CheckoutModel.AddressViewModel.Country" class="form-control">
+                    <select v-on:change="updateBillingAddress" name="" id="billingcountry" v-model="CheckoutModel.addressViewModel.country" class="form-control">
                         <option value="" disabled>Select a country</option>
-                        <option :value="country" v-for="country in CheckoutModel.Countries">{{ country.Name }}</option>
+                        <option :value="country" v-for="country in CheckoutModel.countries">{{ country.name }}</option>
                     </select>
                 </div>
                 <div class="col-6">
                     <label for="billingemail" class="form-label">Email</label>
-                    <input type="text" v-on:blur="updateBillingAddress" v-model="CheckoutModel.AddressViewModel.EmailAddress" class="form-control" id="billingemail"></input>
+                    <input type="text" v-on:blur="updateBillingAddress" v-model="CheckoutModel.addressViewModel.emailAddress" class="form-control" id="billingemail"></input>
                 </div>
                 <div class="col-6">
                     <label for="billingphone" class="form-label">Phone</label>
-                    <input v-on:blur="updateBillingAddress" v-model="CheckoutModel.AddressViewModel.PhoneNumber" type="text" class="form-control" id="billingphone"></input>
+                    <input v-on:blur="updateBillingAddress" v-model="CheckoutModel.addressViewModel.phoneNumber" type="text" class="form-control" id="billingphone"></input>
                 </div>
                 <div class="col-12">
                     <label for="showShippingAddressFields" class="form-label">Use a different shipping address</label>
-                    <input type="checkbox" id="showShippingAddressFields" v-model="CheckoutModel.DifferentShippingAddress" v-on:click="CheckoutModel.DifferentShippingAddress = !CheckoutModel.DifferentShippingAddress" />
+                    <input type="checkbox" id="showShippingAddressFields" v-model="CheckoutModel.differentShippingAddress" v-on:click="CheckoutModel.differentShippingAddress = !CheckoutModel.differentShippingAddress" />
                 </div>
             </div>
-            <div class="row bg-light p-3 mt-4 me-1" v-if="CheckoutModel.DifferentShippingAddress">
+            <div class="row bg-light p-3 mt-4 me-1" v-if="CheckoutModel.differentShippingAddress">
                 <legend>Shipping information</legend>
                 <div class="col-6">
                     <label for="shippingfirstname" class="form-label">First name</label>
-                    <input type="text" v-on:blur="updateShippingAddress" v-model="CheckoutModel.ShippingAddressViewModel.FirstName" class="form-control" id="shippingfirstname"></input>
+                    <input type="text" v-on:blur="updateShippingAddress" v-model="CheckoutModel.shippingAddressViewModel.firstName" class="form-control" id="shippingfirstname"></input>
                 </div>
                 <div class="col-6">
                     <label for="shippinglastname" class="form-label">Last name</label>
-                    <input type="text" v-on:blur="updateShippingAddress" v-model="CheckoutModel.ShippingAddressViewModel.LastName" class="form-control" id="shippinglastname"></input>
+                    <input type="text" v-on:blur="updateShippingAddress" v-model="CheckoutModel.shippingAddressViewModel.lastName" class="form-control" id="shippinglastname"></input>
                 </div>
                 <div class="col-6">
                     <label for="shippingaddress" class="form-label">Address</label>
-                    <input type="text" v-on:blur="updateShippingAddress" class="form-control" v-model="CheckoutModel.ShippingAddressViewModel.Line1" id="shippingaddress"></input>
+                    <input type="text" v-on:blur="updateShippingAddress" class="form-control" v-model="CheckoutModel.shippingAddressViewModel.line1" id="shippingaddress"></input>
                 </div>
                 <div class="col-6">
                     <label for="shippingcity" class="form-label">City</label>
-                    <input type="text" v-on:blur="updateShippingAddress" v-model="CheckoutModel.ShippingAddressViewModel.City" class="form-control" id="shippingcity"></input>
+                    <input type="text" v-on:blur="updateShippingAddress" v-model="CheckoutModel.shippingAddressViewModel.city" class="form-control" id="shippingcity"></input>
                 </div>
                 <div class="col-6">
                     <label for="shippingpostal" class="form-label">Postal Code</label>
-                    <input type="text" v-on:blur="updateShippingAddress" v-model="CheckoutModel.ShippingAddressViewModel.PostalCode" class="form-control" id="shippingpostal"></input>
+                    <input type="text" v-on:blur="updateShippingAddress" v-model="CheckoutModel.shippingAddressViewModel.postalCode" class="form-control" id="shippingpostal"></input>
                 </div>
                 <div class="col-6">
                     <label for="shippingcountry" class="form-label">Country</label>
-                    <select v-on:change="updateShippingAddress" name="" id="shippingcountry" v-model="CheckoutModel.ShippingAddressViewModel.Country" class="form-control">
+                    <select v-on:change="updateShippingAddress" name="" id="shippingcountry" v-model="CheckoutModel.shippingAddressViewModel.country" class="form-control">
                         <option value="" disabled>Select a country</option>
-                        <option :value="country" v-for="country in CheckoutModel.Countries">{{ country.Name }}</option>
+                        <option :value="country" v-for="country in CheckoutModel.countries">{{ country.name }}</option>
                     </select>
                 </div>
                 <div class="col-6">
                     <label for="shippingemail" class="form-label">Email</label>
-                    <input type="text" v-on:blur="updateShippingAddress" v-model="CheckoutModel.ShippingAddressViewModel.EmailAddress" class="form-control" id="shippingemail"></input>
+                    <input type="text" v-on:blur="updateShippingAddress" v-model="CheckoutModel.shippingAddressViewModel.emailAddress" class="form-control" id="shippingemail"></input>
                 </div>
                 <div class="col-6">
                     <label for="shippingphone" class="form-label">Phone</label>
-                    <input v-on:blur="updateShippingAddress" v-model="CheckoutModel.ShippingAddressViewModel.PhoneNumber" type="text" class="form-control" id="shippingphone"></input>
+                    <input v-on:blur="updateShippingAddress" v-model="CheckoutModel.shippingAddressViewModel.phoneNumber" type="text" class="form-control" id="shippingphone"></input>
                 </div>
             </div>
         </div>
@@ -115,8 +115,8 @@
             <div class="row bg-light p-3 ms-1">
                 <div class="col-md-12">
                     <legend>Shipping Method</legend>
-                    <div v-for="shippingMethod in CheckoutModel.ShippingViewModel.AvailableShippingMethods">
-                        <input v-on:change="updateShippingMethod" :value="shippingMethod" type="radio" v-model="CheckoutModel.ShippingViewModel.SelectedShippingMethod" :disabled="CheckoutModel.AddressViewModel.FirstName === null" /> {{ shippingMethod.Name }}
+                    <div v-for="shippingMethod in CheckoutModel.shippingViewModel.availableShippingMethods">
+                        <input v-on:change="updateShippingMethod" :value="shippingMethod" type="radio" v-model="CheckoutModel.shippingViewModel.selectedShippingMethod" :disabled="CheckoutModel.addressViewModel.firstName === null" /> {{ shippingMethod.name }}
                     </div>
                 </div>
             </div>
@@ -124,8 +124,8 @@
             <div class="row bg-light p-3 mt-4 ms-1">
                 <div class="col-md-12">
                     <legend>Payment Method</legend>
-                    <div v-for="paymentMethod in CheckoutModel.PaymentViewModel.AvailablePaymentMethods">
-                        <input v-on:change="updatePaymentMethod" :value="paymentMethod" type="radio" v-model="CheckoutModel.PaymentViewModel.SelectedPaymentMethod" /> {{ paymentMethod.Name }}
+                    <div v-for="paymentMethod in CheckoutModel.paymentViewModel.availablePaymentMethods">
+                        <input v-on:change="updatePaymentMethod" :value="paymentMethod" type="radio" v-model="CheckoutModel.paymentViewModel.selectedPaymentMethod" /> {{ paymentMethod.name }}
                     </div>
                 </div>
             </div>
@@ -136,7 +136,7 @@
                         Sub total
                     </div>
                     <div class="col-6 text-end">
-                        {{ CheckoutModel.SubTotal }}
+                        {{ CheckoutModel.subTotal }}
                     </div>
                 </div>
                 <div class="row">
@@ -144,7 +144,7 @@
                         VAT
                     </div>
                     <div class="col-6 text-end">
-                        {{ CheckoutModel.TaxTotal }}
+                        {{ CheckoutModel.taxTotal }}
                     </div>
                 </div>
                 <div class="row">
@@ -152,7 +152,7 @@
                         Discounts
                     </div>
                     <div class="col-6 text-end">
-                        {{ CheckoutModel.Discount }}
+                        {{ CheckoutModel.discount }}
                     </div>
                 </div>
                 <div class="row">
@@ -160,7 +160,7 @@
                         Shipping Total
                     </div>
                     <div class="col-6 text-end">
-                        {{ CheckoutModel.ShippingTotal }}
+                        {{ CheckoutModel.shippingTotal }}
                     </div>
                 </div>
                 <div class="row">
@@ -168,7 +168,7 @@
                         Payment Total
                     </div>
                     <div class="col-6 text-end">
-                        {{ CheckoutModel.PaymentTotal }}
+                        {{ CheckoutModel.paymentTotal }}
                     </div>
                 </div>
                 <div class="row">
@@ -176,7 +176,7 @@
                         Order Total
                     </div>
                     <div class="col-6 text-end">
-                        {{ CheckoutModel.OrderTotal }}
+                        {{ CheckoutModel.orderTotal }}
                     </div>
                 </div>
                 <div class="row p-3 mt-4 ms-1">
@@ -192,55 +192,68 @@
         var app = new Vue({
             el: '#app-checkout',
             data: {
+                UpdatingAddressesInProgress: false,
                 CheckoutModel: {
-                    PurchaseOrderViewModel: {},
-                    AddressViewModel: {},
-                    ShippingAddressViewModel: {},
-                    ShippingViewModel: {},
-                    PaymentViewModel: {},
-                    DifferentShippingAddress: false
+                    purchaseOrderViewModel: {},
+                    addressViewModel: {},
+                    shippingAddressViewModel: {},
+                    shippingViewModel: {},
+                    paymentViewModel: {},
+                    differentShippingAddress: false
                 }
             },
             methods: {
                 refreshBasket: function () {
-                    axios.get('/umbraco/api/basket/get', this.CheckoutModel).then(response => {
+                    axios.get('/umbraco/api/masterclassbasket/get', this.CheckoutModel).then(response => {
                         this.CheckoutModel = response.data;
                     });
                 },
                 updateShippingAddress: function () {
-                    axios.post('/umbraco/api/addresses/updateShipping', this.CheckoutModel.ShippingAddressViewModel).then(response => {
-                        this.refreshBasket();
-                    });
+                    if (!this.UpdatingAddressesInProgress) {
+                        this.UpdatingAddressesInProgress = true;
+                        setTimeout(function () { 
+                            axios.post('/umbraco/api/masterclassaddresses/updateShipping', this.CheckoutModel.shippingAddressViewModel).then(response => {
+                                this.UpdatingAddressesInProgress = false;
+                                this.refreshBasket();
+                            });
+                        }.bind(this), 200);
+                    }
                 },
                 updateBillingAddress: function () {
-                    axios.post('/umbraco/api/addresses/updateBilling', this.CheckoutModel.AddressViewModel).then(response => {
-                        this.refreshBasket();
-                    });
+                    if (!this.UpdatingAddressesInProgress) {
+                        this.UpdatingAddressesInProgress = true;
+                        setTimeout(function () { 
+                            axios.post('/umbraco/api/masterclassaddresses/updateBilling', this.CheckoutModel.addressViewModel).then(response => {
+                                this.refreshBasket();
+                                this.UpdatingAddressesInProgress = false;
+                            });
 
-                    if (!this.CheckoutModel.DifferentShippingAddress)
-                        axios.post('/umbraco/api/addresses/updateShipping', this.CheckoutModel.AddressViewModel).then(response => {
-                            this.refreshBasket();
-                        });
+                            if (!this.CheckoutModel.DifferentShippingAddress)
+                                axios.post('/umbraco/api/masterclassaddresses/updateShipping', this.CheckoutModel.addressViewModel).then(response => {
+                                    this.refreshBasket();
+                                });
+                        }.bind(this), 200);
+                    }
                 },
                 updateShippingMethod: function () {
-                    axios.post('/umbraco/api/shippingMethod/update', this.CheckoutModel).then(response => {
+                    axios.post('/umbraco/api/masterclassshippingMethod/update', this.CheckoutModel).then(response => {
                         this.refreshBasket();
                     });
                 },
                 updatePaymentMethod: function () {
-                    axios.post('/umbraco/api/paymentMethod/update', this.CheckoutModel).then(response => {
+                    axios.post('/umbraco/api/masterclasspaymentMethod/update', this.CheckoutModel).then(response => {
                         this.refreshBasket();
                     });
                 },
                 checkoutStepsSatisfied: function () {
                     return Object.values(this.CheckoutModel)
                         .every(step =>
-                            typeof step != "undefined"
+                            typeof step != "undefined" || step != null
                         );
                 },
                 complete: function (e) {
                     if (this.checkoutStepsSatisfied()) {
-                        axios.get('/umbraco/api/checkout/getpaymentpageurl').then(response => {
+                        axios.get('/umbraco/api/masterclasscheckout/getpaymentpageurl').then(response => {
                             top.location.href = response.data;
                         }).catch(function (error) {
                             if (error.response) {
@@ -257,7 +270,7 @@
                         alert("Please provide all information");
                 },
                 updateOrderLine: function (orderLineId, newQuantity) {
-                    axios.post('/umbraco/api/basket/updateorderline',
+                    axios.post('/umbraco/api/masterclassbasket/updateorderline',
                         {
                             OrderLineId: orderLineId,
                             NewQuantity: newQuantity

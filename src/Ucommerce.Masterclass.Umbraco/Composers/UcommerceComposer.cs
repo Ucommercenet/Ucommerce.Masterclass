@@ -1,4 +1,7 @@
 using Ucommerce.Api;
+using Ucommerce.Masterclass.Umbraco.Headless;
+using Ucommerce.Masterclass.Umbraco.Resolvers;
+using Ucommerce.Masterclass.Umbraco.Resolvers.Impl;
 using Umbraco.Core.Composing;
 
 namespace Ucommerce.Masterclass.Umbraco.Composers
@@ -16,6 +19,10 @@ namespace Ucommerce.Masterclass.Umbraco.Composers
             
             //Services for checkout
             composition.RegisterFor<Ucommerce.Api.ITransactionLibrary, Ucommerce.Api.TransactionLibrary>(x => Ucommerce.Infrastructure.ObjectFactory.Instance.Resolve<ITransactionLibrary>());
+            composition.RegisterFor<ITransactionClient, TransactionClient>();
+            composition.RegisterFor<IBasketIdResolver, CookieBasketIdResolver>();
+            composition.RegisterFor<IPriceGroupIdResolver, CatalogContextPriceGroupIdResolver>();
+            composition.RegisterFor<ICultureCodeResolver, ThreadCultureCodeResolver>();
         }
     }
 }

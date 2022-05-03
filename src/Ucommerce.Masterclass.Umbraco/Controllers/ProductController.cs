@@ -17,7 +17,7 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
         private readonly ICatalogLibrary _catalogLibrary;
         private readonly ITransactionLibrary _transactionLibrary;
 
-        public ProductController(ICatalogContext catalogContext, ICatalogLibrary catalogLibrary, ITransactionLibrary transactionLibrary )
+        public ProductController(ICatalogContext catalogContext, ICatalogLibrary catalogLibrary, ITransactionLibrary transactionLibrary)
         {
             _catalogContext = catalogContext;
             _catalogLibrary = catalogLibrary;
@@ -39,7 +39,7 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
 
             //TODO: Task 02 - Ensure your code accounts for product Families
             productModel.Variants = MapVariants(_catalogLibrary.GetVariants(currentProduct));
-            
+
             return View(productModel);
         }
 

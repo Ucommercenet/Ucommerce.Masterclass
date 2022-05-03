@@ -17,7 +17,7 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
         private readonly ICatalogContext _catalogContext;
         private readonly IIndex<Product> _productIndex;
 
-        public ProductSearchResultController(ICatalogLibrary catalogLibrary, IUrlService urlService, 
+        public ProductSearchResultController(ICatalogLibrary catalogLibrary, IUrlService urlService,
             ICatalogContext catalogContext, IIndex<Ucommerce.Search.Models.Product> productIndex)
         {
             _catalogLibrary = catalogLibrary;
@@ -54,7 +54,7 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
         private IList<ProductViewModel> MapProducts(IList<Product> products)
         {
             var prices = _catalogLibrary.CalculatePrices(products.Select(x => x.Guid).ToList());
-            
+
             return products.Select(product => new ProductViewModel()
             {
                 LongDescription = product.LongDescription,

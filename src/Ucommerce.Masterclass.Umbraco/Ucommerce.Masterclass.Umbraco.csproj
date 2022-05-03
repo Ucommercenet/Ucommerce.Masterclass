@@ -527,13 +527,13 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Api\BasketController.cs" />
+    <Compile Include="Api\MasterClassBasketController.cs" />
     <Compile Include="Controllers\ConfirmationController.cs" />
     <Compile Include="Controllers\ConfirmationEmailController.cs" />
-    <Compile Include="Api\PaymentMethodController.cs" />
-    <Compile Include="Api\ShippingMethodController.cs" />
-    <Compile Include="Api\AddressesController.cs" />
-    <Compile Include="Api\CheckoutController.cs" />
+    <Compile Include="Api\MasterClassPaymentMethodController.cs" />
+    <Compile Include="Api\MasterClassShippingMethodController.cs" />
+    <Compile Include="Api\MasterClassAddressesController.cs" />
+    <Compile Include="Api\MasterClassCheckoutController.cs" />
     <Compile Include="Composers\UcommerceComposer.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CategoryNavigationController.cs" />
@@ -543,7 +543,12 @@
     <Compile Include="Controllers\SinglePageCheckoutController.cs" />
     <Compile Include="Controllers\ProductSearchController.cs" />
     <Compile Include="Controllers\ProductSearchResultController.cs" />
+    <Compile Include="Exceptions\MissingBasketIdException.cs" />
     <Compile Include="Extensions\FacetedQueryStringExtensions.cs" />
+    <Compile Include="Headless\ITransactionClient.cs" />
+    <Compile Include="Headless\Models\AuthenticationModel.cs" />
+    <Compile Include="Headless\TransactionClient.cs" />
+    <Compile Include="Headless\UcommerceHttpClient.cs" />
     <Compile Include="IndexDefinitions\MasterclassIndexDefinition.cs" />
     <Compile Include="Models\AddressViewModel.cs" />
     <Compile Include="Models\CategoryNavigationViewModel.cs" />
@@ -561,6 +566,14 @@
     <Compile Include="Models\ShippingViewModel.cs" />
     <Compile Include="Models\UpdateOrderLineRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resolvers\IBasketIdResolver.cs" />
+    <Compile Include="Resolvers\ICultureCodeResolver.cs" />
+    <Compile Include="Resolvers\Impl\CatalogContextPriceGroupIdResolver.cs" />
+    <Compile Include="Resolvers\Impl\CatalogContextProductCatalogIdResolver.cs" />
+    <Compile Include="Resolvers\Impl\CookieBasketIdResolver.cs" />
+    <Compile Include="Resolvers\Impl\ThreadCultureCodeResolver.cs" />
+    <Compile Include="Resolvers\IPriceGroupIdResolver.cs" />
+    <Compile Include="Resolvers\IProductCatalogIdResolver.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -576,7 +589,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

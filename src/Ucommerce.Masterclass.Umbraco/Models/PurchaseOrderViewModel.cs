@@ -28,7 +28,5 @@ namespace Ucommerce.Masterclass.Umbraco.Models
         public string ShippingTotal { get; set; }
 
         public string PaymentTotal { get; set; }
-
-        public int RemoveOrderlineId { get; set; }
     }
 }

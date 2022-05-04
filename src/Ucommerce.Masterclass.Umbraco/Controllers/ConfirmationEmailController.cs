@@ -21,7 +21,7 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
         [System.Web.Mvc.HttpGet]
         public ActionResult Index()
         {
-            var orderGuidParameterFromQueryString = System.Web.HttpContext.Current.Request.QueryString["OrderGuid"];
+            var orderGuidParameterFromQueryString = System.Web.HttpContext.Current.Request.QueryString["orderGuid"];
 
             if (orderGuidParameterFromQueryString.IsNullOrWhiteSpace())
                 return View(new PurchaseOrderViewModel());
@@ -39,7 +39,7 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
             purchaseOrderViewModel.BillingAddress.Line1 = billingInformation.Line1;
             purchaseOrderViewModel.BillingAddress.City = billingInformation.City;
             purchaseOrderViewModel.BillingAddress.PostalCode = billingInformation.PostalCode;
-            purchaseOrderViewModel.BillingAddress.Country = new CountryViewModel() { Name = selectedCountry.Name, CountryId = selectedCountry.CountryId };
+            purchaseOrderViewModel.BillingAddress.Country = new CountryViewModel() { Name = selectedCountry.Name, CountryId = selectedCountry.CountryId.ToString() };
             purchaseOrderViewModel.BillingAddress.EmailAddress = billingInformation.EmailAddress;
             purchaseOrderViewModel.BillingAddress.PhoneNumber = billingInformation.MobilePhoneNumber;
 
@@ -50,7 +50,7 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
             purchaseOrderViewModel.ShippingAddress.Line1 = shippingInformation.Line1;
             purchaseOrderViewModel.ShippingAddress.City = shippingInformation.City;
             purchaseOrderViewModel.ShippingAddress.PostalCode = shippingInformation.PostalCode;
-            purchaseOrderViewModel.ShippingAddress.Country = new CountryViewModel() { Name = selectedShippingCountry.Name, CountryId = selectedShippingCountry.CountryId };
+            purchaseOrderViewModel.ShippingAddress.Country = new CountryViewModel() { Name = selectedShippingCountry.Name, CountryId = selectedShippingCountry.CountryId.ToString() };
             purchaseOrderViewModel.ShippingAddress.EmailAddress = shippingInformation.EmailAddress;
             purchaseOrderViewModel.ShippingAddress.PhoneNumber = shippingInformation.MobilePhoneNumber;
 
@@ -75,20 +75,18 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
 
         private PurchaseOrderViewModel MapPurchaseOrder(PurchaseOrder basket)
         {
-            var model = new PurchaseOrderViewModel();
-
-            model.OrderLines = basket.OrderLines.Select(orderLine => new OrderlineViewModel()
+            return new PurchaseOrderViewModel
             {
-                Quantity = orderLine.Quantity,
-                ProductName = orderLine.ProductName,
-                Total = new Money(orderLine.Total.GetValueOrDefault(), basket.BillingCurrency.ISOCode).ToString(),
-                TotalWithDiscount =
-                    new Money(orderLine.Total.GetValueOrDefault() - orderLine.Discount, basket.BillingCurrency.ISOCode).ToString(),
-                Discount = orderLine.Discount,
-                OrderLineId = orderLine.OrderLineId
-            }).ToList();
-
-            return model;
+                OrderLines = basket.OrderLines.Select(orderLine => new OrderlineViewModel
+                {
+                    Quantity = orderLine.Quantity,
+                    ProductName = orderLine.ProductName,
+                    Total = new Money(orderLine.Total.GetValueOrDefault(), basket.BillingCurrency.ISOCode).ToString(),
+                    TotalWithDiscount =
+                        new Money(orderLine.Total.GetValueOrDefault() - orderLine.Discount, basket.BillingCurrency.ISOCode).ToString(),
+                    Discount = orderLine.Discount
+                }).ToList()
+            };
         }
     }
 }

@@ -22,18 +22,15 @@ namespace Ucommerce.Masterclass.Umbraco.Extensions
                 new[] { "umbDebugShowTrace", "product", "variant", "category", "categories", "catalog" }
                     .Contains(kvp.Key));
 
-            var facetsForQuerying = new List<Facet>();
-
-            foreach (var parameter in parameters)
+            var facetsForQuerying = parameters.Select(parameter => new Facet
             {
-                var facet = new Facet { FacetValues = new List<FacetValue>(), Name = parameter.Key };
-                foreach (var value in parameter.Value.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries))
-                {
-                    facet.FacetValues.Add(new FacetValue() { Value = value });
-                }
-
-                facetsForQuerying.Add(facet);
-            }
+                Name = parameter.Key,
+                FacetValues = parameter.Value.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries).Select(
+                    value => new FacetValue
+                    {
+                        Value = value
+                    }).ToList()
+            }).ToList();
 
             return facetsForQuerying;
         }

@@ -24,10 +24,12 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
         }
         public ActionResult CategoryNavigation()
         {
-            var model = new CategoryNavigationViewModel();
+            var model = new CategoryNavigationViewModel
+            {
+                CurrentCategoryGuid = _catalogContext.CurrentCategory?.Guid ?? new Guid(),
+                Categories = MapCategories(_catalogLibrary.GetRootCategories().Results)
+            };
 
-            model.CurrentCategoryGuid = _catalogContext.CurrentCategory?.Guid ?? new Guid();
-            model.Categories = MapCategories(_catalogLibrary.GetRootCategories().Results);
             return View("/views/CategoryNavigation/index.cshtml", model);
         }
 
@@ -36,7 +38,7 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
             var allSubCategoryIds = categories.SelectMany(cat => cat.Categories).Distinct().ToList();
             var subCategoriesById = _catalogLibrary.GetCategories(allSubCategoryIds).ToDictionary(cat => cat.Guid);
 
-            return categories.Select(x => new CategoryViewModel()
+            return categories.Select(x => new CategoryViewModel
             {
                 Guid = x.Guid,
                 Name = x.Name,

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Ucommerce.Api;
-using Ucommerce.Infrastructure;
 using Ucommerce.Masterclass.Umbraco.Models;
 using Ucommerce.Search;
 using Ucommerce.Search.Models;
@@ -30,15 +29,15 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
             //TODO: Task 01 - Fetch and present the current Product
             var currentProduct = _catalogContext.CurrentProduct;
 
-            var productModel = new ProductViewModel();
-            productModel.PrimaryImageUrl = currentProduct.PrimaryImageUrl;
-            productModel.Name = currentProduct.DisplayName;
-            productModel.Sku = currentProduct.Sku;
-
-            productModel.Prices = _catalogLibrary.CalculatePrices(new List<Guid>() { currentProduct.Guid }).Items;
-
-            //TODO: Task 02 - Ensure your code accounts for product Families
-            productModel.Variants = MapVariants(_catalogLibrary.GetVariants(currentProduct));
+            var productModel = new ProductViewModel
+            {
+                PrimaryImageUrl = currentProduct.PrimaryImageUrl,
+                Name = currentProduct.DisplayName,
+                Sku = currentProduct.Sku,
+                Prices = _catalogLibrary.CalculatePrices(new List<Guid> { currentProduct.Guid }).Items,
+                //TODO: Task 02 - Ensure your code accounts for product Families
+                Variants = MapVariants(_catalogLibrary.GetVariants(currentProduct))
+            };
 
             return View(productModel);
         }

@@ -75,20 +75,18 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
 
         private PurchaseOrderViewModel MapPurchaseOrder(PurchaseOrder basket)
         {
-            var model = new PurchaseOrderViewModel();
-
-            model.OrderLines = basket.OrderLines.Select(orderLine => new OrderlineViewModel()
+            return new PurchaseOrderViewModel
             {
-                Quantity = orderLine.Quantity,
-                ProductName = orderLine.ProductName,
-                Total = new Money(orderLine.Total.GetValueOrDefault(), basket.BillingCurrency.ISOCode).ToString(),
-                TotalWithDiscount =
-                    new Money(orderLine.Total.GetValueOrDefault() - orderLine.Discount, basket.BillingCurrency.ISOCode).ToString(),
-                Discount = orderLine.Discount,
-                //OrderLineId = orderLine.OrderLineId
-            }).ToList();
-
-            return model;
+                OrderLines = basket.OrderLines.Select(orderLine => new OrderlineViewModel
+                {
+                    Quantity = orderLine.Quantity,
+                    ProductName = orderLine.ProductName,
+                    Total = new Money(orderLine.Total.GetValueOrDefault(), basket.BillingCurrency.ISOCode).ToString(),
+                    TotalWithDiscount =
+                        new Money(orderLine.Total.GetValueOrDefault() - orderLine.Discount, basket.BillingCurrency.ISOCode).ToString(),
+                    Discount = orderLine.Discount
+                }).ToList()
+            };
         }
     }
 }

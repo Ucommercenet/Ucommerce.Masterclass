@@ -43,7 +43,7 @@ namespace Ucommerce.Masterclass.Umbraco.Headless
                     {
                         if (_client == null)
                         {
-                            HttpClientHandler handler = new HttpClientHandler();
+                            var handler = new HttpClientHandler();
                             handler.AllowAutoRedirect = false;
                             _client = new HttpClient(handler);
                             _client.BaseAddress = new Uri(_apiUrl);
@@ -152,9 +152,9 @@ namespace Ucommerce.Masterclass.Umbraco.Headless
 
         private static string GenerateBasicAuthorizationHeaderValue(string clientId, string clientSecret)
         {
-            string credentials = $"{clientId}:{clientSecret}";
-            byte[] credentialsByteData = Encoding.GetEncoding("iso-8859-1").GetBytes(credentials);
-            string base64Credentials = Convert.ToBase64String(credentialsByteData);
+            var credentials = $"{clientId}:{clientSecret}";
+            var credentialsByteData = Encoding.GetEncoding("iso-8859-1").GetBytes(credentials);
+            var base64Credentials = Convert.ToBase64String(credentialsByteData);
 
             return $"Basic {base64Credentials}";
         }

@@ -28,8 +28,6 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
 
         public ActionResult Index()
         {
-            var model = new ProductListViewModel();
-
             var searchTerm = GetSearchTerm();
 
             var result = _productIndex.Find<Ucommerce.Search.Models.Product>()
@@ -41,7 +39,10 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
                         x.Name == Match.Literal(searchTerm) ||
                         x.DisplayName == Match.Wildcard($"*{searchTerm}*")).ToList();
 
-            model.ProductViewModels = MapProducts(result.Results);
+            var model = new ProductListViewModel
+            {
+                ProductViewModels = MapProducts(result.Results)
+            };
 
             return View(model);
         }
@@ -55,7 +56,7 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
         {
             var prices = _catalogLibrary.CalculatePrices(products.Select(x => x.Guid).ToList());
 
-            return products.Select(product => new ProductViewModel()
+            return products.Select(product => new ProductViewModel
             {
                 LongDescription = product.LongDescription,
                 IsVariant = product.ProductType == ProductType.Variant,

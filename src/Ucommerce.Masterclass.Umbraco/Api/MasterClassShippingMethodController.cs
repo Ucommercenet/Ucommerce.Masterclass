@@ -1,8 +1,6 @@
 ﻿using MC_Headless.Exceptions;
 using MC_Headless.Headless;
 using MC_Headless.Resolvers;
-using System.Linq;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -55,12 +53,6 @@ namespace MC_Headless.Api
             }
 
             return BadRequest("Missing Shipping method");
-        }
-
-        private string GetBasketCookieValue()
-        {
-            return this.Request.Headers.GetCookies().Select(c => c["basketId"])
-                .FirstOrDefault()?.Value ?? "";
         }
     }
 }

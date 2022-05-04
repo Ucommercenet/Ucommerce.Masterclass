@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using MC_Headless.Exceptions;
-using MC_Headless.Headless;
 using Ucommerce.Masterclass.Umbraco.Models;
 using MC_Headless.Resolvers;
 using Umbraco.Web.WebApi;
@@ -12,17 +11,11 @@ namespace MC_Headless.Api
 {
     public class MasterClassPaymentMethodController : UmbracoApiController
     {
-        private readonly ITransactionClient _transactionClient;
         private readonly IBasketIdResolver _basketResolver;
-        private readonly IPriceGroupIdResolver _priceGroupIdResolver;
-        private readonly ICultureCodeResolver _cultureCodeResolver;
 
-        public MasterClassPaymentMethodController(ITransactionClient transactionClient, IBasketIdResolver basketResolver, IPriceGroupIdResolver priceGroupIdResolver, ICultureCodeResolver cultureCodeResolver)
+        public MasterClassPaymentMethodController(IBasketIdResolver basketResolver)
         {
-            _transactionClient = transactionClient;
             _basketResolver = basketResolver;
-            _priceGroupIdResolver = priceGroupIdResolver;
-            _cultureCodeResolver = cultureCodeResolver;
         }
 
         [HttpPost]
@@ -34,8 +27,6 @@ namespace MC_Headless.Api
                 throw new MissingBasketIdException("Couldn't read basket id from cookies.");
 
             var paymentMethodId = checkoutViewModel?.PaymentViewModel?.SelectedPaymentMethod?.PaymentMethodId;
-
-            var cultureCode = _cultureCodeResolver.GetCultureCode();
 
             if (paymentMethodId == null) return BadRequest("Missing Payment method");
             var selectedPaymentMethodCookie = new HttpCookie("SelectedPaymentMethodId", paymentMethodId.ToString());

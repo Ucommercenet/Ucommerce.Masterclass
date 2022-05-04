@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -22,15 +21,17 @@ namespace MC_Headless.Api
         private readonly IPriceGroupIdResolver _priceGroupIdResolver;
         private readonly ICultureCodeResolver _cultureCodeResolver;
         private readonly IProductCatalogIdResolver _productCatalogIdResolver;
+        private readonly IBasketIdResolver _basketIdResolver;
 
         public MasterClassBasketController(ITransactionClient transactionClient,
             IPriceGroupIdResolver priceGroupIdResolver, ICultureCodeResolver cultureCodeResolver,
-            IProductCatalogIdResolver productCatalogIdResolver)
+            IProductCatalogIdResolver productCatalogIdResolver, IBasketIdResolver basketIdResolver)
         {
             _transactionClient = transactionClient;
             _priceGroupIdResolver = priceGroupIdResolver;
             _cultureCodeResolver = cultureCodeResolver;
             _productCatalogIdResolver = productCatalogIdResolver;
+            _basketIdResolver = basketIdResolver;
         }
 
         public async Task<CheckoutViewModel> Get(CancellationToken ct)
@@ -43,8 +44,9 @@ namespace MC_Headless.Api
         public async Task<IHttpActionResult> UpdateOrderLine(UpdateOrderLineRequest updateOrderLineRequest,
             CancellationToken ct)
         {
-            var basketId = this.Request.Headers.GetCookies().Select(c => c["basketId"])
-                .FirstOrDefault()?.Value ?? "";
+            var basketId = _basketIdResolver.GetBasketId(this.Request);
+            if (string.IsNullOrWhiteSpace(basketId))
+                throw new MissingBasketIdException("Couldn't read basket id from cookies.");
 
             var cultureCode = _cultureCodeResolver.GetCultureCode();
             var priceGroupId = _priceGroupIdResolver.PriceGroupId();
@@ -61,8 +63,8 @@ namespace MC_Headless.Api
         {
             var checkoutModel = new CheckoutViewModel();
 
-            var basketId = GetBasketCookieValue();
-            if (string.IsNullOrEmpty(basketId))
+            var basketId = _basketIdResolver.GetBasketId(this.Request);
+            if (string.IsNullOrWhiteSpace(basketId))
                 throw new MissingBasketIdException("Couldn't read basket id from cookies.");
 
             var basket = await _transactionClient.GetBasket(basketId, ct);
@@ -71,35 +73,34 @@ namespace MC_Headless.Api
             MapTotals(checkoutModel, basket);
 
             //TODO: Task 02 -> Present the address details
-            MapAddress(basket.BillingAddress, checkoutModel.AddressViewModel);
-            MapAddress(basket.Shipments.FirstOrDefault()?.ShipmentAddress, checkoutModel.ShippingAddressViewModel);
+            checkoutModel.BillingAddressViewModel = MapAddress(basket.BillingAddress);
+            checkoutModel.ShippingAddressViewModel = MapAddress(basket.Shipments.FirstOrDefault()?.ShipmentAddress);
 
             var countries = await _transactionClient.GetCountries(ct);
             checkoutModel.Countries = MapCountries(countries);
 
             checkoutModel.DifferentShippingAddress = IsAddressesDifferent(checkoutModel.ShippingAddressViewModel,
-                checkoutModel.AddressViewModel);
+                checkoutModel.BillingAddressViewModel);
 
             //TODO: Task 03 -> Present the available shipping methods
-            var selectedCountry = checkoutModel.AddressViewModel.Country != null
-                ? countries.Countries.First(x => x.Id.Equals(checkoutModel.AddressViewModel.Country.CountryId))
+            var selectedCountry = checkoutModel.BillingAddressViewModel.Country != null
+                ? countries.Countries.First(x => x.Id.Equals(checkoutModel.BillingAddressViewModel.Country.CountryId))
                 : countries.Countries.First();
 
-            if (checkoutModel.AddressViewModel.Country == null)
-                checkoutModel.AddressViewModel.Country = new CountryViewModel()
+            if (checkoutModel.BillingAddressViewModel.Country == null)
+                checkoutModel.BillingAddressViewModel.Country = new CountryViewModel
                     { CountryId = selectedCountry.Id, Name = selectedCountry.Name };
 
             var availableShippingMethods = await _transactionClient.GetShippingMethods(
                 _cultureCodeResolver.GetCultureCode(), selectedCountry.Id, _priceGroupIdResolver.PriceGroupId(), ct);
             checkoutModel.ShippingViewModel.AvailableShippingMethods = availableShippingMethods.ShippingMethods
-                .Select(x => new ShippingMethodViewModel() { Name = x.Name, ShippingMethodId = new Guid(x.Id) })
+                .Select(x => new ShippingMethodViewModel { Name = x.Name, ShippingMethodId = new Guid(x.Id) })
                 .ToList();
 
-            PurchaseOrderShippingMethodOutput
-                selectedShippingMethod = basket.Shipments.FirstOrDefault()?.ShippingMethod;
+            var selectedShippingMethod = basket.Shipments.FirstOrDefault()?.ShippingMethod;
             if (selectedShippingMethod != null)
             {
-                checkoutModel.ShippingViewModel.SelectedShippingMethod = new ShippingMethodViewModel()
+                checkoutModel.ShippingViewModel.SelectedShippingMethod = new ShippingMethodViewModel
                     { Name = selectedShippingMethod.Name, ShippingMethodId = selectedShippingMethod.Id };
             }
 
@@ -107,31 +108,32 @@ namespace MC_Headless.Api
             var availablePaymentMethods = await _transactionClient.GetPaymentMethods(
                 _cultureCodeResolver.GetCultureCode(), selectedCountry.Id, _priceGroupIdResolver.PriceGroupId(), ct);
             checkoutModel.PaymentViewModel.AvailablePaymentMethods = availablePaymentMethods.PaymentMethods
-                .Select(x => new PaymentMethodViewModel() { Name = x.Name, PaymentMethodId = x.Id }).ToList();
+                .Select(x => new PaymentMethodViewModel { Name = x.Name, PaymentMethodId = x.Id }).ToList();
 
             return checkoutModel;
         }
 
-        private static List<CountryViewModel> MapCountries(CountriesOutput countries)
+        private List<CountryViewModel> MapCountries(CountriesOutput countries)
         {
-            return countries.Countries.Select(x => new CountryViewModel() { Name = x.Name, CountryId = x.Id }).ToList();
+            return countries.Countries.Select(x => new CountryViewModel { Name = x.Name, CountryId = x.Id }).ToList();
         }
 
         private PurchaseOrderViewModel MapPurchaseOrder(Ucommerce.Headless.Domain.GetBasketOutput basket)
         {
-            var model = new PurchaseOrderViewModel();
-
-            model.OrderLines = basket.OrderLines.Select(orderLine => new OrderlineViewModel
+            var model = new PurchaseOrderViewModel
             {
-                Quantity = orderLine.Quantity,
-                ProductName = orderLine.ProductName,
-                Discount = orderLine.Discount,
-                Total = new Money(orderLine.Total.GetValueOrDefault(), basket.BillingCurrency.IsoCode).ToString(),
-                TotalWithDiscount =
-                    new Money(orderLine.Price - orderLine.Discount, basket.BillingCurrency.IsoCode).ToString(),
-                Sku = orderLine.Sku,
-                VariantSku = orderLine.VariantSku
-            }).ToList();
+                OrderLines = basket.OrderLines.Select(orderLine => new OrderlineViewModel
+                {
+                    Quantity = orderLine.Quantity,
+                    ProductName = orderLine.ProductName,
+                    Discount = orderLine.Discount,
+                    Total = new Money(orderLine.Total.GetValueOrDefault(), basket.BillingCurrency.IsoCode).ToString(),
+                    TotalWithDiscount =
+                        new Money(orderLine.Price - orderLine.Discount, basket.BillingCurrency.IsoCode).ToString(),
+                    Sku = orderLine.Sku,
+                    VariantSku = orderLine.VariantSku
+                }).ToList()
+            };
 
             return model;
         }
@@ -156,31 +158,25 @@ namespace MC_Headless.Api
                     .ToString();
         }
 
-        private void MapAddress(Ucommerce.Headless.Domain.OrderAddressOutput address,
-            AddressViewModel addressViewModel)
+        private AddressViewModel MapAddress(Ucommerce.Headless.Domain.OrderAddressOutput address)
         {
-            if (address == null) return;
-
-            addressViewModel.FirstName = address.FirstName;
-            addressViewModel.LastName = address.LastName;
-            addressViewModel.Line1 = address.Line1;
-            addressViewModel.City = address.City;
-            addressViewModel.PostalCode = address.PostalCode;
-            addressViewModel.Country = new CountryViewModel
-                { Name = address.Country?.Name, CountryId = address.Country?.Id };
-            addressViewModel.EmailAddress = address.EmailAddress;
-            addressViewModel.PhoneNumber = address.MobilePhoneNumber;
+            if (address == null) return new AddressViewModel();
+            return new AddressViewModel
+            {
+                FirstName = address.FirstName,
+                LastName = address.LastName,
+                Line1 = address.Line1,
+                City = address.City,
+                PostalCode = address.PostalCode,
+                Country = new CountryViewModel { Name = address.Country?.Name, CountryId = address.Country?.Id },
+                EmailAddress = address.EmailAddress,
+                PhoneNumber = address.PhoneNumber
+            };
         }
 
         private bool IsAddressesDifferent(AddressViewModel addressOne, AddressViewModel addressTwo)
         {
             return JsonConvert.SerializeObject(addressOne) != JsonConvert.SerializeObject(addressTwo);
-        }
-
-        private string GetBasketCookieValue()
-        {
-            return this.Request.Headers.GetCookies().Select(c => c["basketId"])
-                .FirstOrDefault()?.Value ?? "";
         }
     }
 }

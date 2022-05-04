@@ -6,7 +6,7 @@ namespace Ucommerce.Masterclass.Umbraco.Models
     {
         public CheckoutViewModel()
         {
-            AddressViewModel = new AddressViewModel();
+            BillingAddressViewModel = new AddressViewModel();
             ShippingAddressViewModel = new AddressViewModel();
             PaymentViewModel = new PaymentViewModel();
             ShippingViewModel = new ShippingViewModel();
@@ -14,7 +14,7 @@ namespace Ucommerce.Masterclass.Umbraco.Models
 
         public PurchaseOrderViewModel PurchaseOrderViewModel { get; set; }
 
-        public AddressViewModel AddressViewModel { get; set; }
+        public AddressViewModel BillingAddressViewModel { get; set; }
         public AddressViewModel ShippingAddressViewModel { get; set; }
 
         public PaymentViewModel PaymentViewModel { get; set; }

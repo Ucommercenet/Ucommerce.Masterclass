@@ -1,6 +1,5 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
 using MC_Headless.Headless;
 using MC_Headless.Resolvers;
@@ -14,22 +13,24 @@ namespace MC_Headless.Api
         private readonly IBasketIdResolver _basketIdResolver;
         private readonly IPriceGroupIdResolver _priceGroupIdResolver;
         private readonly ICultureCodeResolver _cultureCodeResolver;
+        private readonly IPaymentMethodIdResolver _paymentMethodIdResolver;
 
-        public MasterClassCheckoutController(ITransactionClient transactionClient, IBasketIdResolver basketIdResolver, IPriceGroupIdResolver priceGroupIdResolver, ICultureCodeResolver cultureCodeResolver)
+        public MasterClassCheckoutController(ITransactionClient transactionClient, IBasketIdResolver basketIdResolver, IPriceGroupIdResolver priceGroupIdResolver, ICultureCodeResolver cultureCodeResolver, IPaymentMethodIdResolver paymentMethodIdResolver)
         {
             _transactionClient = transactionClient;
             _basketIdResolver = basketIdResolver;
             _priceGroupIdResolver = priceGroupIdResolver;
             _cultureCodeResolver = cultureCodeResolver;
+            _paymentMethodIdResolver = paymentMethodIdResolver;
         }
 
         [System.Web.Mvc.HttpGet]
         public async Task<IHttpActionResult> GetPaymentPageUrl(CancellationToken ct)
         {
-            var paymentMethodId = HttpContext.Current.Request.Cookies["SelectedPaymentMethodId"].Value;
+            var paymentMethodId = _paymentMethodIdResolver.GetSelectedPaymentMethodId(this.Request);
             var paymentUrl = await _transactionClient.CreatePayment(_basketIdResolver.GetBasketId(this.Request), _cultureCodeResolver.GetCultureCode(), paymentMethodId, _priceGroupIdResolver.PriceGroupId(), ct);
 
-            if (paymentUrl.PaymentUrl == null) return BadRequest("Missing Payment");
+            if (paymentUrl == null || string.IsNullOrWhiteSpace(paymentUrl.PaymentUrl)) return BadRequest("Missing Payment");
 
             return Redirect(paymentUrl.PaymentUrl);
         }

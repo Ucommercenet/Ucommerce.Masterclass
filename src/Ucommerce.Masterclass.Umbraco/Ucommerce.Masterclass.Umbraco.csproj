@@ -571,9 +571,11 @@
     <Compile Include="Resolvers\Impl\CatalogContextPriceGroupIdResolver.cs" />
     <Compile Include="Resolvers\Impl\CatalogContextProductCatalogIdResolver.cs" />
     <Compile Include="Resolvers\Impl\CookieBasketIdResolver.cs" />
+    <Compile Include="Resolvers\Impl\PaymentMethodIdResolver.cs" />
     <Compile Include="Resolvers\Impl\ThreadCultureCodeResolver.cs" />
     <Compile Include="Resolvers\IPriceGroupIdResolver.cs" />
     <Compile Include="Resolvers\IProductCatalogIdResolver.cs" />
+    <Compile Include="Resolvers\IPaymentMethodIdResolver.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

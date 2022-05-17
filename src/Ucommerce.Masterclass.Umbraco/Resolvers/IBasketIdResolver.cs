@@ -1,10 +1,10 @@
-﻿using System.Net.Http;
+﻿using System.Web;
 
 
 namespace MC_Headless.Resolvers
 {
     public interface IBasketIdResolver
     {
-        string GetBasketId(HttpRequestMessage request);
+        string GetBasketId(HttpRequest request);
     }
 }

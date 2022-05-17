@@ -32,5 +32,7 @@ namespace MC_Headless.Headless
 
         Task<CreatePaymentOutput> CreatePayment(string basketId, string cultureCode, string paymentMethodId, string priceGroupId,
             CancellationToken ct);
+        
+        Task<GetOrderOutput> GetOrder(string orderId, CancellationToken ct);
     }
 }

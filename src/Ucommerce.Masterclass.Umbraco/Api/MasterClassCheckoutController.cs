@@ -27,7 +27,7 @@ namespace MC_Headless.Api
         public async Task<IHttpActionResult> GetPaymentPageUrl(CancellationToken ct)
         {
             var paymentMethodId = HttpContext.Current.Request.Cookies["SelectedPaymentMethodId"].Value;
-            var paymentUrl = await _transactionClient.CreatePayment(_basketIdResolver.GetBasketId(this.Request), _cultureCodeResolver.GetCultureCode(), paymentMethodId, _priceGroupIdResolver.PriceGroupId(), ct);
+            var paymentUrl = await _transactionClient.CreatePayment(_basketIdResolver.GetBasketId(System.Web.HttpContext.Current.Request), _cultureCodeResolver.GetCultureCode(), paymentMethodId, _priceGroupIdResolver.PriceGroupId(), ct);
 
             if (paymentUrl.PaymentUrl == null) return BadRequest("Missing Payment");
 

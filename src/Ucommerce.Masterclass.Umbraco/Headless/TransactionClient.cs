@@ -20,7 +20,7 @@ namespace MC_Headless.Headless
             var errorMessage = string.Empty;
 
             using (var request = new HttpRequestMessage(new HttpMethod("GET"),
-                       $"/api/v1/payment-methods?cultureCode={cultureCode}&countryId={countryId}&priceGroupId={priceGroupId}"))
+                       ""))
             {
                 if (request.Headers.TryAddWithoutValidation("Authorization", $"Bearer {Auth.AccessToken}"))
                 {
@@ -80,19 +80,11 @@ namespace MC_Headless.Headless
             var client = await AuthorizeClient(ct);
             var errorMessage = string.Empty;
 
-            using (var request = new HttpRequestMessage(new HttpMethod("POST"), $"/api/v1/baskets/{basketId}/lines?"))
+            using (var request = new HttpRequestMessage(new HttpMethod("POST"), ""))
             {
                 if (request.Headers.TryAddWithoutValidation("Authorization", $"Bearer {Auth.AccessToken}"))
                 {
-                    var dict = new Dictionary<string, object>
-                    {
-                        { "cultureCode", cultureCode },
-                        { "quantity", quantity },
-                        { "sku", sku },
-                        { "variantSku", variantSku },
-                        { "priceGroupId", priceGroupId },
-                        { "productCatalogId", productCatalogId }
-                    };
+                    var dict = new Dictionary<string, object> { };
 
                     request.Content = new StringContent(JsonConvert.SerializeObject(dict));
                     request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
@@ -136,24 +128,11 @@ namespace MC_Headless.Headless
             var errorMessage = string.Empty;
 
             using (var request =
-                   new HttpRequestMessage(new HttpMethod("POST"), $"/api/v1/baskets/{basketId}/billing-address"))
+                   new HttpRequestMessage(new HttpMethod("POST"), ""))
             {
                 if (request.Headers.TryAddWithoutValidation("Authorization", $"Bearer {Auth.AccessToken}"))
                 {
-                    var dict = new Dictionary<string, object>
-                    {
-                        { "city", city },
-                        { "firstName", firstName },
-                        { "lastName", lastName },
-                        { "postalCode", postalCode },
-                        { "line1", line1 },
-                        { "countryId", countryId },
-                        { "email", emailAddress },
-                        { "state", state },
-                        { "mobileNumber", mobilePhoneNumber },
-                        { "attention", attention },
-                        { "companyName", company },
-                    };
+                    var dict = new Dictionary<string, object> { };
 
                     request.Content = new StringContent(JsonConvert.SerializeObject(dict));
                     request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
@@ -247,6 +226,25 @@ namespace MC_Headless.Headless
             }
 
             throw new ServerException($"Couldn't update billing address. Message {errorMessage}");
+        }
+        
+        public async Task<GetOrderOutput> GetOrder(string orderId, CancellationToken ct)
+        {
+            var client = await AuthorizeClient(ct);
+            var errorMessage = string.Empty;
+
+            using (var request = new HttpRequestMessage(new HttpMethod("GET"), $"/api/v1/orders/{orderId}"))
+            {
+                if (request.Headers.TryAddWithoutValidation("Authorization", $"Bearer {Auth.AccessToken}"))
+                {
+                    var response = await client.SendAsync(request, ct);
+                    if (response.IsSuccessStatusCode)
+                        return await response.Content.ReadAsAsync<GetOrderOutput>(ct);
+                    errorMessage = await response.Content.ReadAsStringAsync();
+                }
+            }
+
+            throw new ServerException($"Couldn't get the order with Id {orderId}. Message {errorMessage}");
         }
     }
 }

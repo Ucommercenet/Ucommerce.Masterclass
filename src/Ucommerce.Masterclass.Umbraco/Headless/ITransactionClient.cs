@@ -30,7 +30,10 @@ namespace MC_Headless.Headless
             string mobilePhoneNumber, string company, string line1, string line2, string postalCode, string city,
             string attention, string state, string countryId, CancellationToken ct);
 
-        Task<CreatePaymentOutput> CreatePayment(string basketId, string cultureCode, string paymentMethodId, string priceGroupId,
+        Task<CreatePaymentOutput> CreatePayment(string basketId, string cultureCode, string paymentMethodId,
+            string priceGroupId,
             CancellationToken ct);
+
+        Task<GetOrderOutput> GetOrder(string orderId, CancellationToken ct);
     }
 }

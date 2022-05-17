@@ -1,7 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web.Mvc;
+using MC_Headless.Exceptions;
+using MC_Headless.Headless;
+using MC_Headless.Resolvers;
 using Ucommerce.Api;
 using Ucommerce.Masterclass.Umbraco.Models;
 using Ucommerce.Search;
@@ -14,13 +19,24 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
     {
         private readonly ICatalogContext _catalogContext;
         private readonly ICatalogLibrary _catalogLibrary;
-        private readonly ITransactionLibrary _transactionLibrary;
+        private readonly ITransactionClient _transactionClient;
+        private readonly IBasketIdResolver _basketIdResolver;
+        private readonly IPriceGroupIdResolver _priceGroupIdResolver;
+        private readonly ICultureCodeResolver _cultureCodeResolver;
+        private readonly IProductCatalogIdResolver _productCatalogIdResolver;
 
-        public ProductController(ICatalogContext catalogContext, ICatalogLibrary catalogLibrary, ITransactionLibrary transactionLibrary)
+        public ProductController(ICatalogContext catalogContext, ICatalogLibrary catalogLibrary,
+            ITransactionClient transactionClient, IBasketIdResolver basketIdResolver,
+            IPriceGroupIdResolver priceGroupIdResolver, ICultureCodeResolver cultureCodeResolver,
+            IProductCatalogIdResolver productCatalogIdResolver)
         {
             _catalogContext = catalogContext;
             _catalogLibrary = catalogLibrary;
-            _transactionLibrary = transactionLibrary;
+            _transactionClient = transactionClient;
+            _basketIdResolver = basketIdResolver;
+            _priceGroupIdResolver = priceGroupIdResolver;
+            _cultureCodeResolver = cultureCodeResolver;
+            _productCatalogIdResolver = productCatalogIdResolver;
         }
 
         [System.Web.Mvc.HttpGet]
@@ -43,20 +59,31 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
         }
 
         [System.Web.Mvc.HttpPost]
-        public ActionResult Index(string sku, string variantSku, int quantity)
+        public async Task<ActionResult> Index(UpdateOrderLineRequest updateOrderLineRequest,
+            CancellationToken ct)
         {
-            _transactionLibrary.AddToBasket(quantity, sku, variantSku);
+            var basketId = _basketIdResolver.GetBasketId(System.Web.HttpContext.Current.Request);
+            if (string.IsNullOrWhiteSpace(basketId))
+                throw new MissingBasketIdException("Couldn't read basket id from cookies.");
+
+            var cultureCode = _cultureCodeResolver.GetCultureCode();
+            var priceGroupId = _priceGroupIdResolver.PriceGroupId();
+            var productCatalogId = _productCatalogIdResolver.ProductCatalogId();
+
+            await _transactionClient.UpdateOrderLineQuantity(cultureCode, updateOrderLineRequest.NewQuantity,
+                updateOrderLineRequest.Sku, updateOrderLineRequest.VariantSku, priceGroupId, productCatalogId, basketId,
+                ct);
             return Index();
         }
 
         private IList<ProductViewModel> MapVariants(ResultSet<Product> variants)
         {
             return variants.Select(x =>
-                 new ProductViewModel
-                 {
-                     Name = x.DisplayName,
-                     VariantSku = x.VariantSku
-                 }).ToList();
+                new ProductViewModel
+                {
+                    Name = x.DisplayName,
+                    VariantSku = x.VariantSku
+                }).ToList();
         }
     }
 }

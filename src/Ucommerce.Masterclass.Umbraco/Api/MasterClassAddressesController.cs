@@ -28,7 +28,7 @@ namespace MC_Headless.Api
         public async Task<IHttpActionResult> UpdateBilling(AddressViewModel address, CancellationToken ct)
         {
             await _transactionClient.EditBillingInformation(
-                basketId: _basketIdResolver.GetBasketId(this.Request),
+                basketId: _basketIdResolver.GetBasketId(System.Web.HttpContext.Current.Request),
                 city: address.City ?? "",
                 firstName: address.FirstName ?? "",
                 lastName: address.LastName ?? "",
@@ -50,7 +50,7 @@ namespace MC_Headless.Api
         public async Task<IHttpActionResult> UpdateShipping(AddressViewModel address, CancellationToken ct)
         {
             await _transactionClient.EditShippingInformation(
-                basketId: _basketIdResolver.GetBasketId(this.Request),
+                basketId: _basketIdResolver.GetBasketId(System.Web.HttpContext.Current.Request),
                 cultureCodeId: _cultureCodeResolver.GetCultureCode(),
                 priceGroupId: _priceGroupIdResolver.PriceGroupId(),
                 shippingMethodId: address.ShippingMethodId ?? "",

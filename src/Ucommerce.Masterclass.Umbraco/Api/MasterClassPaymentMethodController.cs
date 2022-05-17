@@ -21,7 +21,7 @@ namespace MC_Headless.Api
         [HttpPost]
         public async Task<IHttpActionResult> Update(CheckoutViewModel checkoutViewModel, CancellationToken ct)
         {
-            var basketId = _basketResolver.GetBasketId(this.Request);
+            var basketId = _basketResolver.GetBasketId(System.Web.HttpContext.Current.Request);
             
             if (string.IsNullOrWhiteSpace(basketId))
                 throw new MissingBasketIdException("Couldn't read basket id from cookies.");

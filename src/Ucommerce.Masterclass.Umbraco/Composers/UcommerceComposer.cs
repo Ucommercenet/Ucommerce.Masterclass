@@ -19,7 +19,6 @@ namespace MC_Headless.Composers
             composition.RegisterFor<Ucommerce.Search.Slugs.IUrlService, Ucommerce.Search.Slugs.UrlService>(x => Ucommerce.Infrastructure.ObjectFactory.Instance.Resolve<Ucommerce.Search.Slugs.IUrlService>());
 
             //Services for checkout
-            composition.RegisterFor<Ucommerce.Api.ITransactionLibrary, Ucommerce.Api.TransactionLibrary>(x => Ucommerce.Infrastructure.ObjectFactory.Instance.Resolve<ITransactionLibrary>());
             composition.Register<ITransactionClient, TransactionClient>();
             composition.Register<IBasketIdResolver, CookieBasketIdResolver>();
             composition.Register<IPriceGroupIdResolver, CatalogContextPriceGroupIdResolver>();

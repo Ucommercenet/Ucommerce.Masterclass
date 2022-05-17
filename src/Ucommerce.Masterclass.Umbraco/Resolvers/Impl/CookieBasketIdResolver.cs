@@ -1,14 +1,12 @@
-﻿using System.Linq;
-using System.Net.Http;
+﻿using System.Web;
 
 namespace MC_Headless.Resolvers.Impl
 {
     public class CookieBasketIdResolver : IBasketIdResolver
     {
-        public string GetBasketId(HttpRequestMessage request)
+        public string GetBasketId(HttpRequest request)
         {
-            return request.Headers.GetCookies().Select(c => c["basketId"])
-                .FirstOrDefault()?.Value ?? "";
+            return request.Cookies["basketId"]?.Value ?? "";
         }
     }
 }

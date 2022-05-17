@@ -1,6 +1,9 @@
 ﻿using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web.Mvc;
-using Ucommerce.Api;
+using MC_Headless.Headless;
+using MC_Headless.Resolvers;
 using Ucommerce.Masterclass.Umbraco.Models;
 using Umbraco.Web.Mvc;
 
@@ -8,28 +11,31 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
 {
     public class MiniBasketController : SurfaceController
     {
-        private readonly ITransactionLibrary _transactionLibrary;
+        private readonly ITransactionClient _transactionClient;
+        private readonly IBasketIdResolver _basketIdResolver;
 
-        public MiniBasketController(ITransactionLibrary transactionLibrary)
+        public MiniBasketController(ITransactionClient transactionClient, IBasketIdResolver basketIdResolver)
         {
-            _transactionLibrary = transactionLibrary;
+            _transactionClient = transactionClient;
+            _basketIdResolver = basketIdResolver;
         }
 
-        public ActionResult Render()
+        public async Task<ActionResult> Render(CancellationToken ct)
         {
             var miniBasketViewModel = new MiniBasketViewModel();
 
-            if (!_transactionLibrary.HasBasket())
+            var basketId = _basketIdResolver.GetBasketId(System.Web.HttpContext.Current.Request);
+            var basket = await _transactionClient.GetBasket(basketId, ct);
+
+            if (string.IsNullOrWhiteSpace(basketId))
             {
                 miniBasketViewModel.Empty = true;
 
                 return View("/views/Minibasket/index.cshtml", miniBasketViewModel);
             }
 
-            var basket = _transactionLibrary.GetBasket(false);
-
             miniBasketViewModel.Empty = false;
-            miniBasketViewModel.OrderTotal = new Money(basket.OrderTotal.GetValueOrDefault(0), basket.BillingCurrency.ISOCode).ToString();
+            miniBasketViewModel.OrderTotal = new Money(basket.OrderTotal.GetValueOrDefault(0), basket.BillingCurrency.IsoCode).ToString();
             miniBasketViewModel.ItemsInCart = basket.OrderLines.Sum(x => x.Quantity);
 
             return View("/views/Minibasket/index.cshtml", miniBasketViewModel);

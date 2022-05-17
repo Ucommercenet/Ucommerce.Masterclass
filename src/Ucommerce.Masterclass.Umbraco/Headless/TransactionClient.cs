@@ -12,7 +12,6 @@ namespace MC_Headless.Headless
 {
     public class TransactionClient : UcommerceHttpClient, ITransactionClient
     {
-
         public async Task<PaymentMethodsOutput> GetPaymentMethods(string cultureCode, string countryId,
             string priceGroupId, CancellationToken ct)
         {
@@ -218,7 +217,8 @@ namespace MC_Headless.Headless
             throw new ServerException($"Couldn't update shipping address. Message {errorMessage}");
         }
 
-        public async Task<CreatePaymentOutput> CreatePayment(string basketId, string cultureCode, string paymentMethodId,
+        public async Task<CreatePaymentOutput> CreatePayment(string basketId, string cultureCode,
+            string paymentMethodId,
             string priceGroupId, CancellationToken ct)
         {
             var client = await AuthorizeClient(ct);
@@ -247,6 +247,25 @@ namespace MC_Headless.Headless
             }
 
             throw new ServerException($"Couldn't update billing address. Message {errorMessage}");
+        }
+
+        public async Task<GetOrderOutput> GetOrder(string orderId, CancellationToken ct)
+        {
+            var client = await AuthorizeClient(ct);
+            var errorMessage = string.Empty;
+
+            using (var request = new HttpRequestMessage(new HttpMethod("GET"), $"/api/v1/orders/{orderId}"))
+            {
+                if (request.Headers.TryAddWithoutValidation("Authorization", $"Bearer {Auth.AccessToken}"))
+                {
+                    var response = await client.SendAsync(request, ct);
+                    if (response.IsSuccessStatusCode)
+                        return await response.Content.ReadAsAsync<GetOrderOutput>(ct);
+                    errorMessage = await response.Content.ReadAsStringAsync();
+                }
+            }
+
+            throw new ServerException($"Couldn't get the basket with Id {orderId}. Message {errorMessage}");
         }
     }
 }

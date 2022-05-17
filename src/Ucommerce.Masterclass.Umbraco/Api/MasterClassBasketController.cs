@@ -44,7 +44,7 @@ namespace MC_Headless.Api
         public async Task<IHttpActionResult> UpdateOrderLine(UpdateOrderLineRequest updateOrderLineRequest,
             CancellationToken ct)
         {
-            var basketId = _basketIdResolver.GetBasketId(this.Request);
+            var basketId = _basketIdResolver.GetBasketId(System.Web.HttpContext.Current.Request);
             if (string.IsNullOrWhiteSpace(basketId))
                 throw new MissingBasketIdException("Couldn't read basket id from cookies.");
 
@@ -63,7 +63,7 @@ namespace MC_Headless.Api
         {
             var checkoutModel = new CheckoutViewModel();
 
-            var basketId = _basketIdResolver.GetBasketId(this.Request);
+            var basketId = _basketIdResolver.GetBasketId(System.Web.HttpContext.Current.Request);
             if (string.IsNullOrWhiteSpace(basketId))
                 throw new MissingBasketIdException("Couldn't read basket id from cookies.");
 

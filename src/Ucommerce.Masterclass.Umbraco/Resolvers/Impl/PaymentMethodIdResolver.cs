@@ -1,14 +1,12 @@
-﻿using System.Linq;
-using System.Net.Http;
+﻿using System.Web;
 
 namespace MC_Headless.Resolvers.Impl
 {
     public class PaymentMethodIdResolver: IPaymentMethodIdResolver
     {
-        public string GetSelectedPaymentMethodId(HttpRequestMessage request)
+        public string GetSelectedPaymentMethodId(HttpRequest request)
         {
-            return request.Headers.GetCookies().Select(c => c["SelectedPaymentMethodId"])
-                .FirstOrDefault()?.Value ?? "";
+            return request.Cookies["SelectedPaymentMethodId"].Value ?? "";
         }
     }
 }

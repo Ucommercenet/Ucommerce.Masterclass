@@ -1,5 +1,4 @@
 ﻿using System.Threading;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using Ucommerce.Masterclass.Umbraco.Models;
@@ -19,17 +18,17 @@ namespace Ucommerce.Masterclass.Umbraco.Api
         }
 
         [HttpPost]
-        public async Task<IHttpActionResult> Update(CheckoutViewModel checkoutViewModel, CancellationToken ct)
+        public IHttpActionResult Update(CheckoutViewModel checkoutViewModel, CancellationToken ct)
         {
             var basketId = _basketResolver.GetBasketId(System.Web.HttpContext.Current.Request);
             
             if (string.IsNullOrWhiteSpace(basketId))
                 throw new MissingBasketIdException("Couldn't read basket id from cookies.");
 
-            var paymentMethodId = checkoutViewModel?.PaymentViewModel?.SelectedPaymentMethod?.PaymentMethodId;
+            var selectedPaymentMethodId = checkoutViewModel?.PaymentViewModel?.SelectedPaymentMethod?.PaymentMethodId;
 
-            if (paymentMethodId == null) return BadRequest("Missing Payment method");
-            var selectedPaymentMethodCookie = new HttpCookie("SelectedPaymentMethodId", paymentMethodId.ToString());
+            if (selectedPaymentMethodId == null) return BadRequest("Missing Payment method");
+            var selectedPaymentMethodCookie = new HttpCookie("SelectedPaymentMethodId", selectedPaymentMethodId.ToString());
             HttpContext.Current.Response.Cookies.Add(selectedPaymentMethodCookie);
 
             return Ok();

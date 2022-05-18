@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 using Ucommerce.Headless.Domain;
 using Ucommerce.Masterclass.Umbraco.Headless;
 
-namespace MC_Headless.Headless
+namespace Ucommerce.Masterclass.Umbraco.Headless
 {
     public class TransactionClient : UcommerceHttpClient, ITransactionClient
     {

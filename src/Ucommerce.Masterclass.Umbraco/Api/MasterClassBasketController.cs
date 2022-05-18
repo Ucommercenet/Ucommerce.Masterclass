@@ -8,7 +8,7 @@ using Ucommerce.Masterclass.Umbraco.Models;
 using Umbraco.Web.WebApi;
 using Ucommerce.Headless.Domain;
 
-namespace MC_Headless.Api
+namespace Ucommerce.Masterclass.Umbraco.Api
 {
     public class MasterClassBasketController : UmbracoApiController
     {

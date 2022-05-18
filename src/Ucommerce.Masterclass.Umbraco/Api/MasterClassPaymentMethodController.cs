@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Web;
 using System.Web.Http;
-using MC_Headless.Exceptions;
+using Ucommerce.Masterclass.Umbraco.Exceptions;
 using Umbraco.Web.WebApi;
 
-namespace MC_Headless.Api
+namespace Ucommerce.Masterclass.Umbraco.Api
 {
     public class MasterClassPaymentMethodController : UmbracoApiController
     {

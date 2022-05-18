@@ -2,11 +2,11 @@
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using MC_Headless.Headless;
-using MC_Headless.Resolvers;
+using Ucommerce.Masterclass.Umbraco.Headless;
+using Ucommerce.Masterclass.Umbraco.Resolvers;
 using Umbraco.Web.WebApi;
 
-namespace MC_Headless.Api
+namespace Ucommerce.Masterclass.Umbraco.Api
 {
     public class MasterClassCheckoutController : UmbracoApiController
     {

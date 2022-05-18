@@ -1,13 +1,13 @@
-﻿using MC_Headless.Exceptions;
-using MC_Headless.Headless;
-using MC_Headless.Resolvers;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
+using Ucommerce.Masterclass.Umbraco.Exceptions;
+using Ucommerce.Masterclass.Umbraco.Headless;
 using Ucommerce.Masterclass.Umbraco.Models;
+using Ucommerce.Masterclass.Umbraco.Resolvers;
 using Umbraco.Web.WebApi;
 
-namespace MC_Headless.Api
+namespace Ucommerce.Masterclass.Umbraco.Api
 {
     public class MasterClassShippingMethodController : UmbracoApiController
     {

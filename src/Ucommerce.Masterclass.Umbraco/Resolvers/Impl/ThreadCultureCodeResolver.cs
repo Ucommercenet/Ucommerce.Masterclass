@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 
-namespace MC_Headless.Resolvers.Impl
+namespace Ucommerce.Masterclass.Umbraco.Resolvers.Impl
 {
     public class ThreadCultureCodeResolver : ICultureCodeResolver
     {

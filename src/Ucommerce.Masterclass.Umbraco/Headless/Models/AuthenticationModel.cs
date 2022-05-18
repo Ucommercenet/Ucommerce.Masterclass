@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace MC_Headless.Headless.Models
+namespace Ucommerce.Masterclass.Umbraco.Headless.Models
 {
     public class AuthenticationModel
     {

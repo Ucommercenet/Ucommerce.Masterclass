@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Ucommerce.Headless.Domain;
 
-namespace MC_Headless.Headless
+namespace Ucommerce.Masterclass.Umbraco.Headless
 {
     public interface ITransactionClient
     {

@@ -1,4 +1,4 @@
-﻿namespace MC_Headless.Resolvers
+﻿namespace Ucommerce.Masterclass.Umbraco.Resolvers
 {
     public interface ICultureCodeResolver
     {

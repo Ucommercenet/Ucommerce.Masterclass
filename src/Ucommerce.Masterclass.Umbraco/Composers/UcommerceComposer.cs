@@ -1,11 +1,11 @@
 using Ucommerce.Api;
-using MC_Headless.Headless;
-using MC_Headless.Resolvers;
-using MC_Headless.Resolvers.Impl;
+using Ucommerce.Masterclass.Umbraco.Headless;
+using Ucommerce.Masterclass.Umbraco.Resolvers;
+using Ucommerce.Masterclass.Umbraco.Resolvers.Impl;
 using Umbraco.Core.Composing;
 using Umbraco.Core;
 
-namespace MC_Headless.Composers
+namespace Ucommerce.Masterclass.Umbraco.Composers
 {
     public class UcommerceComposer : IUserComposer
     {

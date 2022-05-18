@@ -1,12 +1,12 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
-using MC_Headless.Headless;
 using Ucommerce.Masterclass.Umbraco.Models;
-using MC_Headless.Resolvers;
+using Ucommerce.Masterclass.Umbraco.Headless;
+using Ucommerce.Masterclass.Umbraco.Resolvers;
 using Umbraco.Web.WebApi;
 
-namespace MC_Headless.Api
+namespace Ucommerce.Masterclass.Umbraco.Api
 {
     public class MasterClassAddressesController : UmbracoApiController
     {

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
-using MC_Headless.Headless.Models;
+using Ucommerce.Masterclass.Umbraco.Headless.Models;
 
 namespace Ucommerce.Masterclass.Umbraco.Headless
 {

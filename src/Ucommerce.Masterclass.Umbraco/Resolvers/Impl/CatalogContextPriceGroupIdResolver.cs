@@ -1,6 +1,6 @@
 ﻿using Ucommerce.Api;
 
-namespace MC_Headless.Resolvers.Impl
+namespace Ucommerce.Masterclass.Umbraco.Resolvers.Impl
 {
     public class CatalogContextPriceGroupIdResolver : IPriceGroupIdResolver
     {

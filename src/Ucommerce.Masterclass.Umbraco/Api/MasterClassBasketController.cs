@@ -5,15 +5,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Newtonsoft.Json;
-using MC_Headless.Exceptions;
-using MC_Headless.Headless;
 using Ucommerce.Masterclass.Umbraco.Models;
-using MC_Headless.Resolvers;
 using Umbraco.Web.WebApi;
 using Ucommerce.Headless.Domain;
-using Ucommerce;
+using Ucommerce.Masterclass.Umbraco.Exceptions;
+using Ucommerce.Masterclass.Umbraco.Headless;
+using Ucommerce.Masterclass.Umbraco.Resolvers;
 
-namespace MC_Headless.Api
+namespace Ucommerce.Masterclass.Umbraco.Api
 {
     public class MasterClassBasketController : UmbracoApiController
     {

@@ -1,6 +1,6 @@
 ﻿using System.Web;
 
-namespace MC_Headless.Resolvers.Impl
+namespace Ucommerce.Masterclass.Umbraco.Resolvers.Impl
 {
     public class CookieBasketIdResolver : IBasketIdResolver
     {

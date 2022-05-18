@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using MC_Headless.Headless;
+using Ucommerce.Masterclass.Umbraco.Headless;
 using Ucommerce.Headless.Domain;
 using Ucommerce.Masterclass.Umbraco.Models;
 using Umbraco.Core;

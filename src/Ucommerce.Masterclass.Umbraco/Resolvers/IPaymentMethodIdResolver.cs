@@ -1,6 +1,6 @@
 ﻿using System.Web;
 
-namespace MC_Headless.Resolvers
+namespace Ucommerce.Masterclass.Umbraco.Resolvers
 {
     public interface IPaymentMethodIdResolver
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace MC_Headless.Exceptions
+namespace Ucommerce.Masterclass.Umbraco.Exceptions
 {
     [ExcludeFromCodeCoverage]
     [Serializable]

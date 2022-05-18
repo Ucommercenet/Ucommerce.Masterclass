@@ -17,6 +17,7 @@ namespace MC_Headless.Headless.Models
         [JsonProperty("refresh_token")]
         public string RefreshToken { get; set; }
 
+        [JsonProperty("expires_at")]
         public DateTime ExpiresAt { get; set; }
 
     }

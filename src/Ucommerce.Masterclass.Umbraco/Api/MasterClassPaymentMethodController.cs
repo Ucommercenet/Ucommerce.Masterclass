@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using MC_Headless.Exceptions;
@@ -16,7 +15,7 @@ namespace MC_Headless.Api
         }
 
         [HttpPost]
-        public async Task<IHttpActionResult> Update(CheckoutViewModel checkoutViewModel, CancellationToken ct)
+        public IHttpActionResult Update(CheckoutViewModel checkoutViewModel, CancellationToken ct)
         {
             var basketId = "";
             

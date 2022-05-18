@@ -21,6 +21,10 @@ Copy-Item -Path "$src\Views" -Destination "$workingdir\content" -Recurse -Force
 Copy-Item -Path "$src\Models" -Destination "$workingdir\content" -Recurse -Force
 Copy-Item -Path "$src\Api" -Destination "$workingdir\content" -Recurse -Force
 Copy-Item -Path "$src\Extensions" -Destination "$workingdir\content" -Recurse -Force
+Copy-Item -Path "$src\Exceptions" -Destination "$workingdir\content" -Recurse -Force
+Copy-Item -Path "$src\Headless" -Destination "$workingdir\content" -Recurse -Force
+Copy-Item -Path "$src\IndexDefinitions" -Destination "$workingdir\content" -Recurse -Force
+Copy-Item -Path "$src\Resolvers" -Destination "$workingdir\content" -Recurse -Force
 Copy-Item -Path "$base_dir\tools\NuGet\Umbraco\uCommerce.Masterclass.Umbraco.nuspec" "$workingdir" -Force
 Copy-Item -Path "$base_dir\tools\NuGet\Umbraco\readme.txt" "$workingdir" -Force
 

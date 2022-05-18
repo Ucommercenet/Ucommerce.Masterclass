@@ -1,3 +1,5 @@
+using System;
+
 namespace Ucommerce.Masterclass.Umbraco.Models
 {
     public class OrderlineViewModel
@@ -6,7 +8,7 @@ namespace Ucommerce.Masterclass.Umbraco.Models
 
         public int Quantity { get; set; }
 
-        public int OrderLineId { get; set; }
+        public Guid OrderLineId { get; set; }
 
         public string Sku { get; set; }
 

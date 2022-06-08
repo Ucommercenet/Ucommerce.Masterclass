@@ -6,7 +6,7 @@ namespace Ucommerce.Masterclass.Umbraco.Resolvers.Impl
     {
         public string GetSelectedPaymentMethodId(HttpRequest request)
         {
-            return request.Cookies["SelectedPaymentMethodId"].Value ?? "";
+            return request.Cookies["SelectedPaymentMethodId"]?.Value ?? "";
         }
     }
 }

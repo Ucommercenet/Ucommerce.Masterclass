@@ -184,7 +184,7 @@ namespace Ucommerce.Masterclass.Umbraco.Headless
                         { "priceGroupId", priceGroupId },
                         { "shippingMethodId", shippingMethodId },
                         {
-                            "shippingAddress", new Dictionary<string, string>()
+                            "shippingAddress", new Dictionary<string, string>
                             {
                                 { "attention", attention },
                                 { "city", city },
@@ -246,6 +246,34 @@ namespace Ucommerce.Masterclass.Umbraco.Headless
             }
 
             throw new ServerException($"Couldn't update billing address. Message {errorMessage}");
+        }
+        
+        public async Task<CreateNewBasketOutput> CreateBasket(string currency, string cultureCode, CancellationToken ct)
+        {
+            var client = await AuthorizeClient(ct);
+            var errorMessage = string.Empty;
+
+            using (var request = new HttpRequestMessage(new HttpMethod("POST"), "/api/v1/baskets"))
+            {
+                if (request.Headers.TryAddWithoutValidation("Authorization", $"Bearer {Auth.AccessToken}"))
+                {
+                    var dict = new Dictionary<string, object>
+                    {
+                        { "currency", currency },
+                        { "cultureCode", cultureCode }
+                    };
+
+                    request.Content = new StringContent(JsonConvert.SerializeObject(dict));
+                    request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
+
+                    var response = await client.SendAsync(request, ct);
+                    if (response.IsSuccessStatusCode)
+                        return await response.Content.ReadAsAsync<CreateNewBasketOutput>(ct);
+                    errorMessage = await response.Content.ReadAsStringAsync();
+                }
+            }
+
+            throw new ServerException($"Couldn't create new Basket. Message {errorMessage}");
         }
 
         public async Task<GetOrderOutput> GetOrder(string orderId, CancellationToken ct)

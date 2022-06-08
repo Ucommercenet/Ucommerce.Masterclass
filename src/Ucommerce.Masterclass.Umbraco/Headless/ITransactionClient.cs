@@ -34,6 +34,8 @@ namespace Ucommerce.Masterclass.Umbraco.Headless
             string priceGroupId,
             CancellationToken ct);
 
+        Task<CreateNewBasketOutput> CreateBasket(string currency, string cultureCode, CancellationToken ct);
+
         Task<GetOrderOutput> GetOrder(string orderId, CancellationToken ct);
     }
 }

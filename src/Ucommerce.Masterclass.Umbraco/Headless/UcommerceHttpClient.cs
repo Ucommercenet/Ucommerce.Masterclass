@@ -21,10 +21,10 @@ namespace Ucommerce.Masterclass.Umbraco.Headless
     /// </remarks>
     public abstract class UcommerceHttpClient : IDisposable
     {
-        private static readonly string _clientId = "eb446cf5-9f7d-4eaf-a4ba-26c5b64e88b6";
-        private static readonly string _clientSecret = "EAAE6EE4-A90D-4AE6-85BC-C9BBAA1E3FCBpkPdRblQH1i389c7wJG4gsLcpTDKouTLPZ6630T8hXDa7uTBvuxUYC1QEQn6cLGfdNCKTEj9Gu7SSe2XKRFsvL9Es6INsCO7OTUCuI8c55uKhtNz58KhFzG0DpjW2C2BkN";
+        private static readonly string _clientId = "f89b7384-3b38-4288-ac81-428a02f52ce9";
+        private static readonly string _clientSecret = "26E854D3-5A6A-4090-BDCC-AD8E69F25E01pkPdRblQH1i389c7wJG4gsLcpTDKouTLPZ6630T8hXDa7uTBvuxUYC1QEQn6cLGfdNCKTEj9Gu7SSe2XKRFsvL9Es6INsCO7OTUCuI8c55uKhtNz58KhFzG0DpjW2C2BkN";
         private static readonly string _redirectUrl = "http://localhost";
-        private static readonly string _apiUrl = "https://localhost:44340";
+        private static readonly string _apiUrl = "https://localhost:44332";
 
         protected static AuthenticationModel Auth = null;
 

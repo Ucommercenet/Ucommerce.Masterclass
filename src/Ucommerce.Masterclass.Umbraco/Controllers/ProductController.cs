@@ -1,11 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Ucommerce.Masterclass.Umbraco.Exceptions;
 using Ucommerce.Masterclass.Umbraco.Headless;
 using Ucommerce.Masterclass.Umbraco.Resolvers;
 using Ucommerce.Api;

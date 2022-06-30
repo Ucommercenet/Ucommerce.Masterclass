@@ -1,0 +1,43 @@
+﻿@using Umbraco.Web
+@model Ucommerce.Masterclass.Umbraco.Models.LoginViewModel
+@{
+    string status = Model.IsLoggedIn ? Model.UserName : "Login";
+}
+
+<div class="dropdown">
+    <button class="dropdown-toggle btn btn-link text-white" type="button" id="LoginButton" data-bs-toggle="dropdown" aria-expanded="false">
+        @status
+    </button>
+        @if (Model.IsLoggedIn)
+        { 
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="/mypurchases">My Purchases</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                    @using (Html.BeginUmbracoForm("Logout", "LoginNavigation"))
+                    {
+                        <button type="submit" class="btn btn-primary ms-2">Logout</button>
+                    }
+                </li>
+            </ul>
+        }
+        else
+        {
+            <div class="dropdown-menu row" aria-labelledby="LoginButton">
+                @using (Html.BeginUmbracoForm("Post", "LoginNavigation"))
+                {
+                    <div class="col-12">
+                        <label for="userName" class="form-label">Username</label>
+                        <input type="text" required class="form-control" id="userName" name="Username" />
+                    </div>
+                    <div class="col-12">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" required class="form-control" name="Password" id="password" />
+                    </div>
+                    <div class="col-12 mt-2">
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </div>
+                }   
+            </div>
+        }
+</div>

@@ -1,4 +1,4 @@
-﻿using System.Web;
+using System.Web;
 
 namespace Ucommerce.Masterclass.Umbraco.Resolvers.Impl
 {

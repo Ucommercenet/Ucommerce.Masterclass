@@ -1,3 +1,4 @@
+using System;
 using System.Web;
 
 namespace Ucommerce.Masterclass.Umbraco.Resolvers.Impl
@@ -6,7 +7,7 @@ namespace Ucommerce.Masterclass.Umbraco.Resolvers.Impl
     {
         public string GetBasketId(HttpRequest request)
         {
-            return request.Cookies["basketId"]?.Value ?? "";
+            throw new NotImplementedException();
         }
     }
 }

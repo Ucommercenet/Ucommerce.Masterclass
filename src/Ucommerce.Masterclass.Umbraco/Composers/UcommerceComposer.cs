@@ -28,7 +28,6 @@ namespace Ucommerce.Masterclass.Umbraco.Composers
 
             //Services for checkout
             composition.Register<ITransactionClient, TransactionClient>();
-            composition.Register<IBasketIdResolver, CookieBasketIdResolver>();
             composition.Register<IPriceGroupIdResolver, CatalogContextPriceGroupIdResolver>();
             composition.Register<IProductCatalogIdResolver, CatalogContextProductCatalogIdResolver>();
             composition.Register<ICultureCodeResolver, ThreadCultureCodeResolver>();

@@ -1,8 +1,13 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Security;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using Ucommerce.Masterclass.Umbraco.Headless.Models;
 
 namespace Ucommerce.Masterclass.Umbraco.Headless
@@ -16,10 +21,10 @@ namespace Ucommerce.Masterclass.Umbraco.Headless
     /// </remarks>
     public abstract class UcommerceHttpClient : IDisposable
     {
-        private static readonly string _clientId = "clientId";
-        private static readonly string _clientSecret = "secret";
+        private static readonly string _clientId = "f89b7384-3b38-4288-ac81-428a02f52ce9";
+        private static readonly string _clientSecret = "26E854D3-5A6A-4090-BDCC-AD8E69F25E01pkPdRblQH1i389c7wJG4gsLcpTDKouTLPZ6630T8hXDa7uTBvuxUYC1QEQn6cLGfdNCKTEj9Gu7SSe2XKRFsvL9Es6INsCO7OTUCuI8c55uKhtNz58KhFzG0DpjW2C2BkN";
         private static readonly string _redirectUrl = "http://localhost";
-        private static readonly string _apiUrl = "https://localhost:PORT";
+        private static readonly string _apiUrl = "https://localhost:44332";
 
         protected static AuthenticationModel Auth = null;
 
@@ -74,12 +79,75 @@ namespace Ucommerce.Masterclass.Umbraco.Headless
 
         private static async Task RefreshToken(CancellationToken ct)
         {
-            throw new NotImplementedException();
+            if (Auth == null) return;
+
+            using (var request = new HttpRequestMessage(new HttpMethod("POST"), "/api/v1/oauth/token"))
+            {
+                if (request.Headers.TryAddWithoutValidation("Authorization", GenerateBasicAuthorizationHeaderValue(_clientId, _clientSecret)))
+                {
+                    var dict = new Dictionary<string, string>
+                     {
+                         { "refresh_token", Auth.RefreshToken },
+                         { "grant_type", "refresh_token" }
+                     };
+                    request.Content = new FormUrlEncodedContent(dict);
+                    request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
+
+                    var response = await Client.SendAsync(request, ct);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        Auth = await response.Content.ReadAsAsync<AuthenticationModel>(ct);
+                        Auth.ExpiresAt = DateTime.UtcNow.AddSeconds(Auth.ExpiresIn);
+                        return;
+                    }
+                }
+                throw new SecurityException($"Unable to refresh the token.");
+            }
         }
 
         private static async Task AuthorizeAsync(CancellationToken ct)
         {
-            throw new NotImplementedException();
+            if (Auth != null) return;
+
+            string authorizationCode = null;
+
+            var connectResponse = await Client.GetAsync(
+                $"/api/v1/oauth/connect?client_id={_clientId}&redirect_uri={_redirectUrl}&response_type=code", ct);
+            if (connectResponse.StatusCode.Equals(HttpStatusCode.Found))
+            {
+                var targetUrlUri = new Uri(connectResponse.Headers.Location.OriginalString);
+                authorizationCode = HttpUtility.ParseQueryString(targetUrlUri.Query).Get("code");
+            }
+
+            if (authorizationCode != null)
+            {
+                using (var request = new HttpRequestMessage(new HttpMethod("POST"), "/api/v1/oauth/token"))
+                {
+                    if (request.Headers.TryAddWithoutValidation("Authorization", GenerateBasicAuthorizationHeaderValue(_clientId, _clientSecret)))
+                    {
+
+                        var dict = new Dictionary<string, string>
+                         {
+                             { "code", authorizationCode },
+                             { "grant_type", "authorization_code" },
+                             { "redirect_uri", _redirectUrl }
+                         };
+                        request.Content = new FormUrlEncodedContent(dict);
+                        request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/x-www-form-urlencoded");
+
+                        var response = await Client.SendAsync(request, ct);
+                        if (response.IsSuccessStatusCode)
+                        {
+                            Auth = await response.Content.ReadAsAsync<AuthenticationModel>(ct);
+                            Auth.ExpiresAt = DateTime.UtcNow.AddSeconds(Auth.ExpiresIn);
+                            return;
+                        }
+                    }
+                }
+            }
+
+            throw new SecurityException($"Unable to authorize headless APIs.");
         }
 
         private static string GenerateBasicAuthorizationHeaderValue(string clientId, string clientSecret)

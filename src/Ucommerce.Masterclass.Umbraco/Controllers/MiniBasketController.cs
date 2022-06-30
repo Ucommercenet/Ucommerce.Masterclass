@@ -1,7 +1,8 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Ucommerce.Headless.Domain;
 using Ucommerce.Masterclass.Umbraco.Headless;
 using Ucommerce.Masterclass.Umbraco.Resolvers;
 using Ucommerce.Masterclass.Umbraco.Models;
@@ -20,12 +21,11 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
             _basketIdResolver = basketIdResolver;
         }
 
-        public async Task<ActionResult> Render(CancellationToken ct)
-        { 
-            var request = System.Web.HttpContext.Current.Request;
-            var basketId = _basketIdResolver.GetBasketId(request);
-            
+        public ActionResult Render(CancellationToken ct)
+        {
             var miniBasketViewModel = new MiniBasketViewModel();
+
+            var basketId = _basketIdResolver.GetBasketId(System.Web.HttpContext.Current.Request);
 
             if (string.IsNullOrWhiteSpace(basketId))
             {
@@ -34,12 +34,34 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
                 return View("/views/Minibasket/index.cshtml", miniBasketViewModel);
             }
 
+            var completionSource = new TaskCompletionSource<GetBasketOutput>();
 
-            var basket = await _transactionClient.GetOrder(basketId, ct);
+            Task.Run(async () =>
+            {
+                try
+                {
+                    var basketOutput = await _transactionClient.GetBasket(basketId, ct);
+                    completionSource.SetResult(basketOutput);
+                }
+                catch
+                {
+                    completionSource.SetResult(null);
+                }
+            });
 
-            miniBasketViewModel.Empty = false;
-            miniBasketViewModel.OrderTotal = new Money(basket.OrderTotal.GetValueOrDefault(0), basket.BillingCurrency.IsoCode).ToString();
-            miniBasketViewModel.ItemsInCart = basket.OrderLines.Sum(x => x.Quantity);
+            var basket = completionSource.Task.GetAwaiter().GetResult();
+
+            if (basket == null)
+            {
+                miniBasketViewModel.Empty = true;
+            }
+            else
+            {
+                miniBasketViewModel.Empty = false;
+                miniBasketViewModel.OrderTotal =
+                    new Money(basket.OrderTotal.GetValueOrDefault(0), basket.BillingCurrency.IsoCode).ToString();
+                miniBasketViewModel.ItemsInCart = basket.OrderLines.Sum(x => x.Quantity);
+            }
 
             return View("/views/Minibasket/index.cshtml", miniBasketViewModel);
         }

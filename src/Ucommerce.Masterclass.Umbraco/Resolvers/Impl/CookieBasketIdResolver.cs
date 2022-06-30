@@ -1,4 +1,4 @@
-﻿using System.Web;
+using System.Web;
 
 namespace Ucommerce.Masterclass.Umbraco.Resolvers.Impl
 {
@@ -6,7 +6,7 @@ namespace Ucommerce.Masterclass.Umbraco.Resolvers.Impl
     {
         public string GetBasketId(HttpRequest request)
         {
-            return "";
+            return request.Cookies["basketId"]?.Value ?? "";
         }
     }
 }

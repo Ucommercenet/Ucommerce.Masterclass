@@ -1,4 +1,4 @@
-﻿using System.Threading;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Ucommerce.Masterclass.Umbraco.Exceptions;
@@ -12,14 +12,16 @@ namespace Ucommerce.Masterclass.Umbraco.Api
     public class MasterClassShippingMethodController : UmbracoApiController
     {
         private readonly ITransactionClient _transactionClient;
+        private readonly IBasketIdResolver _basketResolver;
         private readonly IPriceGroupIdResolver _priceGroupIdResolver;
         private readonly ICultureCodeResolver _cultureCodeResolver;
 
         public MasterClassShippingMethodController(ITransactionClient transactionClient,
-            IPriceGroupIdResolver priceGroupIdResolver,
+            IBasketIdResolver basketResolver, IPriceGroupIdResolver priceGroupIdResolver,
             ICultureCodeResolver cultureCodeResolver)
         {
             _transactionClient = transactionClient;
+            _basketResolver = basketResolver;
             _priceGroupIdResolver = priceGroupIdResolver;
             _cultureCodeResolver = cultureCodeResolver;
         }
@@ -27,7 +29,7 @@ namespace Ucommerce.Masterclass.Umbraco.Api
         [HttpPost]
         public async Task<IHttpActionResult> Update(CheckoutViewModel checkoutViewModel, CancellationToken ct)
         {
-            var basketId = "";
+            var basketId = _basketResolver.GetBasketId(System.Web.HttpContext.Current.Request);
             if (string.IsNullOrEmpty(basketId))
                 throw new MissingBasketIdException("Couldn't read basket id from cookies.");
 

@@ -1,4 +1,4 @@
-﻿using System.Threading;
+using System.Threading;
 using System.Threading.Tasks;
 using Ucommerce.Headless.Domain;
 
@@ -30,9 +30,12 @@ namespace Ucommerce.Masterclass.Umbraco.Headless
             string mobilePhoneNumber, string company, string line1, string line2, string postalCode, string city,
             string attention, string state, string countryId, CancellationToken ct);
 
-        Task<CreatePaymentOutput> CreatePayment(string basketId, string cultureCode, string paymentMethodId, string priceGroupId,
+        Task<CreatePaymentOutput> CreatePayment(string basketId, string cultureCode, string paymentMethodId,
+            string priceGroupId,
             CancellationToken ct);
-        
+
+        Task<CreateNewBasketOutput> CreateBasket(string currency, string cultureCode, CancellationToken ct);
+
         Task<GetOrderOutput> GetOrder(string orderId, CancellationToken ct);
     }
 }

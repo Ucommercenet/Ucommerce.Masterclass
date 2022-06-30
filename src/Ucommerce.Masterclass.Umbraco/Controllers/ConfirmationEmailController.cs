@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -40,7 +40,8 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
             purchaseOrderViewModel.BillingAddress.Line1 = billingInformation.Line1;
             purchaseOrderViewModel.BillingAddress.City = billingInformation.City;
             purchaseOrderViewModel.BillingAddress.PostalCode = billingInformation.PostalCode;
-            purchaseOrderViewModel.BillingAddress.Country = new CountryViewModel { Name = selectedCountry.Name, CountryId = selectedCountry.Id };
+            purchaseOrderViewModel.BillingAddress.Country = new CountryViewModel
+                { Name = selectedCountry.Name, CountryId = selectedCountry.Id };
             purchaseOrderViewModel.BillingAddress.EmailAddress = billingInformation.EmailAddress;
             purchaseOrderViewModel.BillingAddress.PhoneNumber = billingInformation.MobilePhoneNumber;
 
@@ -51,7 +52,8 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
             purchaseOrderViewModel.ShippingAddress.Line1 = shippingInformation.Line1;
             purchaseOrderViewModel.ShippingAddress.City = shippingInformation.City;
             purchaseOrderViewModel.ShippingAddress.PostalCode = shippingInformation.PostalCode;
-            purchaseOrderViewModel.ShippingAddress.Country = new CountryViewModel { Name = selectedShippingCountry.Name, CountryId = selectedShippingCountry.Id };
+            purchaseOrderViewModel.ShippingAddress.Country = new CountryViewModel
+                { Name = selectedShippingCountry.Name, CountryId = selectedShippingCountry.Id };
             purchaseOrderViewModel.ShippingAddress.EmailAddress = shippingInformation.EmailAddress;
             purchaseOrderViewModel.ShippingAddress.PhoneNumber = shippingInformation.MobilePhoneNumber;
 
@@ -84,8 +86,9 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
                     ProductName = orderLine.ProductName,
                     Total = new Money(orderLine.Total.GetValueOrDefault(), order.BillingCurrency.IsoCode).ToString(),
                     TotalWithDiscount =
-                        new Money(orderLine.Total.GetValueOrDefault() - orderLine.Discount, order.BillingCurrency.IsoCode).ToString(),
-                    Discount = orderLine.Discount
+                        new Money(orderLine.Total.GetValueOrDefault() - orderLine.Discount,
+                            order.BillingCurrency.IsoCode).ToString(),
+                    Discount = orderLine.Discount,
                 }).ToList()
             };
         }

@@ -1,5 +1,7 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using Ucommerce.Masterclass.Umbraco.Headless;
 using Ucommerce.Masterclass.Umbraco.Resolvers;
@@ -33,7 +35,11 @@ namespace Ucommerce.Masterclass.Umbraco.Api
 
             if (paymentUrl == null || string.IsNullOrWhiteSpace(paymentUrl.PaymentUrl)) return BadRequest("Missing Payment");
 
-            request.Cookies.Remove("basketId");
+            var currentBasketIdCookie = HttpContext.Current.Request.Cookies["basketId"];
+            HttpContext.Current.Response.Cookies.Remove("basketId");
+            currentBasketIdCookie.Expires = DateTime.Now.AddDays(-10);
+            currentBasketIdCookie.Value = null;
+            HttpContext.Current.Response.SetCookie(currentBasketIdCookie);
 
             return Ok(paymentUrl.PaymentUrl);
         }

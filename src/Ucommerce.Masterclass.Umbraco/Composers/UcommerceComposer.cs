@@ -1,3 +1,4 @@
+using System.Net;
 using Ucommerce.Api;
 using Ucommerce.Masterclass.Umbraco.Headless;
 using Ucommerce.Masterclass.Umbraco.Resolvers;
@@ -32,6 +33,7 @@ namespace Ucommerce.Masterclass.Umbraco.Composers
             composition.Register<IProductCatalogIdResolver, CatalogContextProductCatalogIdResolver>();
             composition.Register<ICultureCodeResolver, ThreadCultureCodeResolver>();
             composition.Register<IPaymentMethodIdResolver, PaymentMethodIdResolver>();
+            composition.Register<IBasketIdResolver, CookieBasketIdResolver>();
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Ucommerce.Masterclass.Umbraco.Resolvers.Impl
     {
         public string GetBasketId(HttpRequest request)
         {
-            throw new NotImplementedException();
+            return request.Cookies["basketId"]?.Value ?? "";
         }
     }
 }

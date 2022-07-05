@@ -549,7 +549,6 @@
     <Compile Include="Headless\Models\AuthenticationModel.cs" />
     <Compile Include="Headless\TransactionClient.cs" />
     <Compile Include="Headless\UcommerceHttpClient.cs" />
-    <Compile Include="IndexDefinitions\MasterclassIndexDefinition.cs" />
     <Compile Include="Models\AddressViewModel.cs" />
     <Compile Include="Models\CategoryNavigationViewModel.cs" />
     <Compile Include="Models\CategoryViewModel.cs" />

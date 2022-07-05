@@ -15,33 +15,24 @@ namespace Ucommerce.Masterclass.Umbraco.Controllers
         private readonly ICatalogLibrary _catalogLibrary;
         private readonly IUrlService _urlService;
         private readonly ICatalogContext _catalogContext;
-        private readonly IIndex<Product> _productIndex;
 
         public ProductSearchResultController(ICatalogLibrary catalogLibrary, IUrlService urlService,
-            ICatalogContext catalogContext, IIndex<Ucommerce.Search.Models.Product> productIndex)
+            ICatalogContext catalogContext)
         {
             _catalogLibrary = catalogLibrary;
             _urlService = urlService;
             _catalogContext = catalogContext;
-            _productIndex = productIndex;
         }
 
         public ActionResult Index()
         {
             var searchTerm = GetSearchTerm();
 
-            var result = _productIndex.Find<Ucommerce.Search.Models.Product>()
-                .Where(
-                    x =>
-                        x.LongDescription == Match.FullText(searchTerm) ||
-                        x.Name == Match.Wildcard($"*{searchTerm}*") ||
-                        x.Sku == Match.Literal(searchTerm) ||
-                        x.Name == Match.Literal(searchTerm) ||
-                        x.DisplayName == Match.Wildcard($"*{searchTerm}*")).ToList();
+            var result = new List<Product>();
 
             var model = new ProductListViewModel
             {
-                ProductViewModels = MapProducts(result.Results)
+                ProductViewModels = MapProducts(result)
             };
 
             return View(model);

@@ -7,10 +7,10 @@ namespace Ucommerce.Masterclass.Umbraco.Models
     {
         public CategoryNavigationViewModel()
         {
-            Categories = new List<CategoryViewModel>();
+            CategoriesViewModels = new List<CategoryViewModel>();
         }
-        public IList<CategoryViewModel> Categories { get; set; } 
-        
+        public IList<CategoryViewModel> CategoriesViewModels { get; set; }
+
         public Guid CurrentCategoryGuid { get; set; }
     }
 }

@@ -8,21 +8,22 @@ namespace Ucommerce.Masterclass.Umbraco.Models
         public CategoryViewModel()
         {
             Categories = new List<CategoryViewModel>();
-            Products = new List<ProductViewModel>();
+            ProductViewModels = new List<ProductViewModel>();
             Facets = new List<FacetsViewModel>();
         }
+
         public string Url { get; set; }
 
         public string Name { get; set; }
 
         public Guid Guid { get; set; }
-        
+
         public IList<CategoryViewModel> Categories { get; set; }
 
-        public IList<ProductViewModel> Products { get; set; }
-        
+        public IList<ProductViewModel> ProductViewModels { get; set; }
+
         public string ImageMediaUrl { get; set; }
-        public uint TotalProductsCount { get; set; }
+        public int TotalProductsCount { get; set; }
         public IList<FacetsViewModel> Facets { get; set; }
     }
 }

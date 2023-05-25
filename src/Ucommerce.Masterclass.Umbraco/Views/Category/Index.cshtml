@@ -102,7 +102,7 @@
 
 <div class="m-2 row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
     
-    @foreach (var product in @Model.Products)
+    @foreach (var product in @Model.ProductViewModels)
     {
         ProductPriceCalculationResult.Item productPrice = product.Prices.First(x => x.VariantSku == null);
         
